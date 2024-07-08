@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+    border-bottom:solid 1px black;
+}
+.header > a{
+    border-bottom: 0px !important;
+}
