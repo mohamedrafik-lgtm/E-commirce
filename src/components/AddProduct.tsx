@@ -10,16 +10,16 @@ export const ProductInformation = () => {
             </div>
             <div className="p-5 space-y-3">
                <div className="flex flex-col space-y-2 ">
-                  <label htmlFor="product-name">product Name:</label>
+                  <label htmlFor="product-name">product Name</label>
                   <InputComponent className="border rounded-md   w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="product name....." type="text" id="product-name" name="product-name"/>
                </div>
                <div className="grid grid-cols-2 gap-8">
                <div className="flex flex-col space-y-2">
-                  <label htmlFor="SKU">SKU:</label>
+                  <label htmlFor="SKU">SKU</label>
                   <InputComponent className="border rounded-md   h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="SKU....." type="text" id="SKU" name="SKU"/>
                </div>
                <div className="flex flex-col space-y-2 ">
-                  <label htmlFor="unit-in-stock">unit in stock:</label>
+                  <label htmlFor="unit-in-stock">unit in stock</label>
                   <InputComponent className="border rounded-md  h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="unit in stock....." type="number" id="unit-in-stock" name="unit-in-stock"/>
                </div>
                </div>
