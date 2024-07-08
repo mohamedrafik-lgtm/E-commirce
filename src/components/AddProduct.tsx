@@ -1,28 +1,34 @@
-import { formInputList } from "../data"
 import InputComponent from "./ui/InputComponent"
 
+export const ProductInformation = () => {
 
+    return (
+        <div className="border rounded-md shadow-md">
+            <div className="flex p-5 border-b  content-center">
+                <h4 className="font-bold">Product information</h4>
+                <br />
+            </div>
+            <div className="p-5 space-y-3">
+               <div className="flex flex-col space-y-2 ">
+                  <label htmlFor="product-name">product Name:</label>
+                  <InputComponent className="border rounded-md   w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="product name....." type="text" id="product-name" name="product-name"/>
+               </div>
+               <div className="grid grid-cols-2 gap-8">
+               <div className="flex flex-col space-y-2">
+                  <label htmlFor="SKU">SKU:</label>
+                  <InputComponent className="border rounded-md   h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="SKU....." type="text" id="SKU" name="SKU"/>
+               </div>
+               <div className="flex flex-col space-y-2 ">
+                  <label htmlFor="unit-in-stock">unit in stock:</label>
+                  <InputComponent className="border rounded-md  h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="unit in stock....." type="number" id="unit-in-stock" name="unit-in-stock"/>
+               </div>
+               </div>
 
-const AddProduct = () => {
-    //  render fom inputs 
-    const inputsProduct = formInputList.map( (input) => <div className="w-100%">
-             <label htmlFor={input.id}>{input.label}</label>
-           <InputComponent
-           type={input.type}
-           name={input.name}
-           id={input.id}
-           required
-           /> 
-    </div>)
-
-    return <div className=" flex flex-col w-1/3 space-y-3 p-5 border-2 border-slate-400 rounded-md">
-        <h3 className="text-white bg-blue-600 p-3 rounded-md text-2xl">Product details</h3>
-        <hr/>
-        {inputsProduct}
-
-         <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-md text-lg">Add Product</button>
-    </div>
-
+               <div className="space-y-2 mb-5">
+               <label htmlFor="discription">discription</label>
+               <InputComponent className=" border rounded-md  w-full h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="Type your discription....." type="text" id="unit-in-stock" name="unit-in-stock"/>
+               </div>
+            </div>
+        </div>
+    )
 }
-
-export default AddProduct
