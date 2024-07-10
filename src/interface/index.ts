@@ -33,3 +33,10 @@ export interface ISettings{
     Tags:string;
     brand:string;
   }
+
+  export interface IProductInformations{
+    productName:string;
+    SKU:string;
+    unitInStock:number;
+    Discription:string;
+  }

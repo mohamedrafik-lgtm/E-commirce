@@ -1,10 +1,23 @@
 import InputComponent from "./ui/InputComponent"
 import { Switch } from '@headlessui/react'
 import clsx from 'clsx'
-import { Fragment, useState } from 'react'
+import { ChangeEvent, Fragment, useState } from 'react'
 
 export const Pricing = () => {
-    
+    const [price, setPrice] = useState({
+        priceValue:'',
+        discount:'',
+        endDate: '',
+    })
+    console.log(price)
+    // handlers
+    const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
+       const {value,name} = event.target
+       setPrice({
+        ...price,
+         [name]: value
+       })
+    }
     const [enabled, setEnabled] = useState<boolean>(false)
     
     function getTodayDate(): { day: number, month: number, year: number } {
@@ -32,7 +45,7 @@ export const Pricing = () => {
             <div className="p-5 space-y-3">
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="price">price</label>
-                  <InputComponent className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="text" id="price" name="price"/>
+                  <InputComponent value={price.priceValue} onChange={handlerPriceChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="text" id="priceValue" name="priceValue"/>
                </div>
                <div className="flex place-content-between">
                    <p>discount?</p>
@@ -53,11 +66,11 @@ export const Pricing = () => {
                {enabled ? <div className="flex flex-col space-y-6">
                 <div>
                 <label htmlFor="discount">value</label>
-                <InputComponent className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="number" id="discount" name="discount"/>
+                <InputComponent value={price.discount} onChange={handlerPriceChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="number" id="discount" name="discount"/>
                 </div>
                  <div className="flex items-center place-content-between">
                     <label htmlFor="end-date">end date</label>
-                    <InputComponent className="border rounded-md p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" type="date" min={`${todayDate.year}-${todayDate.month}-${todayDate.day}`.toString()} name="end-date" id="end-date" />
+                    <InputComponent value={price.endDate} onChange={handlerPriceChange} className="border rounded-md p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" type="date"  min={`${todayDate.year}-${todayDate.month}-${todayDate.day}`.toString()} name="end-date" id="end-date" />
                  </div>
                </div>:null}
             </div>
