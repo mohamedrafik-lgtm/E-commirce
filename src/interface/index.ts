@@ -24,3 +24,12 @@ export interface ISettings{
     label:string;
     type: string;
   }
+
+  export interface IOrganization {
+    Vendor:string;
+    combanyName:string;
+    contactName:string;
+    category:string;
+    Tags:string;
+    brand:string;
+  }
