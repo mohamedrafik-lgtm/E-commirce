@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from "react"
 import { IProductInformations } from "../interface"
-import InputComponent from "./ui/InputComponent"
-
+import InputComponent from "../components/ui/InputComponent"
 export const ProductInformation = () => {
+   
      const [ProductInformation,setProductInformation] = useState<IProductInformations>({
         productName:'',
         Discription:'',
@@ -41,6 +41,7 @@ export const ProductInformation = () => {
 
                <div className="space-y-2 mb-5">
                <label htmlFor="discription">Discription</label>
+               
                <InputComponent value={ProductInformation.Discription} onChange={handelChange} className=" border rounded-md  w-full h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="Type your discription....." type="text" id="Discription" name="Discription"/>
                </div>
             </div>

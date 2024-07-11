@@ -1,11 +1,12 @@
 import { ChangeEvent, useState } from "react"
-import InputComponent from "./ui/InputComponent"
+
 import { IOrganization } from "../interface"
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputComponent from "../components/ui/InputComponent";
 
 
 const Organization = () => {
@@ -19,7 +20,6 @@ const Organization = () => {
     })
     const [category, setCategory] = useState<string>('');
 
-    console.log(category)
    //  handlers
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value as string);
@@ -27,7 +27,6 @@ const Organization = () => {
    console.log(organization)
     const handelChange = (event:ChangeEvent<HTMLInputElement>) =>{
         const {value,name} = event.target
-        console.log(value)
         setOrganization({
          ...organization,
          [name]: value

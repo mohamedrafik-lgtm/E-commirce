@@ -6,7 +6,7 @@ import {
 import RootLayout from "../pages/RootLayout";
 import { Home } from "../pages/Home";
 import ContactPage from "../pages/ContactPage";
-import AdminPage from "../pages/AdminPage";
+import AdminPage from "../Dashboard/AdminPage";
 const router = createBrowserRouter(createRoutesFromElements(
     <>
     <Route path="/" element={<RootLayout/>}>

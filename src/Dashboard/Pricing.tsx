@@ -1,7 +1,7 @@
-import InputComponent from "./ui/InputComponent"
 import { Switch } from '@headlessui/react'
 import clsx from 'clsx'
 import { ChangeEvent, Fragment, useState } from 'react'
+import InputComponent from '../components/ui/InputComponent'
 
 export const Pricing = () => {
     const [price, setPrice] = useState({
