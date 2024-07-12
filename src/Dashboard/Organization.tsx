@@ -18,16 +18,18 @@ const Organization = () => {
       brand: '',
       Tags:'',
     })
-   //  const [category, setCategory] = useState<string>('');
+    const [category, setCategory] = useState<string>('');
 
    //  handlers
- 
+  const handleChange = (event: SelectChangeEvent) => {
+    setCategory(event.target.value as string);
+  };
    console.log(organization)
     const handelChange = (event:ChangeEvent<HTMLInputElement> | SelectChangeEvent) =>{
         const {value,name} = event.target
         setOrganization({
          ...organization,
-         [name]: value
+         [name]: value as string,
         })
     }
     return (
@@ -52,13 +54,13 @@ const Organization = () => {
                <div>
                    <Box sx={{ minWidth: 120 }}>
                      <FormControl fullWidth>
-                       <InputLabel id="category">Category</InputLabel>
+                       <InputLabel id="demo-simple-select-label">Category</InputLabel>
                        <Select
-                         labelId="Category"
-                         id="category"
-                         value={organization.category}
+                         labelId="demo-simple-select-label"
+                         id="demo-simple-select"
+                         value={category}
                          label="Category"
-                         onChange={handelChange}
+                         onChange={handleChange}
                        >
                          <MenuItem value={`nvidia`}>nvidia</MenuItem>
                          <MenuItem value={`AMD`}>AMD</MenuItem>
