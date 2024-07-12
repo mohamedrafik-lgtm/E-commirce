@@ -45,7 +45,8 @@ function SingleFileUploader() {
     if (selectedFiles.length === 0) return;
 
     // Replace the following URL with your actual API endpoint
-    const uploadUrl = 'YOUR_API_ENDPOINT_HERE';
+    // YOUR_API_ENDPOINT_HERE
+    const uploadUrl = '';
 
     const formData = new FormData();
     selectedFiles.forEach(file => {

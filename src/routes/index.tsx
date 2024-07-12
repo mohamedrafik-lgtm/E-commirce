@@ -16,6 +16,12 @@ const router = createBrowserRouter(createRoutesFromElements(
        <Route path="Sign-Up" element={<h3>Sign-Up page</h3>}/>
        <Route path="Admin" element={<AdminPage/>}/>
     </Route>
+    {/* <Route path="/Admin" element={<RootLayout/>}>
+      <Route path="dashboard" element={<AdminPage/>}/>
+      <Route path="products" element={<h3>Products page</h3>}/>
+      <Route path="orders" element={<h3>Orders page</h3>}/>
+      <Route path="settings" element={<h3>Settings page</h3>}/>
+    </Route> */}
     </>
 ));
 

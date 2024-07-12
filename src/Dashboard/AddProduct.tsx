@@ -48,3 +48,5 @@ export const ProductInformation = () => {
         </div>
     )
 }
+
+
