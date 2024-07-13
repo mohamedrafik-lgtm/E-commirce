@@ -5,6 +5,7 @@ import AddProductForm from "./postData"
 import { ChangeEvent, FormEvent, useState } from "react"
 import InputComponent from "../components/ui/InputComponent"
 import { IProductInformations } from "../interface"
+import { AddProductValidation } from "../validations/AddProductValidation"
 
 
 const AdminPage = () => {
@@ -21,7 +22,7 @@ const AdminPage = () => {
      return Math.round(bytes / 1024); // تحويل البايت إلى Kbyte وتقريبه
    };
  
-   
+  
  
    const handleUpload = () => {
      if (selectedFiles.length === 0) return;
@@ -109,13 +110,23 @@ const AdminPage = () => {
 
    // handlers 
    const onSubmitHandlear = () => {
-
+    //  errors massages
+    
    }
-   const onSubmit = (e:FormEvent<HTMLFormElement>) =>{
+   const onSubmit = (e:FormEvent<HTMLFormElement>):void =>{
      e.preventDefault()
-     console.log("Form submitted")
      // call api here
- 
+     const errors = AddProductValidation(ProductInformation)
+     // check if an any property has a value of "" && check if all properties have a value of ""
+     console.log(errors)
+     
+     const hasErrorMsg = Object.values(errors).some(value => value === "") && Object.values(errors).every(value => value === "");
+    console.log(hasErrorMsg)
+     if (!hasErrorMsg) {
+       return;
+     }
+     
+     console.log("success")
   }
    
    return (
@@ -201,13 +212,13 @@ const AdminPage = () => {
       </div>
     </div>
 
-              <DynamicPropertiesInput maxProperties={5} propertyOptions={["color","size","modil"]}/>
+              <DynamicPropertiesInput maxProperties={10} propertyOptions={["color","size","modil"]}/>
             </div>
             <div className="space-y-5">
               <Pricing/>
               <Organization/>
             </div>
-         <AddProductForm loading={false} onSubmit={onSubmitHandlear}/>
+              <AddProductForm loading={false} onSubmit={onSubmitHandlear}/>
          </form>
       </div>
    )
