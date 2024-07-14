@@ -1,11 +1,13 @@
-import { Pricing } from "./Pricing"
+
 import Organization from "./Organization"
 import DynamicPropertiesInput from "./DynamicPropertiesInput"
 import AddProductForm from "./postData"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useState,Fragment } from "react"
 import InputComponent from "../components/ui/InputComponent"
-import { IProductInformations } from "../interface"
-import { AddProductValidation } from "../validations/AddProductValidation"
+import { IPrice, IProductInformations } from "../interface"
+import { PriceValidations, ProductInformationValidation } from "../validations/AddProductValidation"
+import { Switch } from '@headlessui/react'
+import clsx from 'clsx'
 
 
 const AdminPage = () => {
@@ -18,11 +20,43 @@ const AdminPage = () => {
       SKU: '',
       unitInStock:0
    })
-   const bytesToKb = (bytes: number): number => {
-     return Math.round(bytes / 1024); // تحويل البايت إلى Kbyte وتقريبه
-   };
- 
-  
+   const [enabled, setEnabled] = useState<boolean>(false)
+   const [price, setPrice] = useState<IPrice>({
+    priceValue:0,
+    discount:0,
+    endDate: '',
+})
+
+const bytesToKb = (bytes: number): number => {
+  return Math.round(bytes / 1024); // تحويل البايت إلى Kbyte وتقريبه
+};
+console.log(price)
+// handlers
+const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
+   const {value,name} = event.target
+   setPrice({
+    ...price,
+     [name]: value
+   })
+}
+
+console.log(price.endDate)
+function getTodayDate(): { day: number, month: number, year: number } {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.getMonth() + 1; // Months are zero-based in JavaScript
+    const year = today.getFullYear();
+
+    return {
+        day: day,
+        month: month,
+        year: year
+    };
+}
+
+// Usage example
+const todayDate = getTodayDate();
+
  
    const handleUpload = () => {
      if (selectedFiles.length === 0) return;
@@ -48,9 +82,6 @@ const AdminPage = () => {
          console.error('Error:', error);
        });
    };
- 
-
-   // handlers
    
    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
@@ -108,25 +139,43 @@ const AdminPage = () => {
    }
 
 
-   // handlers 
+   
    const onSubmitHandlear = () => {
     //  errors massages
     
+    
    }
+   PriceValidations({priceValue:price.priceValue,discount:price.discount,endDate:price.endDate,isOpen:enabled})
+
+
    const onSubmit = (e:FormEvent<HTMLFormElement>):void =>{
      e.preventDefault()
-     // call api here
-     const errors = AddProductValidation(ProductInformation)
-     // check if an any property has a value of "" && check if all properties have a value of ""
-     console.log(errors)
+     const ProductInformationValidationErrors = ProductInformationValidation(ProductInformation)
+     console.log(ProductInformationValidationErrors)
+      const PriceValidationsErrors = PriceValidations({priceValue:price.priceValue,discount:price.discount,endDate:price.endDate,isOpen:enabled})
+      console.log(PriceValidationsErrors)
+     const hasErrorMsg = Object.values(ProductInformationValidationErrors).some(value => value === '') && Object.values(ProductInformationValidationErrors).every(value => value === '');
+     console.log(hasErrorMsg)
+
+
+
+     const errorMsg = Object.values(PriceValidationsErrors).some(value => value === '') && Object.values(PriceValidationsErrors).every(value => value === '');
      
-     const hasErrorMsg = Object.values(errors).some(value => value === "") && Object.values(errors).every(value => value === "");
-    console.log(hasErrorMsg)
+     setPrice({
+       priceValue:0,
+       discount:0,
+       endDate: ''
+     })
+     console.log(errorMsg)
      if (!hasErrorMsg) {
+      
        return;
      }
-     
+     if(!errorMsg){
+       return;
+     }
      console.log("success")
+   
   }
    
    return (
@@ -215,7 +264,44 @@ const AdminPage = () => {
               <DynamicPropertiesInput maxProperties={10} propertyOptions={["color","size","modil"]}/>
             </div>
             <div className="space-y-5">
-              <Pricing/>
+            <div className="border rounded-md shadow-md">
+            <div className="flex p-5 border-b  content-center">
+                <h4 className="font-bold">Pricing</h4>
+                <br />
+            </div>
+            <div className="p-5 space-y-3">
+               <div className="flex flex-col space-y-2 ">
+                  <label htmlFor="price">price</label>
+                  <InputComponent value={price.priceValue} onChange={handlerPriceChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="number" id="priceValue" name="priceValue"/>
+               </div>
+               <div className="flex place-content-between">
+                   <p>discount?</p>
+                   <Switch checked={enabled} onChange={setEnabled} as={Fragment}>
+                       {({ checked, disabled }) => (
+                           <button
+                           className={clsx(
+                           'group inline-flex h-6 w-11 items-center rounded-full',
+                            checked ? 'bg-blue-600' : 'bg-gray-200',
+                            disabled && 'cursor-not-allowed opacity-50'
+                        )}>
+                                <span className="sr-only">Enable notifications</span>
+                                <span
+                                className={clsx('size-4 rounded-full bg-white transition', checked ? 'translate-x-6' : 'translate-x-1')}/>
+                            </button>)}
+                   </Switch>
+               </div>
+               {enabled ? <div className="flex flex-col space-y-6">
+                <div>
+                <label htmlFor="discount">value</label>
+                <InputComponent value={price.discount} onChange={handlerPriceChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="number" id="discount" name="discount"/>
+                </div>
+                 <div className="flex items-center place-content-between">
+                    <label htmlFor="end-date">end date</label>
+                    <InputComponent value={price.endDate} onChange={handlerPriceChange} className="border rounded-md p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" type="date"  min={`${todayDate.year}-${todayDate.month}-${todayDate.day}`.toString()} name="end-date" id="end-date" />
+                 </div>
+               </div>:null}
+            </div>
+        </div>
               <Organization/>
             </div>
               <AddProductForm loading={false} onSubmit={onSubmitHandlear}/>

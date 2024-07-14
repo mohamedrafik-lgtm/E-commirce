@@ -40,3 +40,11 @@ export interface ISettings{
     unitInStock:number;
     Discription:string;
   }
+
+
+  export interface IPrice {
+    priceValue:number;
+    discount:number ;
+    endDate:string ; 
+    isOpen?:boolean;
+  }

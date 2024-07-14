@@ -6,7 +6,7 @@ import InputComponent from '../components/ui/InputComponent'
 export const Pricing = () => {
     const [price, setPrice] = useState({
         priceValue:'',
-        discount:'',
+        discount:0,
         endDate: '',
     })
     console.log(price)
@@ -35,7 +35,7 @@ export const Pricing = () => {
     
     // Usage example
     const todayDate = getTodayDate();
-
+    console.log(todayDate)
     return (
         <div className="border rounded-md shadow-md">
             <div className="flex p-5 border-b  content-center">
