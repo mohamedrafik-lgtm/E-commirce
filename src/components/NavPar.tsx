@@ -13,7 +13,7 @@ const NavPar = () => {
                        <div className="text-xl mr-10"><NavLink to={"/"}>Home</NavLink></div>
                        <div className="text-xl mr-10"><NavLink to={"/contact"}>Contact</NavLink></div>
                        <div className="text-xl mr-10"><NavLink to={"/About"}>About</NavLink></div>
-                       <div className="text-xl mr-10"><NavLink to={"/Sign-Up"}>Sign Up</NavLink></div>
+                       <div className="text-xl mr-10"><NavLink to={"/Login"}>login</NavLink></div>
                     </div>
                     <div className="flex justify-center items-center space-x-5">
                         <form>   

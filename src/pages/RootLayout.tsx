@@ -8,7 +8,6 @@ const RootLayout = () =>{
     return (
         <>
            <NavPar/>
-           {/* <Sidebar/> */}
            <Outlet/>
         </>
     )

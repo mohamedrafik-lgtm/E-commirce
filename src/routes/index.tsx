@@ -7,13 +7,15 @@ import RootLayout from "../pages/RootLayout";
 import { Home } from "../pages/Home";
 import ContactPage from "../pages/ContactPage";
 import AdminPage from "../Dashboard/AdminPage";
+
+import Register from "../pages/Register";
 const router = createBrowserRouter(createRoutesFromElements(
     <>
     <Route path="/" element={<RootLayout/>}>
        <Route index element={<Home/>}/>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
-       <Route path="Sign-Up" element={<h3>Sign-Up page</h3>}/>
+       <Route path="Login" element={<Register/>}/>
        <Route path="Admin" element={<AdminPage/>}/>
     </Route>
     {/* <Route path="/Admin" element={<RootLayout/>}>

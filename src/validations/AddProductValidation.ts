@@ -37,12 +37,12 @@ export const PriceValidations = ({priceValue,discount,endDate,isOpen}:IPrice) =>
     if (isNaN(priceValue) || priceValue < 1){
         PriceError.priceValue = "Price value should be a number between 1 ";
     }
-    
+     console.log(isOpen)
     if(isOpen){
-        if( isNaN(discount) || discount < 0 || discount > 100){
-            PriceError.discount = "Discount should be a number between 0 and 100 when enabled";
+        if( isNaN(discount) || discount < 1 ){
+            PriceError.discount = "Discount should be a number between 0";
         }
-        if(endDate?.length > 0){
+        if(endDate?.length < 1){
             PriceError.endDate = "End date is required when enabled";
         }
     }

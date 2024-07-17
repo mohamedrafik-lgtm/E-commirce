@@ -30,7 +30,6 @@ const AdminPage = () => {
 const bytesToKb = (bytes: number): number => {
   return Math.round(bytes / 1024); // تحويل البايت إلى Kbyte وتقريبه
 };
-console.log(price)
 // handlers
 const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
    const {value,name} = event.target
@@ -151,24 +150,16 @@ const todayDate = getTodayDate();
    const onSubmit = (e:FormEvent<HTMLFormElement>):void =>{
      e.preventDefault()
      const ProductInformationValidationErrors = ProductInformationValidation(ProductInformation)
-     console.log(ProductInformationValidationErrors)
       const PriceValidationsErrors = PriceValidations({priceValue:price.priceValue,discount:price.discount,endDate:price.endDate,isOpen:enabled})
-      console.log(PriceValidationsErrors)
      const hasErrorMsg = Object.values(ProductInformationValidationErrors).some(value => value === '') && Object.values(ProductInformationValidationErrors).every(value => value === '');
-     console.log(hasErrorMsg)
 
 
 
      const errorMsg = Object.values(PriceValidationsErrors).some(value => value === '') && Object.values(PriceValidationsErrors).every(value => value === '');
-     
-     setPrice({
-       priceValue:0,
-       discount:0,
-       endDate: ''
-     })
-     console.log(errorMsg)
-     if (!hasErrorMsg) {
       
+     PriceValidations({priceValue:price.priceValue,discount:price.discount,endDate:price.endDate,isOpen:enabled})
+    
+     if (!hasErrorMsg) {
        return;
      }
      if(!errorMsg){
