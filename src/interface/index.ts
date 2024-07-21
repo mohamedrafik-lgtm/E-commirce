@@ -48,3 +48,14 @@ export interface ISettings{
     endDate:string ; 
     isOpen?:boolean;
   }
+
+  export interface IRegister{
+    name: "username" | "email" | "password" | "confirmPassword";
+    plassholder: string;
+    type: string;
+    validation:{
+      pattern?:RegExp;
+      required:boolean,
+      minLength:number
+    }
+  }

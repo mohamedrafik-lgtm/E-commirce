@@ -1,10 +1,12 @@
 import React, {  ChangeEvent,FormEvent,useState } from 'react';
-
+import axios from 'axios';
 const Login: React.FC = () => {
     const [userData, setUserData] = useState<{username:string,password:string}>({
         username: '',
         password: '',
     })
+    const [response, setResponse] = useState <null | string>(null);
+    console.log(response)
     console.log(userData)
     const handelChanged = (event:ChangeEvent<HTMLInputElement>) => {
         const  {value,name}= event.target
@@ -13,11 +15,22 @@ const Login: React.FC = () => {
             [name]:value
         })
     };
-    const onSubmit = (e:FormEvent<HTMLFormElement>):void =>{
+    const onSubmit = async (e:FormEvent<HTMLFormElement>):Promise<void> =>{
         e.preventDefault()
         
+
+        const url:string = 'https://94ed-197-160-202-76.ngrok-free.app/api/Auth/login'; 
+
+        try {
+            const res = await axios.post(url, userData);
+            setResponse(res.data);
+        } catch (error) {
+            console.error('There was an error!', error);
+            setResponse('Error occurred');
+        }
       
      }
+     
 
     return (
         <div className="flex items-center justify-center min-h-screen">
@@ -27,6 +40,7 @@ const Login: React.FC = () => {
                     <div className="form-group">
                         <label htmlFor="username" className="block text-sm font-medium text-gray-700">username:</label>
                         <input
+                            name='username'
                             type="text"
                             id="username"
                             value={userData.username}
@@ -38,6 +52,7 @@ const Login: React.FC = () => {
                     <div className="form-group">
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">password:</label>
                         <input
+                        name='password'
                             type="password"
                             id="password"
                             value={userData.password}

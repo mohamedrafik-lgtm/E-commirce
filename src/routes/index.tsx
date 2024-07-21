@@ -7,7 +7,7 @@ import RootLayout from "../pages/RootLayout";
 import { Home } from "../pages/Home";
 import ContactPage from "../pages/ContactPage";
 import AdminPage from "../Dashboard/AdminPage";
-
+import Login from "../pages/Login";
 import Register from "../pages/Register";
 const router = createBrowserRouter(createRoutesFromElements(
     <>
@@ -18,12 +18,7 @@ const router = createBrowserRouter(createRoutesFromElements(
        <Route path="Login" element={<Register/>}/>
        <Route path="Admin" element={<AdminPage/>}/>
     </Route>
-    {/* <Route path="/Admin" element={<RootLayout/>}>
-      <Route path="dashboard" element={<AdminPage/>}/>
-      <Route path="products" element={<h3>Products page</h3>}/>
-      <Route path="orders" element={<h3>Orders page</h3>}/>
-      <Route path="settings" element={<h3>Settings page</h3>}/>
-    </Route> */}
+    
     </>
 ));
 

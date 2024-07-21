@@ -1,12 +1,14 @@
-import { InputHTMLAttributes } from "react"
+import { forwardRef, InputHTMLAttributes, Ref } from "react"
 
 interface IProp extends InputHTMLAttributes<HTMLInputElement>{}
 
-const InputComponent = ({className,...rest}:IProp) => {
+const InputComponent = forwardRef(({className,...rest}:IProp,ref:Ref<HTMLInputElement>) => {
     return (
-            <input className={`${className}`} {...rest}/>
+            <input
+            ref={ref}
+            className={`${className}`} {...rest}/>
     )
 
-}
+})
 
 export default InputComponent
