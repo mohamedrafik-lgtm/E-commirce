@@ -4,8 +4,11 @@ import InputErrorMsg from "../components/ui/InputErrorMsg";
 import { yupResolver } from "@hookform/resolvers/yup"
 import RENDERER_INPUTS from "../data";
 import { registerSchema } from "../validations";
+import axiosInstance from "../config/axios.config";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const Register: React.FC = () => {
-    
+    const navigator = useNavigate()
     interface IProp{
         username: string;
         email: string;
@@ -16,10 +19,31 @@ const Register: React.FC = () => {
 const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
     resolver:yupResolver(registerSchema)
 })
-    const onSubmit: SubmitHandler<IProp> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<IProp> =async (data) => {
+        try {
+          const {status}= await axiosInstance.post('/api/Auth/register',{username:data.username,email:data.email,password:data.password,confirmPassword:data.confirmPassword})
+          if (status === 200 ){
+            toast.success("You will navigate to the Verification Code page in 2 seconds!", {
+                position: "bottom-center",
+                duration: 1500,
+                style: {
+                  backgroundColor: "black",
+                  color: "white",
+                  width: "fit-content",
+                },
+              });
+              setTimeout(() => {
+                navigator("/home");
+              }, 2000);
+          }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
+
+
+    
     // render
     const renderInputForm = RENDERER_INPUTS.map(({name,plassholder,type,validation},idx)=> <div key={idx} className="form-group">
                         <label htmlFor={name} className="block text-sm font-medium text-gray-700">{name}:</label>

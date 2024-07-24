@@ -8,4 +8,11 @@ export const registerSchema = yup
     confirmPassword: yup.string().required("confirm password is required!")
   })
   .required()
+
+  export const loginSchema = yup
+  .object({
+    email: yup.string().required("email is required!").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,"Not a valid email address"),
+    password: yup.string().required("password is required!").min(8,"password should be at least 8 characters long"),
+  })
+  .required()
  

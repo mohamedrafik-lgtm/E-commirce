@@ -1,4 +1,4 @@
-import { IRegister } from "../interface";
+import { ILogin, IRegister } from "../interface";
 
 
 const RENDERER_INPUTS:IRegister[] = [
@@ -42,6 +42,32 @@ const RENDERER_INPUTS:IRegister[] = [
             minLength:7,
         }
     }
+]
+
+export const LOGIN_INPUT:ILogin[] = [
+    {
+        name:"email",
+        plassholder:"enter email heer",
+        label:"email",
+        type:"email",
+        validation:{
+            pattern:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            required:true,
+            minLength:7,
+        }
+    },
+    {
+        name:"password",
+        plassholder:"password",
+        label:"password",
+        type:"password",
+        validation:{
+            required:true,
+            minLength:7,
+        }
+    },
+
+
 ]
 
 export default RENDERER_INPUTS;

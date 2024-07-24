@@ -5,9 +5,10 @@ import AddProductForm from "./postData"
 import { ChangeEvent, FormEvent, useState,Fragment } from "react"
 import InputComponent from "../components/ui/InputComponent"
 import { IPrice, IProductInformations } from "../interface"
-import { PriceValidations, ProductInformationValidation } from "../validations/AddProductValidation"
+
 import { Switch } from '@headlessui/react'
 import clsx from 'clsx'
+import axiosInstance from "../config/axios.config"
 
 
 const AdminPage = () => {
@@ -62,24 +63,14 @@ const todayDate = getTodayDate();
  
      // Replace the following URL with your actual API endpoint
      // YOUR_API_ENDPOINT_HERE
-     const uploadUrl = '';
+     
  
      const formData = new FormData();
      selectedFiles.forEach(file => {
        formData.append('files', file);
      });
  
-     fetch(uploadUrl, {
-       method: 'POST',
-       body: formData,
-     })
-       .then(response => response.json())
-       .then(data => {
-         console.log('Success:', data);
-       })
-       .catch(error => {
-         console.error('Error:', error);
-       });
+     
    };
    
    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,33 +130,20 @@ const todayDate = getTodayDate();
 
 
    
-   const onSubmitHandlear = () => {
-    //  errors massages
+  
+   
+
+   const url:string = "/api/Product"
+   const onSubmit =async (e:FormEvent<HTMLFormElement>) =>{
+    e.preventDefault()
+    try {
+      const res =await axiosInstance.post(url,{...ProductInformation,...price,selectedFiles})
+     console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
     
-    
-   }
-   PriceValidations({priceValue:price.priceValue,discount:price.discount,endDate:price.endDate,isOpen:enabled})
-
-
-   const onSubmit = (e:FormEvent<HTMLFormElement>):void =>{
-     e.preventDefault()
-     const ProductInformationValidationErrors = ProductInformationValidation(ProductInformation)
-      const PriceValidationsErrors = PriceValidations({priceValue:price.priceValue,discount:price.discount,endDate:price.endDate,isOpen:enabled})
-     const hasErrorMsg = Object.values(ProductInformationValidationErrors).some(value => value === '') && Object.values(ProductInformationValidationErrors).every(value => value === '');
-
-
-
-     const errorMsg = Object.values(PriceValidationsErrors).some(value => value === '') && Object.values(PriceValidationsErrors).every(value => value === '');
-      
-     PriceValidations({priceValue:price.priceValue,discount:price.discount,endDate:price.endDate,isOpen:enabled})
-    
-     if (!hasErrorMsg) {
-       return;
-     }
-     if(!errorMsg){
-       return;
-     }
-     console.log("success")
+     
    
   }
    
@@ -295,7 +273,7 @@ const todayDate = getTodayDate();
         </div>
               <Organization/>
             </div>
-              <AddProductForm loading={false} onSubmit={onSubmitHandlear}/>
+              <AddProductForm loading={false}/>
          </form>
       </div>
    )

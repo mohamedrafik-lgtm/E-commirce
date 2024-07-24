@@ -59,3 +59,15 @@ export interface ISettings{
       minLength:number
     }
   }
+
+  export interface ILogin {
+    name: "email" | "password";
+    label:string;
+    plassholder: string;
+    type: string;
+    validation:{
+      pattern?:RegExp;
+      required:boolean,
+      minLength:number
+    }
+  }
