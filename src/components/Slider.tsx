@@ -1,57 +1,4 @@
-// import Slider from "react-slick";
-// import SliderContent from "./ui/SliderContent";
 
-// function Resizable() {
- 
-
-//   const settings = {
-//     dots: true,
-//     infinite: true,
-//     speed: 400,
-//     slidesToShow: 1,
-//     slidesToScroll: 1
-//   };
-//   return (
-//     <div className="slider-container">
-      
-//       <div
-//         style={{
-//           width: "40%",
-          
-//         }}
-//       >
-//         <Slider {...settings}>
-//           <div>
-//           <SliderContent/>
-//           </div>
-//           <div>
-//           <SliderContent/>
-//           </div>
-//           <div>
-//           <SliderContent/>
-//           </div>
-//           <div>
-//           <SliderContent/>
-//           </div>
-//           <div>
-//           <SliderContent/>
-//           </div>
-//           <div>
-//           <SliderContent/>
-//           </div>
-//         </Slider>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Resizable;
-
-
-// src/ImageSlider.tsx
-// src/ImageSlider.tsx
-// src/ImageSlider.tsx
-// src/ImageSlider.tsx
 import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -137,4 +84,5 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height }) => {
 };
 
 export default ImageSlider;
+
 

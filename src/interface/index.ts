@@ -29,7 +29,6 @@ export interface ISettings{
     Vendor:string;
     combanyName:string;
     contactName:string;
-    category:string;
     Tags:string;
     brand:string;
   }

@@ -12,29 +12,22 @@ const Login: React.FC = () => {
     })
     const navigate = useNavigate()
     
-     const onSubmit: SubmitHandler<{ email: string; password: string; }> =async (data) => {
+     const onSubmit: SubmitHandler<{ email: string; password: string; }> =async (userData) => {
         
         const url:string = '/api/Auth/login'; 
         
         try {
-           const {status} = await axiosInstance.post(url, data);
+           const {status,data} = await axiosInstance.post(url, userData);
+           console.log(data)
            if (status === 200) {
-            toast.success("You will navigate to the home page in 2 seconds!", {
-              position: "bottom-center",
-              duration: 1500,
-              style: {
-                backgroundColor: "black",
-                color: "white",
-                width: "fit-content",
-              },
-            });
+            toast.success(`you wil navigate to the home page after 2 secound`);
             setTimeout(() => {
-              navigate("/home");
+              navigate("/");
             }, 2000);
           }
         } catch (error) {
              
-        console.error(error)
+            toast.error('Please enter your login data');
             
         }
      }

@@ -13,12 +13,12 @@ const Sidebar: React.FC = () => {
   const items = [
     { name: 'Add Product', icon: faCartArrowDown, path: '/Admin/AddProduct' },
     { name: 'Update Product', icon: faEdit, path: '/update-product' },
-    { name: 'Products', icon: faBox, path: '/products' },
+    { name: 'Products', icon: faBox, path: '/Admin/products' },
   ];
 
   return (
     <div
-    className={`border h-full  from-gray-800 to-gray-600  transition-all duration-300 ${isCollapsed ? 'w-20' : 'w-64'} z-50`}
+    className={`border h-full  from-gray-800 to-gray-600 p-2  transition-all duration-300 ${isCollapsed ? 'w-20 ' : 'w-64'} z-50`}
     style={{ height: '100vh' }}
   >
     <div className="flex items-center justify-between p-4">
@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
           key={index}
           to={item.path}
           className={({ isActive }) =>
-            `py-2 px-4 flex items-center rounded-lg cursor-pointer hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''} ${isCollapsed ? 'w-12' : 'w-full'}`
+            `py-2 px-4 flex items-center rounded-lg cursor-pointer  ${isActive ? 'bg-blue-500 text-white' : ''} ${isCollapsed ? 'w-12' : 'w-full'}`
           }
         >
           <FontAwesomeIcon icon={item.icon} className="text-xl" />

@@ -10,8 +10,8 @@ const AdminLayout = () => {
            
 
            <NavPar/>
-      <Sidebar />
-      <main className="flex-grow  p-4">
+      <main className="flex">
+          <Sidebar />
         <Outlet />
       </main>
     
