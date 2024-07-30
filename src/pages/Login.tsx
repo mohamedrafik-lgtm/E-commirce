@@ -4,33 +4,49 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../validations';
 import InputErrorMsg from '../components/ui/InputErrorMsg';
 import { useNavigate } from 'react-router-dom';
-import toast from "react-hot-toast";
 import axiosInstance from '../config/axios.config';
+import { useToast } from '@chakra-ui/react';
 const Login: React.FC = () => {
-    const { register, handleSubmit,formState:{errors} } = useForm<{email:string;password:string}>({
-        resolver:yupResolver(loginSchema)
-    })
-    const navigate = useNavigate()
-    
-     const onSubmit: SubmitHandler<{ email: string; password: string; }> =async (userData) => {
-        
-        const url:string = '/api/Auth/login'; 
-        
+    const { register, handleSubmit, formState: { errors } } = useForm<{ email: string; password: string }>({
+        resolver: yupResolver(loginSchema)
+    });
+    const navigate = useNavigate();
+    const toast = useToast();  // استيراد useToast
+
+    const showToast = () => {
+        toast({
+            title: 'Login Successful',
+            description: "You've successfully logged in.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+        });
+    };
+
+    const onSubmit: SubmitHandler<{ email: string; password: string }> = async (userData) => {
+        const url: string = '/api/Auth/login';
+
         try {
-           const {status,data} = await axiosInstance.post(url, userData);
-           console.log(data)
-           if (status === 200) {
-            toast.success(`you wil navigate to the home page after 2 secound`);
-            setTimeout(() => {
-              navigate("/");
-            }, 2000);
-          }
+            const { status, data } = await axiosInstance.post(url, userData);
+            console.log(status);
+            console.log(data);
+            if (status === 200) {
+                showToast();  
+                setTimeout(() => {
+                    navigate("/");
+                }, 2000);
+            }
         } catch (error) {
-             
-            toast.error('Please enter your login data');
-            
+            console.log(error);
+            toast({
+                title: 'Login Failed',
+                description: "There was an error logging you in. Please try again.",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            });
         }
-     }
+    };
      const render = LOGIN_INPUT.map(({name,plassholder,type,validation,label},idx) =><div key={idx} className="form-group">
      <label htmlFor={label} className="block text-sm font-medium text-gray-700">{name}:</label>
      <input

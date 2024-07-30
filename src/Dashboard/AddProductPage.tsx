@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState,Fragment } from "react";
+import { ChangeEvent, FormEvent, useState,Fragment,KeyboardEvent } from "react";
 import InputComponent from "../components/ui/InputComponent";
 import { IPrice, IProductInformations } from "../interface";
 import { Switch } from '@headlessui/react';
@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import axiosInstance from "../config/axios.config";
 import { SelectChangeEvent } from "@mui/material";
 import { IOrganization } from "../interface";
+
 
 const AddProduct = () => {
     
@@ -15,10 +16,18 @@ const AddProduct = () => {
     { value: 'intel', label: 'intel' },
   ];
 
-
+   const [tags, setTags] = useState<string[]>([]); 
+   const [inputValue, setInputValue] = useState<string>("");  
    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
    const [previews, setPreviews] = useState<string[]>([]);
    const [filePaths, setFilePaths] = useState<string[]>([]);
+   const [startDate, setStartDate] = useState<string>('');
+   const [endDate, setEndDate] = useState<string>('');
+   const [discontinued, setDiscontinued] = useState<boolean>(false);
+  const [isArchived, setIsArchived] = useState<boolean>(false);
+  const [productCode, setProductCode] = useState<string>('');
+  const [propertyNames, setPropertyNames] = useState<string[]>([]);
+  const [propertyValues, setPropertyValues] = useState<string[]>([]);
    const [ProductInformation,setProductInformation] = useState<IProductInformations>({
       productName:'',
       Discription:'',
@@ -29,19 +38,21 @@ const AddProduct = () => {
    const [price, setPrice] = useState<IPrice>({
     priceValue:0,
     discount:0,
+    startDate:'',
     endDate: '',
 })
+
 const [organization,setOrganization] = useState<IOrganization>({
   Vendor:'',
   contactName: '',
   combanyName:'',
   brand: '',
-  Tags:'',
+  
 })
 
 
 const bytesToKb = (bytes: number): number => {
-  return Math.round(bytes / 1024); // تحويل البايت إلى Kbyte وتقريبه
+  return Math.round(bytes / 1024); 
 };
 // handlers
 const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
@@ -52,69 +63,71 @@ const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
    })
 }
 
-console.log(price.endDate)
-function getTodayDate(): { day: number, month: number, year: number } {
-    const today = new Date();
-    const day = today.getDate();
-    const month = today.getMonth() + 1; // Months are zero-based in JavaScript
-    const year = today.getFullYear();
 
-    return {
-        day: day,
-        month: month,
-        year: year
-    };
-}
 
-// Usage example
-const todayDate = getTodayDate();
+
+
 
  
-   const handleUpload = () => {
-     if (selectedFiles.length === 0) return;
- 
-     // Replace the following URL with your actual API endpoint
-     // YOUR_API_ENDPOINT_HERE
-     
- 
-     const formData = new FormData();
-     selectedFiles.forEach(file => {
-       formData.append('files', file);
-     });
- 
-     
-   };
+  
 
-   
-   const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([]);
+  //  dynamically input for Product Features:
    const maxProperties:number = 10
-   console.log(properties)
-   const handleAddProperty = () => {
-     if (properties.length < maxProperties) {
-       setProperties([...properties, { name: '', value: '' }]);
-     }
-   };
- 
-   const handleRemoveProperty = (index: number) => {
-     const updatedProperties = [...properties];
-     updatedProperties.splice(index, 1);
-     setProperties(updatedProperties);
-   };
- 
-   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-     const { name, value } = e.target;
-     const updatedProperties = [...properties];
-     updatedProperties[index] = { ...updatedProperties[index], [name]: value };
-     setProperties(updatedProperties);
-   };
-
-
-
-
    
- //  handlers
+  //  handlers
+   console.log(propertyNames, propertyValues)
+  const handleAddProperty = () => {
+    if (propertyNames.length < maxProperties) {
+      setPropertyNames([...propertyNames, '']);
+      setPropertyValues([...propertyValues, '']);
+    }
+  };
 
- console.log(organization)
+  const handleRemoveProperty = (index: number) => {
+    const updatedNames = [...propertyNames];
+    const updatedValues = [...propertyValues];
+    updatedNames.splice(index, 1);
+    updatedValues.splice(index, 1);
+    setPropertyNames(updatedNames);
+    setPropertyValues(updatedValues);
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const updatedNames = [...propertyNames];
+    updatedNames[index] = e.target.value;
+    setPropertyNames(updatedNames);
+  };
+
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const updatedValues = [...propertyValues];
+    updatedValues[index] = e.target.value;
+    setPropertyValues(updatedValues);
+  };
+
+ 
+ 
+   console.log(tags)
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === ' ' && inputValue.trim()) {
+      event.preventDefault();
+
+      const trimmedValue = inputValue.trim();
+      if (!tags.includes(trimmedValue)) {
+        setTags(prevTags => [...prevTags, trimmedValue]);
+      }
+      setInputValue("");
+    }
+  };
+  const handleTagRemove = (index: number) => {
+    setTags(prevTags => prevTags.filter((_, i) => i !== index));
+  };
+
+
+ 
   const handelOrganizationChange = (event:ChangeEvent<HTMLInputElement> | SelectChangeEvent) =>{
       const {value,name} = event.target
       setOrganization({
@@ -123,7 +136,6 @@ const todayDate = getTodayDate();
       })
   }
   const [selectedValue, setSelectedValue] = useState<string>('option1');
-  console.log(selectedValue)
     const handelChangeSelectedValue = (e:ChangeEvent<HTMLSelectElement>)=> {
      setSelectedValue(e.target.value)
      
@@ -151,7 +163,7 @@ const todayDate = getTodayDate();
           setPreviews(previewUrls);
           setFilePaths(pathArray);
   
-          // عرض حجم الصورة في ال Kbyte
+          
           fileArray.forEach(file => {
             const kbSize = bytesToKb(file.size);
             console.log(`حجم الصورة: ${kbSize} KB`);
@@ -175,7 +187,6 @@ const todayDate = getTodayDate();
    };
 
    
-   console.log(ProductInformation)
    const handelChange = (event:ChangeEvent<HTMLInputElement>) =>{
       const {value,name} = event.target
       setProductInformation({
@@ -183,7 +194,16 @@ const todayDate = getTodayDate();
           [name]:value
       })
    }
+  
 
+   
+   const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+     setStartDate(event.target.value);
+   };
+ 
+   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+     setEndDate(event.target.value);
+   };
 
    
   
@@ -191,10 +211,54 @@ const todayDate = getTodayDate();
 
    const url:string = "/api/Product"
    const onSubmit =async (e:FormEvent<HTMLFormElement>) =>{
+     console.log({ProductName:ProductInformation.productName,
+      UnitPrice:price.priceValue,
+      Description:ProductInformation.Discription,
+      Brand:organization.brand,
+      Category:selectedValue,
+      UnitsInStock:ProductInformation.unitInStock,
+      ReorderLevel:5,
+      Discontinued:discontinued,
+      IsArchived:isArchived,
+      ProductCode:productCode,
+      CompanyName:organization.combanyName,
+      ContactName:organization.contactName,
+      Tags:tags,
+      ProductAttributes:propertyNames,
+      ProductAttributesValues:propertyValues,
+      ProductImages:[";sKJB;SDKJsdsvsDV"],
+      ImageUrls:previews,
+      DiscountAmount:price.discount,
+      DiscountStartDate:startDate,
+      DiscountEndDate:endDate
+    })
+
+
+    
     e.preventDefault()
     try {
-      const res =await axiosInstance.post(url,{properties,selectedValue,...organization,...price,...ProductInformation})
-     console.log(res)
+      const {data} =await axiosInstance.post(url,{ProductName:ProductInformation.productName,
+        UnitPrice:price.priceValue,
+        Description:ProductInformation.Discription,
+        Brand:organization.brand,
+        Category:selectedValue,
+        UnitsInStock:ProductInformation.unitInStock,
+        ReorderLevel:5,
+        Discontinued:discontinued,
+        IsArchived:isArchived,
+        ProductCode:productCode,
+        CompanyName:organization.combanyName,
+        ContactName:organization.contactName,
+        Tags:tags,
+        ProductAttributes:propertyNames,
+        ProductAttributesValues:propertyValues,
+        ProductImages:[";sKJB;SDKJsdsvsDV"],
+        ImageUrls:previews,
+        DiscountAmount:price.discount,
+        DiscountStartDate:startDate,
+        DiscountEndDate:endDate
+      })
+     console.log(data)
     } catch (error) {
       console.log(error)
     }
@@ -203,7 +267,6 @@ const todayDate = getTodayDate();
    
   }
    
-  
   
 
    return (
@@ -236,14 +299,37 @@ const todayDate = getTodayDate();
                <label htmlFor="discription">Discription</label>
                <InputComponent value={ProductInformation.Discription} onChange={handelChange} className=" border rounded-md  w-full h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="Type your discription....." type="text" id="Discription" name="Discription"/>
                </div>
+               
+             
+               <div className="mb-4 flex items-center relative">
+                      <input
+                        type="checkbox"
+                        id="discontinued"
+                        checked={discontinued}
+                        onChange={(e) => setDiscontinued(e.target.checked)}
+                        className="checkbox h-5 w-5 transition duration-150 ease-in-out"
+                      />
+                      <label className="text-gray-700 text-sm font-bold ml-2" htmlFor="discontinued">
+                        Discontinued
+                      </label>
+                    </div>
+                    <div className="mb-4 flex items-center relative">
+                      <input
+                        type="checkbox"
+                        id="isArchived"
+                        checked={isArchived}
+                        onChange={(e) => setIsArchived(e.target.checked)}
+                        className="checkbox h-5 w-5 transition duration-150 ease-in-out"
+                      />
+                      <label className="text-gray-700 text-sm font-bold ml-2" htmlFor="isArchived">
+                        Is Archived
+                      </label>
+               </div>
+              
             </div>
         </div>
 
-        {/* ProductInformation */}
-
-
-
-
+         {/* upload images */}
         <div className="mt-10 p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-6 text-center">Upload Images</h1>
       <div className="grid grid-cols-3 gap-4 mb-4">
@@ -284,37 +370,29 @@ const todayDate = getTodayDate();
           onChange={handleFileChange}
           className="hidden"
         />
-        <button
-          onClick={handleUpload}
-          className={`ml-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 ${selectedFiles.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={selectedFiles.length === 0}
-        >
-          Upload
-        </button>
+        
       </div>
     </div>
              
 
               {/* DynamicPropertiesInput*/}
               <div className="dynamic-properties-input p-4 border border-gray-200 rounded-md shadow-md">
-      <h3 className="text-lg font-bold mb-4">Variants:</h3>
-      {properties.map((property, index) => (
+      <h3 className="text-lg font-bold mb-4">Product Features:</h3>
+      {propertyNames.map((name, index) => (
         <div key={index} className="flex items-center space-x-4 mb-2">
           <input
             type="text"
-            name="name"
-            value={property.name}
-            onChange={(e) => handleChange(e, index)}
+            value={name}
+            onChange={(e) => handleNameChange(e, index)}
             className="px-3 py-2 w-1/3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            placeholder="Feature name"
+            placeholder="property Name"
           />
           <input
             type="text"
-            name="value"
-            value={property.value}
-            onChange={(e) => handleChange(e, index)}
+            value={propertyValues[index]}
+            onChange={(e) => handleValueChange(e, index)}
             className="px-3 py-2 w-1/3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            placeholder="The value of the property"
+            placeholder="property value"
           />
           <button
             type="button"
@@ -325,13 +403,13 @@ const todayDate = getTodayDate();
           </button>
         </div>
       ))}
-      {properties.length < maxProperties && (
+      {propertyNames.length < maxProperties && (
         <button
           type="button"
           onClick={handleAddProperty}
           className="px-4 py-2 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
         >
-          Add a property
+          add property
         </button>
       )}
     </div>
@@ -369,16 +447,40 @@ const todayDate = getTodayDate();
                 <label htmlFor="discount">value</label>
                 <InputComponent value={price.discount} onChange={handlerPriceChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="number" id="discount" name="discount"/>
                 </div>
-                 <div className="flex items-center place-content-between">
-                    <label htmlFor="end-date">end date</label>
-                    <InputComponent value={price.endDate} onChange={handlerPriceChange} className="border rounded-md p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" type="date"  min={`${todayDate.year}-${todayDate.month}-${todayDate.day}`.toString()} name="end-date" id="end-date" />
-                 </div>
+
+                <div className="flex flex-col  gap-4 bg-white">
+      <div className="flex justify-between ">
+        <label htmlFor="start-date" className="mb-2 text-lg font-medium text-gray-700">
+          Start Date:
+        </label>
+        <input
+          type="date"
+          id="start-date"
+          value={startDate}
+          onChange={handleStartDateChange}
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      <div className="flex justify-between">
+        <label htmlFor="end-date" className="mb-2 text-lg font-medium text-gray-700">
+          End Date:
+        </label>
+        <input
+          type="date"
+          id="end-date"
+          value={endDate}
+          onChange={handleEndDateChange}
+          className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+    </div>
+                 
                </div>:null}
                
             </div>
         </div>
              
-              
+              {/* border rounded-md p-2 transition focus:shadow-xl focus:outline-double focus:outline-none */}
               <div className="border rounded-md shadow-md ">
             <div className="flex p-5 border-b  content-center">
                 <h4 className="font-bold">Organization</h4>
@@ -399,8 +501,9 @@ const todayDate = getTodayDate();
                </div>
                <div>
                       
-               <div className="relative inline-block w-full text-gray-700">
-               <select className="w-full h-10 pl-3 pr-10 text-base placeholder-gray-600 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:shadow-outline focus:border-blue-500" value={selectedValue} onChange={handelChangeSelectedValue}>
+               <div className="relative inline-block space-y-3 w-full text-gray-700">
+                <label htmlFor="category">category</label>
+               <select id="category" className="w-full h-10 pl-3 pr-10 text-base placeholder-gray-600 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:shadow-outline focus:border-blue-500" value={selectedValue} onChange={handelChangeSelectedValue}>
                  {options.map((option) => (
                    <option key={option.value} value={option.value}>
                 {option.label}
@@ -415,10 +518,48 @@ const todayDate = getTodayDate();
                </div>
 
                </div>
-               <div className="flex flex-col space-y-2 ">
-                  <label htmlFor="Tags">Tags</label>
-                  <InputComponent value={organization.Tags} onChange={handelOrganizationChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="Enter tags here" type="text" id="Tags" name="Tags"/>
-               </div>
+               <div className="flex flex-wrap items-center p-4 border rounded-lg bg-white shadow-md">
+               <label htmlFor="tags">tags:</label>
+      {tags.map((tag, index) => (
+        <span
+          key={index}
+          className="bg-blue-500 text-white px-3 py-1 m-1 rounded-full text-sm flex items-center"
+        >
+          {tag}
+          <button
+            type="button"
+            onClick={() => handleTagRemove(index)}
+            className="ml-2 text-gray-200 hover:text-white"
+          >
+            &times;
+          </button>
+        </span>
+      ))}
+      
+      <input
+      id="tags"
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        placeholder={"text"}
+        className="flex-1 border-none outline-none p-2"
+      />
+    </div>
+
+    <div className="mb-4">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="productCode">
+        Product Code
+      </label>
+      <input
+        type="text"
+        id="productCode"
+        value={productCode}
+        onChange={(e) => setProductCode(e.target.value)}
+        className="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      />
+    </div>
+    
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="brand">brand</label>
                   <InputComponent value={organization.brand} onChange={handelOrganizationChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="brand tags here" type="text" id="brand" name="brand"/>
@@ -427,6 +568,7 @@ const todayDate = getTodayDate();
         </div>
 
             </div>
+            
               {/* <AddProductForm loading={true}/> */}
               <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
       <button

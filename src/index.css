@@ -9,3 +9,24 @@
     border-bottom: 0px !important;
 }
 
+/* src/index.css */
+
+.checkbox:checked {
+    background-color: #2563EB; /* اللون blue-600 */
+    border-color: #2563EB; /* اللون blue-600 */
+  }
+  
+  .checkbox:checked:after {
+    content: "";
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border: solid white;
+    border-width: 0 0.2rem 0.2rem 0;
+    transform: rotate(45deg);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  

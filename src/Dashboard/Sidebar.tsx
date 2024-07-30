@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars,  faEdit, faBox ,faCartArrowDown} from '@fortawesome/free-solid-svg-icons';
 
 
-
 const Sidebar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -15,7 +14,7 @@ const Sidebar: React.FC = () => {
     { name: 'Update Product', icon: faEdit, path: '/update-product' },
     { name: 'Products', icon: faBox, path: '/Admin/products' },
   ];
-
+  
   return (
     <div
     className={`border h-full  from-gray-800 to-gray-600 p-2  transition-all duration-300 ${isCollapsed ? 'w-20 ' : 'w-64'} z-50`}
@@ -32,6 +31,7 @@ const Sidebar: React.FC = () => {
     </div>
     <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
       {items.map((item, index) => (
+        
         <NavLink
           key={index}
           to={item.path}

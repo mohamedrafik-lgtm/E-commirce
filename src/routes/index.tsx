@@ -10,7 +10,7 @@ import Login from "../pages/Login";
 import AdminLayout from "../pages/AdminLayout";
 import Register from "../pages/Register";
 import ProductPage from "../pages/Product";
-import AddProduct from "../Dashboard/AdminPage";
+import AddProduct from "../Dashboard/AddProductPage";
 // import Register from "../pages/Register";
 
 const router = createBrowserRouter(createRoutesFromElements(

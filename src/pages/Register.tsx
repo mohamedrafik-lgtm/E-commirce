@@ -7,10 +7,9 @@ import { registerSchema } from "../validations";
 import axiosInstance from "../config/axios.config";
 import VerificationCode from "./VerifcationCode";
 import { useState } from "react";
-// import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
+import { useToast } from '@chakra-ui/react';
+
 const Register: React.FC = () => {
-    // const navigator = useNavigate()
     interface IProp{
         username: string;
         email: string;
@@ -19,29 +18,28 @@ const Register: React.FC = () => {
     }
 
     const [getEmail,setGetEmail] = useState("")
+    const toast = useToast();
+    const showToast = () => {
+        toast({
+          title: 'Account created.',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      };
     //  handlers
 const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
     resolver:yupResolver(registerSchema)
 })
     const onSubmit: SubmitHandler<IProp> =async (userData) => {
         try {
-          const {data:{email}}= await axiosInstance.post('/api/Auth/register',userData)
+          const {data:{email},status}= await axiosInstance.post('/api/Auth/register',userData)
           setGetEmail(email)
-          
-        //   if (){
-        //     toast.success("You will navigate to the Verification Code page in 2 seconds!", {
-        //         position: "bottom-center",
-        //         duration: 1500,
-        //         style: {
-        //           backgroundColor: "black",
-        //           color: "white",
-        //           width: "fit-content",
-        //         },
-        //       });
-        //     //   setTimeout(() => {
-        //     //     navigator("/");
-        //     //   }, 2000);
-        //   }
+          if(status === 200){
+            showToast()
+            
+          }
         } catch (error) {
             console.log(error)
         }
@@ -80,3 +78,4 @@ const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
 };
 
 export default Register;
+

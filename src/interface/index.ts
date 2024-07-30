@@ -29,7 +29,6 @@ export interface ISettings{
     Vendor:string;
     combanyName:string;
     contactName:string;
-    Tags:string;
     brand:string;
   }
 
@@ -44,6 +43,7 @@ export interface ISettings{
   export interface IPrice {
     priceValue:number;
     discount:number ;
+    startDate:string;
     endDate:string ; 
     isOpen?:boolean;
   }
