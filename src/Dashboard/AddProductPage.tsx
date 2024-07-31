@@ -1,10 +1,10 @@
-import { ChangeEvent, FormEvent, useState,Fragment,KeyboardEvent } from "react";
+import { ChangeEvent, FormEvent, useState,Fragment } from "react";
 import InputComponent from "../components/ui/InputComponent";
 import { IPrice, IProductInformations } from "../interface";
 import { Switch } from '@headlessui/react';
 import clsx from 'clsx';
 import axiosInstance from "../config/axios.config";
-import { SelectChangeEvent } from "@mui/material";
+// import { SelectChangeEvent } from "@mui/material";
 import { IOrganization } from "../interface";
 
 
@@ -15,67 +15,53 @@ const AddProduct = () => {
     { value: 'AMD', label: 'AMD' },
     { value: 'intel', label: 'intel' },
   ];
-
-   const [tags, setTags] = useState<string[]>([]); 
-   const [inputValue, setInputValue] = useState<string>("");  
-   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-   const [previews, setPreviews] = useState<string[]>([]);
-   const [filePaths, setFilePaths] = useState<string[]>([]);
-   const [startDate, setStartDate] = useState<string>('');
-   const [endDate, setEndDate] = useState<string>('');
-   const [discontinued, setDiscontinued] = useState<boolean>(false);
+  const [tags, setTags] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+  const [filePaths, setFilePaths] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [discontinued, setDiscontinued] = useState<boolean>(false);
   const [isArchived, setIsArchived] = useState<boolean>(false);
   const [productCode, setProductCode] = useState<string>('');
   const [propertyNames, setPropertyNames] = useState<string[]>([]);
   const [propertyValues, setPropertyValues] = useState<string[]>([]);
-   const [ProductInformation,setProductInformation] = useState<IProductInformations>({
-      productName:'',
-      Discription:'',
-      SKU: '',
-      unitInStock:0
-   })
-   const [enabled, setEnabled] = useState<boolean>(false)
-   const [price, setPrice] = useState<IPrice>({
-    priceValue:0,
-    discount:0,
-    startDate:'',
+  const [ProductInformation, setProductInformation] = useState<IProductInformations>({
+    productName: '',
+    Discription: '',
+    SKU: '',
+    unitInStock: 0
+  });
+  const [enabled, setEnabled] = useState<boolean>(false);
+  const [price, setPrice] = useState<IPrice>({
+    priceValue: 0,
+    discount: 0,
+    startDate: '',
     endDate: '',
-})
+  });
 
-const [organization,setOrganization] = useState<IOrganization>({
-  Vendor:'',
-  contactName: '',
-  combanyName:'',
-  brand: '',
-  
-})
+  const [organization, setOrganization] = useState<IOrganization>({
+    Vendor: '',
+    contactName: '',
+    combanyName: '',
+    brand: '',
+  });
 
+  const bytesToKb = (bytes: number): number => {
+    return Math.round(bytes / 1024);
+  };
 
-const bytesToKb = (bytes: number): number => {
-  return Math.round(bytes / 1024); 
-};
-// handlers
-const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
-   const {value,name} = event.target
-   setPrice({
-    ...price,
-     [name]: value
-   })
-}
+  const handlerPriceChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    setPrice({
+      ...price,
+      [name]: value
+    });
+  };
 
+  const maxProperties: number = 10;
 
-
-
-
-
- 
-  
-
-  //  dynamically input for Product Features:
-   const maxProperties:number = 10
-   
-  //  handlers
-   console.log(propertyNames, propertyValues)
   const handleAddProperty = () => {
     if (propertyNames.length < maxProperties) {
       setPropertyNames([...propertyNames, '']);
@@ -104,17 +90,13 @@ const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
     setPropertyValues(updatedValues);
   };
 
- 
- 
-   console.log(tags)
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === ' ' && inputValue.trim()) {
       event.preventDefault();
-
       const trimmedValue = inputValue.trim();
       if (!tags.includes(trimmedValue)) {
         setTags(prevTags => [...prevTags, trimmedValue]);
@@ -122,150 +104,119 @@ const handlerPriceChange = (event:ChangeEvent<HTMLInputElement>) => {
       setInputValue("");
     }
   };
+
   const handleTagRemove = (index: number) => {
     setTags(prevTags => prevTags.filter((_, i) => i !== index));
   };
 
+  const handelOrganizationChange = (event: ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+    const { value, name } = event.target;
+    setOrganization({
+      ...organization,
+      [name]: value as string,
+    });
+  };
 
- 
-  const handelOrganizationChange = (event:ChangeEvent<HTMLInputElement> | SelectChangeEvent) =>{
-      const {value,name} = event.target
-      setOrganization({
-       ...organization,
-       [name]: value as string,
-      })
-  }
   const [selectedValue, setSelectedValue] = useState<string>('option1');
-    const handelChangeSelectedValue = (e:ChangeEvent<HTMLSelectElement>)=> {
-     setSelectedValue(e.target.value)
-     
+  const handelChangeSelectedValue = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(e.target.value);
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      setSelectedFiles(fileArray);
+
+      const previewArray = fileArray.map(file => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        return new Promise<string>((resolve) => {
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+        });
+      });
+
+      const pathArray = fileArray.map(file => URL.createObjectURL(file));
+
+      Promise.all(previewArray).then(previewUrls => {
+        setPreviews(previewUrls);
+        setFilePaths(pathArray);
+
+        fileArray.forEach(file => {
+          const kbSize = bytesToKb(file.size);
+          console.log(`حجم الصورة: ${kbSize} KB`);
+        });
+      });
     }
-   
-   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const files = event.target.files;
-      if (files) {
-        const fileArray = Array.from(files);
-        setSelectedFiles(fileArray);
-  
-        const previewArray = fileArray.map(file => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          return new Promise<string>((resolve) => {
-            reader.onloadend = () => {
-              resolve(reader.result as string);
-            };
-          });
-        });
-  
-        const pathArray = fileArray.map(file => URL.createObjectURL(file));
-  
-        Promise.all(previewArray).then(previewUrls => {
-          setPreviews(previewUrls);
-          setFilePaths(pathArray);
-  
-          
-          fileArray.forEach(file => {
-            const kbSize = bytesToKb(file.size);
-            console.log(`حجم الصورة: ${kbSize} KB`);
-          });
-        });
-      }
-    };
+  };
 
-   const handleRemoveImage = (index: number) => {
-     const newSelectedFiles = [...selectedFiles];
-     newSelectedFiles.splice(index, 1);
-     setSelectedFiles(newSelectedFiles);
- 
-     const newPreviews = [...previews];
-     newPreviews.splice(index, 1);
-     setPreviews(newPreviews);
- 
-     const newFilePaths = [...filePaths];
-     newFilePaths.splice(index, 1);
-     setFilePaths(newFilePaths);
-   };
+  const handleRemoveImage = (index: number) => {
+    const newSelectedFiles = [...selectedFiles];
+    newSelectedFiles.splice(index, 1);
+    setSelectedFiles(newSelectedFiles);
 
-   
-   const handelChange = (event:ChangeEvent<HTMLInputElement>) =>{
-      const {value,name} = event.target
-      setProductInformation({
-          ...ProductInformation,
-          [name]:value
-      })
-   }
-  
+    const newPreviews = [...previews];
+    newPreviews.splice(index, 1);
+    setPreviews(newPreviews);
 
-   
-   const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-     setStartDate(event.target.value);
-   };
- 
-   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-     setEndDate(event.target.value);
-   };
+    const newFilePaths = [...filePaths];
+    newFilePaths.splice(index, 1);
+    setFilePaths(newFilePaths);
+  };
 
-   
-  
-   
+  const handelChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = event.target;
+    setProductInformation({
+      ...ProductInformation,
+      [name]: value
+    });
+  };
 
-   const url:string = "/api/Product"
-   const onSubmit =async (e:FormEvent<HTMLFormElement>) =>{
-     console.log({ProductName:ProductInformation.productName,
-      UnitPrice:price.priceValue,
-      Description:ProductInformation.Discription,
-      Brand:organization.brand,
-      Category:selectedValue,
-      UnitsInStock:ProductInformation.unitInStock,
-      ReorderLevel:5,
-      Discontinued:discontinued,
-      IsArchived:isArchived,
-      ProductCode:productCode,
-      CompanyName:organization.combanyName,
-      ContactName:organization.contactName,
-      Tags:tags,
-      ProductAttributes:propertyNames,
-      ProductAttributesValues:propertyValues,
-      ProductImages:[";sKJB;SDKJsdsvsDV"],
-      ImageUrls:previews,
-      DiscountAmount:price.discount,
-      DiscountStartDate:startDate,
-      DiscountEndDate:endDate
-    })
+  const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setStartDate(event.target.value);
+  };
 
+  const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEndDate(event.target.value);
+  };
 
-    
-    e.preventDefault()
+  const url: string = "/api/Product";
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    console.log(previews)
+    e.preventDefault();
+    const previewsString: string = previews.join(',');
+    const formData = new FormData();
+    formData.append('ProductName', ProductInformation.productName);
+    formData.append('UnitPrice', price.priceValue.toString());
+    formData.append('Description', ProductInformation.Discription);
+    formData.append('Brand', organization.brand);
+    formData.append('Category', selectedValue);
+    formData.append('UnitsInStock', ProductInformation.unitInStock.toString());
+    formData.append('ReorderLevel', '5');
+    formData.append('Discontinued', discontinued.toString());
+    formData.append('IsArchived', isArchived.toString());
+    formData.append('ProductCode', productCode);
+    formData.append('CompanyName', organization.combanyName);
+    formData.append('ContactName', organization.contactName);
+    formData.append('ImageUrls', previewsString);
+    tags.forEach(tag => formData.append('Tags', tag));
+    formData.append('Vendor', organization.Vendor);
+    propertyNames.forEach(( _,index) => formData.append( "ProductAttributes",propertyNames[index]));
+    propertyValues.forEach((_, index) => formData.append( "ProductAttributesValues",propertyValues[index]));
+    selectedFiles.forEach(file => formData.append('ProductImages', file));
+    formData.append('DiscountAmount', price.discount.toString());
+    formData.append('DiscountStartDate', startDate);
+    formData.append('DiscountEndDate', endDate);
+     console.log(formData);
     try {
-      const {data} =await axiosInstance.post(url,{ProductName:ProductInformation.productName,
-        UnitPrice:price.priceValue,
-        Description:ProductInformation.Discription,
-        Brand:organization.brand,
-        Category:selectedValue,
-        UnitsInStock:ProductInformation.unitInStock,
-        ReorderLevel:5,
-        Discontinued:discontinued,
-        IsArchived:isArchived,
-        ProductCode:productCode,
-        CompanyName:organization.combanyName,
-        ContactName:organization.contactName,
-        Tags:tags,
-        ProductAttributes:propertyNames,
-        ProductAttributesValues:propertyValues,
-        ProductImages:[";sKJB;SDKJsdsvsDV"],
-        ImageUrls:previews,
-        DiscountAmount:price.discount,
-        DiscountStartDate:startDate,
-        DiscountEndDate:endDate
-      })
-     console.log(data)
+      const { status } = await axiosInstance.post(url, formData);
+      console.log(status);
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
-    
-     
-   
-  }
+  };
    
   
 
