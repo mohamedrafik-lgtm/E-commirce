@@ -4,7 +4,6 @@ import { IPrice, IProductInformations } from "../interface";
 import { Switch } from '@headlessui/react';
 import clsx from 'clsx';
 import axiosInstance from "../config/axios.config";
-// import { SelectChangeEvent } from "@mui/material";
 import { IOrganization } from "../interface";
 
 
@@ -117,7 +116,7 @@ const AddProduct = () => {
     });
   };
 
-  const [selectedValue, setSelectedValue] = useState<string>('option1');
+  const [selectedValue, setSelectedValue] = useState<string>('');
   const handelChangeSelectedValue = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
   };
@@ -181,10 +180,10 @@ const AddProduct = () => {
   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(event.target.value);
   };
-
+ 
   const url: string = "/api/Product";
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log(previews)
+    
     e.preventDefault();
     const previewsString: string = previews.join(',');
     const formData = new FormData();
@@ -211,8 +210,9 @@ const AddProduct = () => {
     formData.append('DiscountEndDate', endDate);
      console.log(formData);
     try {
-      const { status } = await axiosInstance.post(url, formData);
-      console.log(status);
+      const res = await axiosInstance.post(url, formData);
+      
+      console.log(res);
     } catch (error) {
       console.error(error);
     }

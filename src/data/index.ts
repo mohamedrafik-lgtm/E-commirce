@@ -69,5 +69,104 @@ export const LOGIN_INPUT:ILogin[] = [
 
 
 ]
-
+export const Products = [
+    {
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    },
+    {
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    },
+    {
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    }
+    ,{
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    }
+    ,{
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    }
+    ,{
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    },
+    {
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    },
+    {
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    },
+    {
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    },
+    {
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    },{
+        name:"labtop",
+        type:"elctronic",
+        stocks:100,
+        sku:"123456789",
+        price:"1000$",
+        variants:[{color:"black", size:"13"}],
+        Edite:"edite"
+    }
+]
 export default RENDERER_INPUTS;

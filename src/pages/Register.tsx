@@ -7,7 +7,7 @@ import { registerSchema } from "../validations";
 import axiosInstance from "../config/axios.config";
 import VerificationCode from "./VerifcationCode";
 import { useState } from "react";
-import { useToast } from '@chakra-ui/react';
+
 
 const Register: React.FC = () => {
     interface IProp{
@@ -16,30 +16,19 @@ const Register: React.FC = () => {
         password: string;
         confirmPassword: string;
     }
-
+    
     const [getEmail,setGetEmail] = useState("")
-    const toast = useToast();
-    const showToast = () => {
-        toast({
-          title: 'Account created.',
-          description: "We've created your account for you.",
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-      };
+    
+    
     //  handlers
 const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
     resolver:yupResolver(registerSchema)
 })
     const onSubmit: SubmitHandler<IProp> =async (userData) => {
         try {
-          const {data:{email},status}= await axiosInstance.post('/api/Auth/register',userData)
+          const {data:{email}}= await axiosInstance.post('/api/Auth/register',userData)
           setGetEmail(email)
-          if(status === 200){
-            showToast()
-            
-          }
+          
         } catch (error) {
             console.log(error)
         }

@@ -1,128 +1,70 @@
+import {useEffect, useState } from "react";
 import PaginationControlled from "../components/ui/Paginator";
+import axiosInstance from "../config/axios.config";
+import { IProduct } from "../interface";
 
 
 
 const ProductPage = () =>{
-    const Products = [
-        {
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        },
-        {
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        },
-        {
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
+    const [Products,setProducts] = useState<IProduct[]>([])
+    const [loadingProduct, setLoadingProduct] = useState<number | null>(null); 
+
+    const url:string = "/api/Product"
+    useEffect(()=>{
+        try {
+             axiosInstance.get(url).then(res => setProducts(res.data))
+            
+        } catch (error) {
+            console.log(error)
         }
-        ,{
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
+     
+    },[])
+    
+
+
+    const deleteProduct = async (productId: number) => {
+        setLoadingProduct(productId);
+        try {
+            await axiosInstance.delete(`/api/Product/${productId}`);
+            setProducts(Products.filter(product => product.productId !== productId));
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoadingProduct(null); 
         }
-        ,{
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        }
-        ,{
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        },
-        {
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        },
-        {
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        },
-        {
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        },
-        {
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        },{
-            name:"labtop",
-            type:"elctronic",
-            stocks:100,
-            sku:"123456789",
-            price:"1000$",
-            variants:[{color:"black", size:"13"}],
-            Edite:"edite"
-        }
-    ]
-     const renderProducts = Products.map((product,idx) => <div key={idx} className="w-full h-min p-2 flex justify-between">
-        <div>{product.name}</div>
-        <div>{product.type}</div>
-        <div>{product.stocks}</div>
-        <div>{product.sku}</div>
-        <div>{product.price}</div>
-        
-        <div>{product.variants.map(ele => <span>size: {ele.size}</span>)}</div>
-        <div>{product.Edite}</div>
-     </div>)
+    };
+
+    const renderProducts = Products.map((product) => (
+        <div key={product.productId} className="w-full h-min p-2 flex justify-between">
+            <div>{product.productId}</div>
+            <div>{product.productName}</div>
+            <div>{product.category}</div>
+            <div>{product.brand}</div>
+            <div>{product.supplier}</div>
+            <div>{product.unitPrice}</div>
+            <div>{product.unitsInStock}</div>
+            <button 
+                onClick={() => deleteProduct(product.productId)} 
+                className={`p-2 bg-red-600 text-white rounded-md hover:bg-red-700 ${loadingProduct === product.productId ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={loadingProduct === product.productId}
+            >
+                {loadingProduct === product.productId ? 'Deleting...' : 'Delete'}
+            </button>
+        </div>
+    ));
+
+   
     return (
         <div className="w-full h-min m-5 border rounded-md flex flex-col">
             <ul className="w-full h-min p-2 flex justify-between bg-slate-200">
-                <li>PRODUCT</li>
-                <li>TYPE</li>
-                <li>STOCKS</li>
-                <li>SKU</li>
-                <li>PRICE</li>
-                <li>VARIANTS</li>
-                <li>ACTIONS</li>
+                <li>product id</li>
+                <li>product name</li>
+                <li>category</li>
+                <li>brand</li>
+                <li>supplier</li>
+                <li>unitprice</li>
+                <li>units in stock</li>
+                <li>delete</li>
             </ul>
             <div className="border-b">
             {renderProducts}

@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 
-export default function BasicRating() {
-  const [value, setValue] = React.useState<number | null>(3);
+export default function BasicRating(rat:number) {
+  const [value, setValue] = React.useState<number | null>(rat);
   return (
     <Box
       sx={{

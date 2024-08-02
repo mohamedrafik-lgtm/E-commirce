@@ -70,3 +70,14 @@ export interface ISettings{
       minLength:number
     }
   }
+  export interface IProduct {
+    brand:string,
+    category:string,
+    discontinued:boolean,
+    productId:number,
+    productName:string,
+    rating:number,
+    supplier:string,
+    unitPrice:number,
+    unitsInStock:number
+  }
