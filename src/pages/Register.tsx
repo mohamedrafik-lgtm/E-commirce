@@ -7,9 +7,10 @@ import { registerSchema } from "../validations";
 import axiosInstance from "../config/axios.config";
 import VerificationCode from "./VerifcationCode";
 import { useState } from "react";
-
+import Toast from "../components/Toast";
 
 const Register: React.FC = () => {
+
     interface IProp{
         username: string;
         email: string;
@@ -18,7 +19,7 @@ const Register: React.FC = () => {
     }
     
     const [getEmail,setGetEmail] = useState("")
-    
+    const [showToast, setShowToast] = useState(false);
     
     //  handlers
 const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
@@ -26,8 +27,14 @@ const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
 })
     const onSubmit: SubmitHandler<IProp> =async (userData) => {
         try {
-          const {data:{email}}= await axiosInstance.post('/api/Auth/register',userData)
+          const {data:{email},status}= await axiosInstance.post('/api/Auth/register',userData)
           setGetEmail(email)
+          if (status === 200){
+            setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000); 
+          }
           
         } catch (error) {
             console.log(error)
@@ -49,7 +56,9 @@ const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
                         {errors[name] && <InputErrorMsg msg={errors[name]?.message}/>}
                     </div>)
 
-                    if(getEmail) return <VerificationCode email={getEmail}/>
+                    
+                        if(getEmail) return <VerificationCode email={getEmail}/>
+                    
     return (
         <div className="flex items-center justify-center min-h-screen">
             <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg border shadow-xl">
@@ -60,8 +69,11 @@ const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
                 <button type="submit" className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     Log In
                 </button>
+                
             </form>
-            
+            {showToast && (
+        <Toast message="You will be redirected to the account confirmation page." onClose={() => setShowToast(false)} />
+      )}
         </div>
     );
 };

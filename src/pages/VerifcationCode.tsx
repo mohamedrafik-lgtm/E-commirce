@@ -5,7 +5,7 @@ import axiosInstance from '../config/axios.config';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 interface IProp{
-    email: string;
+    email?: string;
   
 }
 
@@ -39,7 +39,7 @@ const VerificationCode= ({email}:IProp) => {
     try {
         const {status,data} = await axiosInstance.post(url,{email: email,code:code})
         console.log(data)
-        if (status === 200)if (status === 200) {
+        if (status === 200) {
             toast.success("You will navigate to the login page in 2 seconds!", {
               position: "bottom-center",
               duration: 1500,

@@ -88,7 +88,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options }) => {
   }, []);
 
   return (
-    <div className="relative inline-block" ref={dropdownRef}>
+    <div className="relative inline-block z-1000" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className=" font-semibold  inline-flex items-center justify-center"

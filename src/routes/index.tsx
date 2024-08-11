@@ -9,8 +9,9 @@ import ContactPage from "../pages/ContactPage";
 import Login from "../pages/Login";
 import AdminLayout from "../pages/AdminLayout";
 import Register from "../pages/Register";
-import ProductPage from "../pages/Product";
+import ProductPage from "../Dashboard/Product";
 import AddProduct from "../Dashboard/AddProductPage";
+import VerificationCode from "../pages/VerifcationCode";
 // import Register from "../pages/Register";
 
 const router = createBrowserRouter(createRoutesFromElements(
@@ -20,6 +21,7 @@ const router = createBrowserRouter(createRoutesFromElements(
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
        <Route path="Register" element={<Register/>}/>
+       <Route path="VerificationCode" element={<VerificationCode/>}/>
        <Route path="Login" element={<Login/>}/>
        
     </Route>

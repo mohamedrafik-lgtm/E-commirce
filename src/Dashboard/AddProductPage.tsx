@@ -5,6 +5,7 @@ import { Switch } from '@headlessui/react';
 import clsx from 'clsx';
 import axiosInstance from "../config/axios.config";
 import { IOrganization } from "../interface";
+import Toast from "../components/Toast";
 
 
 const AddProduct = () => {
@@ -180,6 +181,14 @@ const AddProduct = () => {
   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(event.target.value);
   };
+  const [showToast, setShowToast] = useState(false);
+
+  // const handleShowToast = () => {
+  //   setShowToast(true);
+  //   setTimeout(() => {
+  //     setShowToast(false);
+  //   }, 3000); 
+  // };
  
   const url: string = "/api/Product";
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -210,15 +219,21 @@ const AddProduct = () => {
     formData.append('DiscountEndDate', endDate);
      console.log(formData);
     try {
-      const res = await axiosInstance.post(url, formData);
+      const {status} = await axiosInstance.post(url, formData);
+      if (status === 200){
+        setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 3000); 
+      }
       
-      console.log(res);
     } catch (error) {
       console.error(error);
     }
   };
    
   
+
 
    return (
       <div className="w-full">
@@ -523,11 +538,14 @@ const AddProduct = () => {
               {/* <AddProductForm loading={true}/> */}
               <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
       <button
-        
+        // onClick={handleShowToast}
         className="bg-blue-500 text-white py-3 px-6 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:bg-blue-500 focus:ring-opacity-50"
       >
         Add Product
       </button>
+      {showToast && (
+        <Toast message="add product successfully!" onClose={() => setShowToast(false)} />
+      )}
     </div>
          </form>
       </div>

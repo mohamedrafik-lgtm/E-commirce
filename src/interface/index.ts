@@ -81,3 +81,14 @@ export interface ISettings{
     unitPrice:number,
     unitsInStock:number
   }
+
+  export interface Products {
+    id: number;
+    productId: number;
+    productName: string;
+    unitPrice: number;
+    discount: number;
+    rate: number;
+    imageUrl: string | undefined;
+  }
+  

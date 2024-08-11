@@ -5,23 +5,17 @@ import { loginSchema } from '../validations';
 import InputErrorMsg from '../components/ui/InputErrorMsg';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../config/axios.config';
-import { useToast } from '@chakra-ui/react';
+import Toast from "../components/Toast";
+import { useState } from 'react';
 const Login: React.FC = () => {
+    const [showToast, setShowToast] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<{ email: string; password: string }>({
         resolver: yupResolver(loginSchema)
     });
     const navigate = useNavigate();
-    const toast = useToast();  // استيراد useToast
-
-    const showToast = () => {
-        toast({
-            title: 'Login Successful',
-            description: "You've successfully logged in.",
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-        });
-    };
+      // استيراد useToast
+   
+    
 
     const onSubmit: SubmitHandler<{ email: string; password: string }> = async (userData) => {
         const url: string = '/api/Auth/login';
@@ -30,21 +24,15 @@ const Login: React.FC = () => {
             const { status, data } = await axiosInstance.post(url, userData);
             console.log(status);
             console.log(data);
-            if (status === 200) {
-                showToast();  
-                setTimeout(() => {
-                    navigate("/");
-                }, 2000);
-            }
+            if (status === 200){
+                setShowToast(true);
+            setTimeout(() => {
+              setShowToast(false);
+            }, 3000); 
+            navigate("/")
+              }
         } catch (error) {
             console.log(error);
-            toast({
-                title: 'Login Failed',
-                description: "There was an error logging you in. Please try again.",
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-            });
         }
     };
      const render = LOGIN_INPUT.map(({name,plassholder,type,validation,label},idx) =><div key={idx} className="form-group">
@@ -67,9 +55,13 @@ const Login: React.FC = () => {
                     {render}
                     
                 </div>
+
                 <button type="submit" className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     log in 
                 </button>
+                {showToast && (
+        <Toast message="add product successfully!" onClose={() => setShowToast(false)} />
+      )}
             </form>
         </div>
     );
