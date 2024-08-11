@@ -92,3 +92,23 @@ export interface ISettings{
     imageUrl: string | undefined;
   }
   
+  export interface IPropductErrors{
+    productName: string;
+    Discription: string;
+    SKU: string;
+    brands: string;
+    unitInStock: string;
+    priceValue: string;
+    discount: string;
+    startDate: string;
+    endDate: string;
+    Vendor: string;
+    contactName: string;
+    combanyName: string;
+    productCode:string;
+    propertyNames: string;
+    propertyValues: string;
+    filePaths: string;
+    tags: string;
+    
+  }

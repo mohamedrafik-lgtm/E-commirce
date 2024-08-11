@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import axiosInstance from "../config/axios.config";
 import { IOrganization } from "../interface";
 import Toast from "../components/Toast";
+import { AddProductValidation } from "../validations";
+import InputErrorMsg from "../components/ui/InputErrorMsg";
 
 
 const AddProduct = () => {
@@ -47,7 +49,26 @@ const AddProduct = () => {
     combanyName: '',
     brand: '',
   });
-
+  const [errors,setErrors] = useState({
+    productName: '',
+    Discription: '',
+    SKU: '',
+    unitInStock: '',
+    priceValue: '',
+    discount: '',
+    startDate: '',
+    endDate: '',
+    Vendor: '',
+    contactName: '',
+    combanyName: '',
+    productCode:'',
+    propertyNames:'',
+    propertyValues:'',
+    filePaths:'',
+    tags:'',
+    brands:''
+  })
+   console.log(errors)
   const bytesToKb = (bytes: number): number => {
     return Math.round(bytes / 1024);
   };
@@ -58,6 +79,10 @@ const AddProduct = () => {
       ...price,
       [name]: value
     });
+    setErrors({
+      ...errors,
+      [name]:""
+    })
   };
 
   const maxProperties: number = 10;
@@ -115,11 +140,16 @@ const AddProduct = () => {
       ...organization,
       [name]: value as string,
     });
+    setErrors({
+      ...errors,
+      [name]:""
+    })
   };
 
   const [selectedValue, setSelectedValue] = useState<string>('');
   const handelChangeSelectedValue = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedValue(e.target.value);
+    
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,6 +202,10 @@ const AddProduct = () => {
       ...ProductInformation,
       [name]: value
     });
+    setErrors({
+      ...errors,
+      [name]:""
+    })
   };
 
   const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,9 +225,22 @@ const AddProduct = () => {
   // };
  
   const url: string = "/api/Product";
+
+  
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    
     e.preventDefault();
+    
+    const errors = AddProductValidation({productName: ProductInformation.productName,SKU: ProductInformation.SKU,Discription: ProductInformation.Discription,combanyName:organization.combanyName,contactName:organization.contactName,
+      startDate: startDate,endDate: endDate,filePaths:filePaths,propertyNames:propertyNames,discount:price.discount,productCode:productCode,propertyValues:propertyValues,
+      tags:tags,priceValue:price.priceValue,unitInStock:ProductInformation.unitInStock,Vendor:organization.Vendor,brand:organization.brand
+    })
+    console.log(errors)
+    const hasErrorMsg = Object.values(errors).some(value => value === '') && Object.values(errors).every(value => value === '')
+    if(!hasErrorMsg){
+      setErrors(errors)
+      return;
+    }
+    // product request
     const previewsString: string = previews.join(',');
     const formData = new FormData();
     formData.append('ProductName', ProductInformation.productName);
@@ -248,22 +295,26 @@ const AddProduct = () => {
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="product-name">product Name</label>
                   <InputComponent value={ProductInformation.productName} onChange={handelChange} className="border rounded-md   w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="product name....." type="text" id="productName" name="productName"/>
+                  <InputErrorMsg msg={errors.productName}/> 
                </div>
 
                <div className="grid grid-cols-2 gap-8">
                <div className="flex flex-col space-y-2">
                   <label htmlFor="SKU">SKU</label>
                   <InputComponent value={ProductInformation.SKU} onChange={handelChange} className="border rounded-md   h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="SKU....." type="text" id="SKU" name="SKU"/>
+                  {errors ? <InputErrorMsg msg={errors.SKU}/> : null}
                </div>
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="unit-in-stock">unit in stock</label>
                   <InputComponent value={ProductInformation.unitInStock} onChange={handelChange} className="border rounded-md  h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="unit in stock....." type="number" id="unitInStock" name="unitInStock"/>
+                  {errors ? <InputErrorMsg msg={errors.unitInStock}/> : null}
                </div>
                </div>
 
                <div className="space-y-2 mb-5">
-               <label htmlFor="discription">Discription</label>
-               <InputComponent value={ProductInformation.Discription} onChange={handelChange} className=" border rounded-md  w-full h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="Type your discription....." type="text" id="Discription" name="Discription"/>
+                  <label htmlFor="discription">Discription</label>
+                  <InputComponent value={ProductInformation.Discription} onChange={handelChange} className=" border rounded-md  w-full h-11 p-2 transition focus:shadow-xl focus:outline-double focus:outline-none" placeholder="Type your discription....." type="text" id="Discription" name="Discription"/>
+                  {errors ? <InputErrorMsg msg={errors.Discription}/> : null}
                </div>
                
              
@@ -324,10 +375,11 @@ const AddProduct = () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex flex-col space-y-3 justify-center items-center">
         <label htmlFor="fileInput" className="cursor-pointer bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
           Select Images
         </label>
+        <InputErrorMsg msg={errors.filePaths}/> 
         <input
           id="fileInput"
           type="file"
@@ -338,6 +390,7 @@ const AddProduct = () => {
         />
         
       </div>
+      
     </div>
              
 
@@ -353,6 +406,7 @@ const AddProduct = () => {
             className="px-3 py-2 w-1/3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             placeholder="property Name"
           />
+          
           <input
             type="text"
             value={propertyValues[index]}
@@ -360,6 +414,7 @@ const AddProduct = () => {
             className="px-3 py-2 w-1/3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             placeholder="property value"
           />
+          
           <button
             type="button"
             onClick={() => handleRemoveProperty(index)}
@@ -367,16 +422,22 @@ const AddProduct = () => {
           >
             Delete
           </button>
+           
         </div>
       ))}
       {propertyNames.length < maxProperties && (
-        <button
+        <div>
+          <button
           type="button"
           onClick={handleAddProperty}
           className="px-4 py-2 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
         >
           add property
+          
         </button>
+        <InputErrorMsg msg={errors.propertyValues}/>
+        </div>
+        
       )}
     </div>
 
@@ -391,6 +452,7 @@ const AddProduct = () => {
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="price">price</label>
                   <InputComponent value={price.priceValue} onChange={handlerPriceChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="number" id="priceValue" name="priceValue"/>
+                  <InputErrorMsg msg={errors.priceValue}/> 
                </div>
                <div className="flex place-content-between">
                    <p>discount?</p>
@@ -412,6 +474,7 @@ const AddProduct = () => {
                 <div>
                 <label htmlFor="discount">value</label>
                 <InputComponent value={price.discount} onChange={handlerPriceChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="0.00" type="number" id="discount" name="discount"/>
+                <InputErrorMsg msg={errors.discount}/> 
                 </div>
 
                 <div className="flex flex-col  gap-4 bg-white">
@@ -419,6 +482,7 @@ const AddProduct = () => {
         <label htmlFor="start-date" className="mb-2 text-lg font-medium text-gray-700">
           Start Date:
         </label>
+        <div>
         <input
           type="date"
           id="start-date"
@@ -426,11 +490,15 @@ const AddProduct = () => {
           onChange={handleStartDateChange}
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+          <InputErrorMsg msg={errors.startDate}/>
+        </div>
       </div>
+        
       <div className="flex justify-between">
         <label htmlFor="end-date" className="mb-2 text-lg font-medium text-gray-700">
           End Date:
         </label>
+        <div>
         <input
           type="date"
           id="end-date"
@@ -438,7 +506,10 @@ const AddProduct = () => {
           onChange={handleEndDateChange}
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+        <InputErrorMsg msg={errors.endDate}/>
+        </div>
       </div>
+        
     </div>
                  
                </div>:null}
@@ -456,14 +527,17 @@ const AddProduct = () => {
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="Vendor">Vendor</label>
                   <InputComponent value={organization.Vendor} onChange={handelOrganizationChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="eg.Nike" type="text" id="Vendor" name="Vendor"/>
+                  <InputErrorMsg msg={errors.Vendor}/>
                </div>
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="combanyName">combany name</label>
                   <InputComponent value={organization.combanyName} onChange={handelOrganizationChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="combany name" type="text" id="combanyName" name="combanyName"/>
+                  <InputErrorMsg msg={errors.combanyName}/>
                </div>
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="contactName">contact name</label>
                   <InputComponent value={organization.contactName} onChange={handelOrganizationChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="contact Name" type="text" id="contactName" name="contactName"/>
+                  <InputErrorMsg msg={errors.contactName}/>
                </div>
                <div>
                       
@@ -511,6 +585,7 @@ const AddProduct = () => {
         placeholder={"text"}
         className="flex-1 border-none outline-none p-2"
       />
+      <InputErrorMsg msg={errors.tags}/>
     </div>
 
     <div className="mb-4">
@@ -524,11 +599,13 @@ const AddProduct = () => {
         onChange={(e) => setProductCode(e.target.value)}
         className="form-input mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
       />
+      <InputErrorMsg msg={errors.productCode}/>
     </div>
     
                <div className="flex flex-col space-y-2 ">
                   <label htmlFor="brand">brand</label>
                   <InputComponent value={organization.brand} onChange={handelOrganizationChange} className="border rounded-md w-full p-2 h-11  transition focus:shadow-xl focus:outline-double focus:outline-none " placeholder="brand tags here" type="text" id="brand" name="brand"/>
+                  <InputErrorMsg msg={errors.brands}/>
                </div>
             </div>
         </div>
