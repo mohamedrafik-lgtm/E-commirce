@@ -12,12 +12,16 @@ import Register from "../pages/Register";
 import ProductPage from "../Dashboard/Product";
 import AddProduct from "../Dashboard/AddProductPage";
 import VerificationCode from "../pages/VerifcationCode";
+import HomeLayout from "../pages/HomeLayout";
 // import Register from "../pages/Register";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
+    <Route path={"/home"} element={<HomeLayout/>}>
+    <Route index element={<Home/>}/>
+    
+    </Route>
     <Route path="/" element={<RootLayout/>}>
-       <Route index element={<Home/>}/>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
        <Route path="Register" element={<Register/>}/>

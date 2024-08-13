@@ -1,6 +1,7 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ImageSlider from "../components/Slider";
+// import ProductSlider from "../components/ProductSlider";
 import ProductSlider from "../components/ProductSlider";
 
 
@@ -18,34 +19,22 @@ export const Home = () => {
    const topSelling:string = '/api/Home/top-selling'
    const outOfStock:string = '/api/Home/out-of-stock'
 
-
-   
-  // const [cartItems, setCartItems] = useState<Products[]>([]);
-  // console.log(cartItems)
-  // const removeFromCart = (productId: number) => {
-  //   setCartItems((prevCartItems) =>
-  //     prevCartItems.filter((item) => item.id !== productId)
-  //   );
-  // };
-  
   
   return (
-    <div>
+    <div className="overflow-hidden">
+                 
                  <div>
-                 <ImageSlider images={images} width="1000px" height="400px"/>
+                 <ImageSlider images={images} width="800px" height="400px"/>
                  </div>
-       
-             <div className="">
-                <div>
-                <ProductSlider endpoint={newEst} sliderTitle="NEW EST"/>
-                </div>
-                <div>
-                <ProductSlider endpoint={topSelling} sliderTitle="top selling"/>
-                </div>
-                <div>
-                <ProductSlider endpoint={outOfStock} sliderTitle="Out Of Stock"/>
-                </div>
-             </div>
+                 <div>
+                 <ProductSlider sliderTitle="NEW EST" endpoint={newEst} visibleProducts={6} />
+                 </div>
+                 <div>
+                 <ProductSlider sliderTitle="Top Selling" endpoint={topSelling} visibleProducts={6} />
+                 </div>
+                 <div>
+                 <ProductSlider sliderTitle="Out Of Stock" endpoint={outOfStock} visibleProducts={6} />
+                 </div>
     </div>
   );
 };
