@@ -17,7 +17,7 @@ interface ProductCardProps {
 
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  id,
+  productId,
   productName,
   unitPrice,
   discount,
@@ -66,7 +66,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       
       
 
-      <div key={key} className="p-4">
+      <div key={key} className="p-4 ">
         {imageUrl ? (
           <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" />
         ) : (
@@ -79,8 +79,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {discount > 0 && (
           <p className="text-red-500">Discount: {discount}%</p>
         )}
-        <Rating name="size-medium"defaultValue={rate}/>
-        <button onClick={() => console.log(id)} className="block p-2 rounded-md bg-blue-600 text-white">Add to cart</button>
+        <Rating name="size-medium" defaultValue={rate}/>
+        <button onClick={() => console.log(productId)} className="block p-2 rounded-md bg-blue-600 text-white">Add to cart</button>
       
     </div>
       </div>
