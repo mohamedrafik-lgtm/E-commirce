@@ -40,18 +40,18 @@ const VerificationCode= ({email}:IProp) => {
         const {status,data} = await axiosInstance.post(url,{email: email,code:code})
         console.log(data)
         if (status === 200) {
-            toast.success("You will navigate to the login page in 2 seconds!", {
+            toast.success("You will navigate to the login page in 3 seconds!", {
               position: "bottom-center",
-              duration: 1500,
+              duration: 2000,
               style: {
-                backgroundColor: "black",
+                backgroundColor: "green",
                 color: "white",
                 width: "fit-content",
               },
             });
             setTimeout(() => {
-              navigator("/Admin");
-            }, 2000);
+              navigator("/home");
+            }, 3000);
           }
     } catch (error) {
         console.log(error);

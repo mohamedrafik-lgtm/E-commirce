@@ -16,6 +16,7 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
     const [products, setProduct] = useState<Products[]>([]);
     console.log(products)
     useEffect(() => {
+      setLoading(true)
         const fetchProducts = async () => {
           try {
             const {data} = await axiosInstance.get(endpoint);
@@ -43,7 +44,7 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   };
 
   return (
-    <div className="relative w-full/12">
+    <div className="relative  w-full/12 mr-3">
         <h3 className= "text-2xl p-2 text-center">{sliderTitle}</h3>
          <hr className="w-3/4 mx-auto"/>
       <button

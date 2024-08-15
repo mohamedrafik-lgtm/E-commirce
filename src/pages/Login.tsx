@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../config/axios.config';
 import Toast from "../components/Toast";
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 const Login: React.FC = () => {
     const [showToast, setShowToast] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<{ email: string; password: string }>({
@@ -24,12 +25,19 @@ const Login: React.FC = () => {
             const { status, data } = await axiosInstance.post(url, userData);
             console.log(status);
             console.log(data);
-            if (status === 200){
-                setShowToast(true);
-            setTimeout(() => {
-              setShowToast(false);
-            }, 3000); 
-            navigate("/")
+            if (status === 200) {
+                toast.success("You will navigate to the login page in 2 seconds!", {
+                  position: "top-right",
+                  duration: 1000,
+                  style: {
+                    backgroundColor: "green",
+                    color: "white",
+                    width: "fit-content",
+                  },
+                });
+                setTimeout(() => {
+                  navigate("/home");
+                }, 2000);
               }
         } catch (error) {
             console.log(error);

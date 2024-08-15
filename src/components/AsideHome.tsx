@@ -132,7 +132,7 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
   
   return (
     <div
-    className={`border ml-14 from-gray-800 to-gray-600 p-5  transition-all duration-300 w-64 z-50`}
+    className={`border ml-12 from-gray-800 to-gray-600 p-5 sticky top-0  transition-all duration-300 w-64 z-50`}
     style={{ height: 'fit-content' }}
   >
     <div className="flex items-center justify-between p-4">

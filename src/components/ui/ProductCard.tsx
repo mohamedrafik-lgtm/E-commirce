@@ -2,7 +2,6 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Rating } from "@mui/material";
 
-// import { Product } from '../../interface';
 interface ProductCardProps {
   id: number;
   productId: number;
@@ -10,7 +9,7 @@ interface ProductCardProps {
   unitPrice: number;
   discount: number;
   rate: number;
-  key:number;
+ 
   imageUrl: string | undefined;
   isLoading: boolean;
 }
@@ -23,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   discount,
   rate,
   imageUrl,
-  key,
+  
   isLoading,
   
 }) => {
@@ -31,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   if (isLoading) {
     return (
-      <div key={key} className="flex justify-center items-center h-full">
+      <div  className="flex justify-center items-center h-full">
         <Stack spacing={1}>
       {/* For variant="text", adjust the height via font-size */}
       <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
@@ -46,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }
   
   return (
-    <div key={key} className="bg-white border rounded-lg shadow-md overflow-hidden ml-5">
+    <div  className="bg-white border rounded-lg shadow-md overflow-hidden ml-5">
       {isLoading ?
 
       <div>
@@ -66,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       
       
 
-      <div key={key} className="p-4 ">
+      <div  className="p-4 ">
         {imageUrl ? (
           <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" />
         ) : (

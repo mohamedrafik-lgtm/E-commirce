@@ -7,7 +7,7 @@ import { registerSchema } from "../validations";
 import axiosInstance from "../config/axios.config";
 import VerificationCode from "./VerifcationCode";
 import { useState } from "react";
-import Toast from "../components/Toast";
+import toast from "react-hot-toast";
 
 const Register: React.FC = () => {
 
@@ -19,7 +19,6 @@ const Register: React.FC = () => {
     }
     
     const [getEmail,setGetEmail] = useState("")
-    const [showToast, setShowToast] = useState(false);
     
     //  handlers
 const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
@@ -30,10 +29,15 @@ const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
           const {data:{email},status}= await axiosInstance.post('/api/Auth/register',userData)
           setGetEmail(email)
           if (status === 200){
-            setShowToast(true);
-        setTimeout(() => {
-          setShowToast(false);
-        }, 3000); 
+            toast.success("You will navigate to the Verification Code page in 2 seconds!", {
+                position: "top-right",
+                duration: 2000,
+                style: {
+                  backgroundColor: "green",
+                  color: "white",
+                  width: "fit-content",
+                },
+              });
           }
           
         } catch (error) {
@@ -71,9 +75,7 @@ const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
                 </button>
                 
             </form>
-            {showToast && (
-        <Toast message="You will be redirected to the account confirmation page." onClose={() => setShowToast(false)} />
-      )}
+            
         </div>
     );
 };

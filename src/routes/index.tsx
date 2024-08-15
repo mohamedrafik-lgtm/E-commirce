@@ -17,7 +17,7 @@ import HomeLayout from "../pages/HomeLayout";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
-    <Route path={"/"} element={<HomeLayout/>}>
+    <Route path={"/home"} element={<HomeLayout/>}>
     <Route index element={<Home/>}/>
     
     </Route>

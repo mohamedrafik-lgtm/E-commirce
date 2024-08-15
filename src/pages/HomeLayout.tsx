@@ -13,7 +13,7 @@ const HomeLayout = () => {
            <div >
 
             <main className="flex ">
-                <div className="static">
+                <div  className="sticky">
                 <AsideHome />
                 </div>
                 <Outlet />

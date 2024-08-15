@@ -12,14 +12,14 @@ const NavPar = () => {
         { label: 'Dashboard', icon: faDashboard , path:"#"}
       ];
     return (
-        <nav className="block pt-8 p-6 border-b-2 ">
+        <nav className="block  pt-8 p-6 border-b-2 ">
             <div className="flex flex-row justify-around header">
                 <NavLink to={"/"} ><h1 className="text-2xl font-bold ">Exclusive</h1></NavLink>
                     <div className="flex flex-row">
-                       <div className="text-xl mr-10"><NavLink to={"/home"}>Home</NavLink></div>
+                       <div className="text-xl mr-10"><NavLink to={"/Home"}>Home</NavLink></div>
                        <div className="text-xl mr-10"><NavLink to={"/contact"}>Contact</NavLink></div>
                        <div className="text-xl mr-10"><NavLink to={"/About"}>About</NavLink></div>
-                       {!isLogdin ? <div className="text-xl mr-10"><NavLink to={"/Register"}>Register</NavLink></div>
+                       {isLogdin ? <div className="text-xl mr-10"><NavLink to={"/Register"}>Register</NavLink></div>
                         : <div className="text-xl mr-10"><NavLink to={"/login"}>login</NavLink></div>}
                     </div>
                     <div className="flex justify-center items-center space-x-5">

@@ -5,10 +5,10 @@ import { Switch } from '@headlessui/react';
 import clsx from 'clsx';
 import axiosInstance from "../config/axios.config";
 import { IOrganization } from "../interface";
-import Toast from "../components/Toast";
 import { AddProductValidation } from "../validations";
 import InputErrorMsg from "../components/ui/InputErrorMsg";
 import CircularProgress from '@mui/material/CircularProgress';
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
     
@@ -215,7 +215,7 @@ const AddProduct = () => {
   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(event.target.value);
   };
-  const [showToast, setShowToast] = useState(false);
+  
 
   // const handleShowToast = () => {
   //   setShowToast(true);
@@ -270,9 +270,17 @@ const AddProduct = () => {
       const {status} = await axiosInstance.post(url, formData);
       setLoading(false)
       if (status === 200){
-        setShowToast(true);
+        toast.success("The product has been added successfully.", {
+          position: "top-right",
+          duration: 1000,
+          style: {
+            backgroundColor: "green",
+            color: "white",
+            width: "fit-content",
+          },
+        });
     setTimeout(() => {
-      setShowToast(false);
+      
     }, 3000); 
       }
       
@@ -611,15 +619,14 @@ const AddProduct = () => {
             
               {/* <AddProductForm loading={true}/> */}
               <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
-      <button
-        // onClick={handleShowToast}
+        {loading ? <CircularProgress />   : <button
+        
         className="bg-blue-500  text-white py-3 px-6 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:bg-blue-500 focus:ring-opacity-50"
       >
-        {loading ? <CircularProgress  color="inherit"/> : "add Product"}
-      </button>
-      {showToast && (
-        <Toast message="add product successfully!" onClose={() => setShowToast(false)} />
-      )}
+      add Product
+      </button>}
+      
+      
     </div>
          </form>
       </div>
