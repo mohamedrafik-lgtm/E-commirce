@@ -1,5 +1,5 @@
-import { ILogin, IRegister } from "../interface";
-
+import { ILogin, IRegister, IUpdateProductInputData } from "../interface";
+import { v4 as uuid } from 'uuid';
 
 const RENDERER_INPUTS:IRegister[] = [
 
@@ -70,4 +70,86 @@ export const LOGIN_INPUT:ILogin[] = [
 
 ]
 
+
+export const updateProductInputData:IUpdateProductInputData[] = [
+    {
+        name:"ProductName",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter Product Name",
+    },
+    {
+        name:"UnitPrice",
+        id:uuid(),
+        type:"number",
+        placeholder:"Enter Unit Price",
+    },
+    {
+        name:"Description",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter Description",
+    },
+    {
+        name:"Brand",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter Brand",
+    },
+    {
+        name:"Category",
+        type:"text",
+        id:uuid(),
+        placeholder:"Enter Category",
+    },
+    {
+        name:"UnitsInStock",
+        type:"text",
+        id:uuid(),
+        placeholder:"Units In Stock",
+    },
+    {
+        name:"ReorderLevel",
+        id:uuid(),
+        type:"text",
+        placeholder:"ReorderLevel",
+    },
+    
+    {
+        name:"ProductCode",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter Product Code",
+    },
+    {
+        name:"CompanyName",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter CompanyName",
+    },
+    {
+        name:"ContactName",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter Contact Name",
+    },
+    {
+        name:"ContactName",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter Contact Name",
+    },
+    {
+        name:"Discontinued",
+        id:uuid(),
+        type:"checkbox",
+        label:"Discontinued ",
+        placeholder:"Discontinued",
+    },
+
+
+]
+
 export default RENDERER_INPUTS;
+
+

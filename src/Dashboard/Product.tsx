@@ -71,7 +71,8 @@ const ProductPage = () => {
         </thead>
         <tbody>
           {currentProducts.map((product:IProduct) => (
-            <tr key={product.productId} className="hover:bg-gray-100 border-b">
+           
+            <tr onClick={()=> console.log(product.productId)} key={product.productId} className="hover:bg-gray-100 border-b">
               <td className="p-3 text-center">{product.productId}</td>
               <td className="p-3 text-center">{product.productName}</td>
               <td className="p-3 text-center">{product.category}</td>

@@ -112,3 +112,12 @@ export interface ISettings{
     tags: string;
     
   }
+
+
+  export interface IUpdateProductInputData{
+    name: string;
+    type:string;
+    id?: string;
+    label?:string;
+    placeholder:string;
+  }
