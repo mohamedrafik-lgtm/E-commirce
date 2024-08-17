@@ -72,6 +72,7 @@
   padding: 0.5rem; 
   transition: border-color 0.3s ease; 
   border-radius: 0px;
+  background: none;
 }
 
 .custom-input:focus {
@@ -84,6 +85,10 @@
 #ProductName{
   margin-left: 4px;
   margin-top: 4px;
+}
+
+.tags{
+  background: none;
 }
 
 

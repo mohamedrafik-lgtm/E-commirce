@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom"
+
 // import AccountDropdownWithaccount from "./ui/AccountDropdownWithaccount"
 import Dropdown from "./ui/Dropdown"
 import { faCog, faShieldAlt ,faDashboard} from '@fortawesome/free-solid-svg-icons';
@@ -49,4 +50,4 @@ const NavPar = () => {
     )
 }
 
-export default NavPar
+export default   NavPar

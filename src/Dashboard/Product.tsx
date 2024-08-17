@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import axiosInstance from '../config/axios.config';
 import{IProduct} from "../interface/index";
+import OptionsModel from "../components/DetailsModel"
 
 const fetchProducts = async () => {
   const { data } = await axiosInstance.get('/api/Product');
@@ -9,27 +10,17 @@ const fetchProducts = async () => {
 };
 
 const ProductPage = () => {
-  const [loadingProduct, setLoadingProduct] = useState<number | null>(null);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const queryClient = useQueryClient();
+  
 
   const { data: products = [], error, isLoading } = useQuery('products', fetchProducts, {
     cacheTime: 5 * 60 * 1000, 
     staleTime: 2 * 60 * 1000, 
   });
 
-  const deleteProduct = async (productId: number) => {
-    setLoadingProduct(productId);
-    try {
-      await axiosInstance.delete(`/api/Product/${productId}`);
-      queryClient.invalidateQueries('products');
-    } catch (error) {
-      console.error('Error deleting product:', error);
-    } finally {
-      setLoadingProduct(null);
-    }
-  };
+  
 
 
   const totalPages = Math.ceil(products.length / itemsPerPage);
@@ -59,14 +50,14 @@ const ProductPage = () => {
       <table className="min-w-full border-collapse bg-gray-50">
         <thead>
           <tr className="bg-gray-200 border-b">
-            <th className="p-3 text-left text-gray-600">Product ID</th>
-            <th className="p-3 text-left text-gray-600">Product Name</th>
-            <th className="p-3 text-left text-gray-600">Category</th>
-            <th className="p-3 text-left text-gray-600">Brand</th>
-            <th className="p-3 text-left text-gray-600">Supplier</th>
-            <th className="p-3 text-left text-gray-600">Unit Price</th>
-            <th className="p-3 text-left text-gray-600">Units in Stock</th>
-            <th className="p-3 text-left text-gray-600">Delete</th>
+            <th className="p-3 text-center text-gray-600">Product ID</th>
+            <th className="p-3 text-center text-gray-600">Product Name</th>
+            <th className="p-3 text-center text-gray-600">Category</th>
+            <th className="p-3 text-center text-gray-600">Brand</th>
+            <th className="p-3 text-center text-gray-600">Supplier</th>
+            <th className="p-3 text-center text-gray-600">Unit Price</th>
+            <th className="p-3 text-center text-gray-600">Units in Stock</th>
+            <th className="p-3 text-center text-gray-600">More choices</th>
           </tr>
         </thead>
         <tbody>
@@ -80,15 +71,7 @@ const ProductPage = () => {
               <td className="p-3 text-center">{product.supplier}</td>
               <td className="p-3 text-center">{product.unitPrice}</td>
               <td className="p-3 text-center">{product.unitsInStock}</td>
-              <td className="p-3 text-center">
-                <button
-                  onClick={() => deleteProduct(product.productId)}
-                  className={`px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 ${loadingProduct === product.productId ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  disabled={loadingProduct === product.productId}
-                >
-                  {loadingProduct === product.productId ? 'Deleting...' : 'Delete'}
-                </button>
-              </td>
+              <td className="p-3 text-center"><OptionsModel productId={product.productId}/></td>
             </tr>
           ))}
         </tbody>
