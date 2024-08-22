@@ -1,11 +1,16 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import InputComponent from "./ui/InputComponent";
-import axiosInstance from "../config/axios.config";
-import Slider from '@mui/material/Slider';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import List from '@mui/material/List';
+import InputComponent from './ui/InputComponent';
+import { ChangeEvent, useState } from 'react';
 import { Transition } from "@headlessui/react";
 import AppleIcon from '@mui/icons-material/Apple';
 import MicrosoftIcon from '@mui/icons-material/Microsoft';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterSlice } from '../App/features';
+import { RootState } from '../App/Store';
+type Anchor = 'right';
 interface IResearch{
     Name: string;
   Category: string;
@@ -16,46 +21,28 @@ interface IResearch{
   MaxDiscount: number;
   MinRate: number;
   MaxRate: number;
-  slide: number;
 }
+export default function FilterModel() {
+  const [state, setState] = useState({
+    right: false,
+  });
 
-
-const Sidebar: React.FC = () => {
-  
-  const [mainRating, setMinRating] = useState<number>(0);
-  const [maxRating, setMaxRating] = useState<number>(0);
-  const [hover, setHover] = useState<number>(0);
-  const [hoverMax, setHoverMax] = useState<number>(0);
-  console.log(mainRating)
-  console.log(maxRating)
-  const handleClick = (value: number) => {
-    setMinRating(value);
-  
-  };
-
-  const handleMouseEnter = (value: number) => {
-    setHover(value);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(0);
-  };
-  const handleClick2 = (value: number) => {
-    setMaxRating(value);
-  
-  };
-
-  const handleMouseEnter2 = (value: number) => {
-    setHoverMax(value);
-  };
-
-  const handleMouseLeave2 = () => {
-    setHoverMax(0);
-  };
-
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [research,setResearch] = useState<IResearch>({
+    Name: '',
+    Category: '',
+    Brand: '',
+    MinPrice: 0,
+    MaxPrice: 0,
+    MinDiscount: 0,
+    MaxDiscount: 0,
+    MinRate: 0,
+    MaxRate: 0,
+  })
+  const dispatch = useDispatch()
+  dispatch(setFilterSlice(research))
   const [isOpen, setIsOpen] = useState(false);
-
+  const filterState = useSelector((state: RootState) => state.filterSlice);
+  console.log(filterState)
   const options = [
     { value: 'apple', label: 'Apple', icon: <AppleIcon className="w-5 h-5 text-gray-500" /> },
     { value: 'samsung', label: 'Samsung', icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className="w-6 h-6" viewBox="0 0 48 48">
@@ -82,81 +69,68 @@ const Sidebar: React.FC = () => {
     { value: 'acer', label: 'Acer', icon: <img src="/IMG/acer-svgrepo-com.svg" className="w-5 h-5 text-gray-500" /> },
     { value: 'microsoft', label: 'Microsoft', icon: <MicrosoftIcon className="w-5 h-5 text-gray-500" /> },
   ];
-
+  // handlers
+  const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
+    const { value, name } = event.target;
+    setResearch({
+      ...research,
+    [name]: value
+    })
+  }
   const handleSelect = (value: string) => {
-    setSelectedValue(value);
+    setResearch({
+        ...research,
+        Brand: value
+    });
     setIsOpen(false);
-    console.log('القيمة المختارة:', value);
   };
-  
-  const [research,setResearch] = useState<IResearch>({
-    Name: '',
-    Category: '',
-    Brand: '',
-    MinPrice: 0,
-    MaxPrice: 0,
-    MinDiscount: 0,
-    MaxDiscount: 0,
-    MinRate: 0,
-    MaxRate: 0,
-    slide:0
-  })
-  const [slide,setSlide ] = useState<number>(10000)
-  function valuetext(value: number) {
-    setSlide(value);
-    return `${value}°C`;
-  }
-  console.log(slide)
-const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
-  const { value, name } = event.target;
-  setResearch({
-    ...research,
-  [name]: value
-  })
-}
-  const handelSubmit = (e:FormEvent<HTMLFormElement>) =>{
-    e.preventDefault();
 
-    try {
-       const response = axiosInstance.get("/api/Home/filter",{
-        params: {
-         ...research
-        }
-       })
-       console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }
- 
-  
-  return (
-    <div
-    className={`border ml-12 from-gray-800 to-gray-600 p-5 sticky top-0  transition-all duration-300 w-64 z-50`}
-    style={{ height: 'fit-content' }}
-  >
-    <div className="flex items-center justify-between p-4">
-      <h2 className={`text-xl font-bold`}>research</h2>
-    </div>
-    <form onSubmit={handelSubmit} className={`flex flex-col space-y-2`}>
-    <div>
-        
-        <InputComponent
-        onChange={handelChange}
-        name="Name"
-        id="Name"
-        className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Product Name"
-    />
+  const toggleDrawer =
+    (anchor: Anchor, open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
 
-      </div>
-      
-      <div className="relative w-full max-w-xs mx-auto">
+      setState({ [anchor]: open });
+    };
+
+    // const onClose = ()=>{
+    //   toggleDrawer("right", false)
+    // }
+
+  const list = () => (
+    <Box
+      sx={{ width: 300}}
+      role="presentation">
+      <List>
+        <div className='p-5 flex justify-between mt-3 mb-3'>
+            <h3 className='text-2xl'>Filter</h3>
+            <button onClick={toggleDrawer("right", false)}>
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-8 hover:text-red-500 transition-all">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                 </svg>
+            </button>
+        </div>
+
+
+        <div className='px-5 space-y-9'>
+            <div>
+                <InputComponent value={research.Name} onChange={handelChange} name="Name" id="Name" className="custom-input mb-1 w-full p-2 rounded-md"
+                placeholder="Max Price"/>
+            </div>
+            
+            <div className="relative w-full max-w-xs mx-auto">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
       >
-        {selectedValue ? options.find(option => option.value === selectedValue)?.label : 'select brand'}
+        {research.Brand ? options.find(option => option.value === research.Brand)?.label : 'select brand'}
         <svg
           className={`w-5 h-5 transition-transform transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -189,62 +163,63 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
           ))}
         </div>
       </Transition>
-      </div>
-    <div>
-        <label htmlFor="Name" className="text-lx">min price</label>
-        <Slider getAriaValueText={valuetext} defaultValue={10000} step={10000} marks min={10000} max={100000}  />
-      </div>
-      <div>
-        <InputComponent onChange={handelChange} name="MaxPrice" id="MaxPrice" className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Max Price"/>
-      </div>
-      <div>
-        <InputComponent onChange={handelChange} name="MinDiscount" id="MinDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Min Discount"/>
-      </div>
-      <div>
-        <InputComponent onChange={handelChange} name="MaxDiscount" id="MaxDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Max Discount"/>
-      </div>
-      <div>
-      <div className="flex space-x-1 text-2xl">
-      <p className="text-lg">min rating :</p>
-      {[1, 2, 3, 4, 5].map((value) => (
-        <span
-          key={value}
-          className={`cursor-pointer transition-colors duration-300 ${value <= (hover || mainRating) ? 'text-yellow-400' : 'text-gray-300'}`}
-          onClick={() => handleClick(value)}
-          onMouseEnter={() => handleMouseEnter(value)}
-          onMouseLeave={handleMouseLeave}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-      </div>
-      <div>
-        
-      <div className="flex space-x-1 text-2xl">
-      <p className="text-lg">max rating :</p>
-      {[1, 2, 3, 4, 5].map((value) => (
-        <span
-          key={value}
-          className={`cursor-pointer transition-colors duration-300 ${value <= (hoverMax || maxRating) ? 'text-yellow-400' : 'text-gray-300'}`}
-          onClick={() => handleClick2(value)}
-          onMouseEnter={() => handleMouseEnter2(value)}
-          onMouseLeave={handleMouseLeave2}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-      </div>
-      
-    <button className="p-1 mt-10 w-full text-xl rounded-md bg-blue-600 text-white">research</button>
-    </form>
-  </div>
+            </div>
+
+            <div>
+  
+                <InputComponent value={research.Category} onChange={handelChange} name="Category" id="Category" className="custom-input mb-1 w-full p-2 rounded-md"
+                placeholder="Category"/>
+            </div>
+            <div>
+                
+                <InputComponent type='number' value={research.MinPrice} onChange={handelChange} name="MinPrice" id="MinPrice" className="custom-input mb-1 w-full p-2 rounded-md"
+                placeholder="Min Price"/>
+            </div>
+
+            <div>
+                <InputComponent type='number' value={research.MaxPrice} onChange={handelChange} name="MaxPrice" id="MaxPrice" className="custom-input mb-1 w-full p-2 rounded-md"
+                placeholder="Max Price"/>
+           </div>
+           <div>
+                <InputComponent type='number' onChange={handelChange} value={research.MinDiscount} name="MinDiscount" id="MinDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
+                 placeholder="Min Discount"/>
+           </div>
+           <div>
+                <InputComponent type='number' onChange={handelChange} value={research.MaxDiscount} name="MaxDiscount" id="MaxDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
+                 placeholder="Max Discount"/>
+           </div>
+
+           <div>
+                <InputComponent type='number' onChange={handelChange} value={research.MinRate} name="MinRate" id="MinRate" className="custom-input mb-1 w-full p-2 rounded-md"
+                placeholder="Min Rate"/>
+           </div>
+            
+           <div>
+                <InputComponent type='number' onChange={handelChange} value={research.MaxRate} name="MaxRate" id="MaxRate" className="custom-input mb-1 w-full p-2 rounded-md"
+                placeholder="Max Rate"/>
+           </div>
+
+           <button  className='w-full text-lg bg-blue-500 text-white py-2 rounded-md hover:bg-white hover:text-blue-500 hover:border transition-all'>search</button>
+        </div>
+      </List>
+    </Box>
   );
-};
 
-export default Sidebar;
-
+  return (
+    <div>
+      {(['right'] as const).map((anchor) => (
+        <React.Fragment key={anchor}>
+          <button className='py-2 px-5 rounded-md border text-blue-500 text-xl' onClick={toggleDrawer(anchor, true)}>Filter</button>
+          <SwipeableDrawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+            onOpen={toggleDrawer(anchor, true)}
+          >
+            {list()}
+          </SwipeableDrawer>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+}

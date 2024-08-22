@@ -16,6 +16,7 @@ const AddProduct = () => {
     { value: 'nvidia', label: 'nvidia' },
     { value: 'AMD', label: 'AMD' },
     { value: 'intel', label: 'intel' },
+    { value: 'Apple', label: 'Apple' },
   ];
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
@@ -272,10 +273,11 @@ const AddProduct = () => {
       if (status === 200){
         toast.success("The product has been added successfully.", {
           position: "top-right",
-          duration: 1000,
+          duration: 5000,
           style: {
-            backgroundColor: "green",
-            color: "white",
+            backgroundColor: "#90ee90",
+            color: "#000000",
+            
             width: "fit-content",
           },
         });

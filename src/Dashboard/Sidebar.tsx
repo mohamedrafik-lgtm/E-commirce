@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars,  faEdit, faBox ,faCartArrowDown} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBox ,faCartArrowDown} from '@fortawesome/free-solid-svg-icons';
 
 
 const Sidebar: React.FC = () => {
@@ -11,7 +11,7 @@ const Sidebar: React.FC = () => {
 
   const items = [
     { name: 'Add Product', icon: faCartArrowDown, path: '/Admin/AddProduct' },
-    { name: 'Update Product', icon: faEdit, path: '/update-product' },
+    
     { name: 'Products', icon: faBox, path: '/Admin/products' },
   ];
   

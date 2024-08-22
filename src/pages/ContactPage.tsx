@@ -1,10 +1,11 @@
-import Modal from "../components/Model";
+import FilterModel from "../components/FilterModel";
+
 
 const ContactPage = () => {
 
     return (
         <div className="w-1/3">
-            <Modal/>
+            <FilterModel/>
         </div>
     )
 }

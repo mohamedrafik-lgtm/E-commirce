@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import axiosInstance from '../config/axios.config';
 import{IProduct} from "../interface/index";
 import OptionsModel from "../components/DetailsModel"
+import FilterModel from '../components/FilterModel';
 
 const fetchProducts = async () => {
   const { data } = await axiosInstance.get('/api/Product');
@@ -47,6 +48,10 @@ const ProductPage = () => {
 
   return (
     <div className="w-full h-min m-5 p-4 border rounded-md flex flex-col bg-white shadow-lg">
+      <div className='mb-3 flex justify-between'>
+           <h3 className='text-xl'>Products</h3>
+          <FilterModel/>
+      </div>
       <table className="min-w-full border-collapse bg-gray-50">
         <thead>
           <tr className="bg-gray-200 border-b">
