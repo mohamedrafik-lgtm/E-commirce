@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import{ useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../App/Store";
+import ProductSlider from "../components/ProductSlider";
 
 interface ProductData {
   productId: number;
@@ -19,36 +22,49 @@ interface ProductData {
   imageUrls: string[];
 }
 
-const ProductPage: React.FC<ProductData> = ({
-  productName,
-  unitPrice,
-  description,
-  brand,
-  category,
-  unitsInStock,
-  discontinued,
-  productCode,
-  companyName,
-  contactName,
-  tags,
-  productAttributes,
-  productAttributesValues,
-  imageUrls,
-}) => {
-  const [selectedImage, setSelectedImage] = useState(imageUrls[0]);
-   
+const ProductPage = (
+//   {
+//   productName,
+//   unitPrice,
+//   description,
+//   brand,
+//   category,
+//   unitsInStock,
+//   discontinued,
+//   productCode,
+//   companyName,
+//   contactName,
+//   tags,
+//   productAttributes,
+//   productAttributesValues,
+//   imageUrls,
+// }
+) => {
+
+  const [productData, setProductData] = useState<ProductData | null>(null);
+  const productId=useSelector((state: RootState) => state.productID.productId); 
+  const [selectedImage, setSelectedImage] = useState(productData?.imageUrls[0]);
+  useEffect(() =>{
+    fetch(`http://localhost:5190/api/Product/${productId}`)
+    .then(response => response.json())
+    .then(data => {setProductData(data); setSelectedImage(data.imageUrls[0])})
+    .catch(error => console.error("Error fetching product data:", error));
+  },[productId])
+  // setSelectedImage(productData?.imageUrls[0])
+   const SimilarProducts: string = `/api/Home/${productId}/similar`
   return (
-    <div className="container mx-auto p-8 bg-white shadow-lg rounded-lg max-w-7xl">
+    <div className="space-y-10">
+      <div className="container mx-auto p-8 mt-10 bg-white shadow-lg rounded-lg max-w-7xl border">
       <div className="flex flex-col md:flex-row gap-10">
         {/* Main Product Image */}
         <div className="md:w-1/2">
           <img
             src={selectedImage}
-            alt={productName}
+            alt={productData?.productName}
             className="w-full h-96 object-contain rounded-lg shadow-md mb-4"
           />
           <div className="flex gap-3 justify-center">
-            {imageUrls.map((url, index) => (
+            {productData?.imageUrls.map((url, index) => (
               <img
                 key={index}
                 src={url}
@@ -67,17 +83,17 @@ const ProductPage: React.FC<ProductData> = ({
           <div>
           <div className="justify-end text-right">
             <span className="inline-block bg-green-500 text-white text-sm px-3 py-1 rounded-full">
-                  In Stock: {unitsInStock}
+                  In Stock: {productData?.unitsInStock}
             </span>
             </div>
             
             <h1 className="text-4xl font-bold  text-wrap text-gray-800">
-              {productName}
+              {productData?.productName}
             </h1>
             
             
             <p className="text-3xl mt-4 font-semibold mb-6">
-              ${unitPrice.toLocaleString()}
+              ${productData?.unitPrice.toLocaleString()}
             </p>
 
             <div className="mb-6">
@@ -85,28 +101,28 @@ const ProductPage: React.FC<ProductData> = ({
                 Overview
               </h2>
               <p className="text-gray-600 mb-4">
-                {description || "No description available."}
+                {productData?.description || "No description available."}
               </p>
 
               <div className="flex flex-wrap gap-4">
                 <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
-                  Brand: {brand}
+                  Brand: {productData?.brand}
                 </span>
                 <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
-                  Category: {category}
+                  Category: {productData?.category}
                 </span>
                 <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full">
-                  Code: {productCode}
+                  Code: {productData?.productCode}
                 </span>
                 
               </div>
 
               <p
                 className={`mt-4 text-lg font-semibold flex items-center ${
-                  discontinued ? "text-red-500" : "text-green-500"
+                  productData?.discontinued ? "text-red-500" : "text-green-500"
                 }`}
               >
-                {discontinued ? "Discontinued" : "Available"}
+                {productData?.discontinued ? "Discontinued" : "Available"}
               </p>
             </div>
 
@@ -115,10 +131,10 @@ const ProductPage: React.FC<ProductData> = ({
                 Attributes
               </h2>
               <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                {productAttributes.map((attr, index) => (
+                {productData?.productAttributes.map((attr, index) => (
                   <li key={index}>
                     <span className="font-medium">{attr}:</span>{" "}
-                    {productAttributesValues[index]}
+                    {productData?.productAttributesValues[index]}
                   </li>
                 ))}
               </ul>
@@ -128,7 +144,7 @@ const ProductPage: React.FC<ProductData> = ({
               <h2 className="text-xl font-semibold text-gray-800 mb-2">Tags</h2>
               <div className="flex justify-between">
               <div className="flex flex-wrap gap-2">
-                {tags.map((tag, index) => (
+                {productData?.tags.map((tag, index) => (
                   <span
                     key={index}
                     className="bg-gray-200 text-gray-800 text-sm content-center px-3 py-1 rounded-full"
@@ -137,7 +153,7 @@ const ProductPage: React.FC<ProductData> = ({
                   </span>
                 ))}
               </div>
-              <button className="rounded-md bg-blue-500 py-2 px-6 text-sm font-medium text-white focus:outline-none data-[hover]:bg-blue-600 data-[focus]:outline-1 data-[focus]:outline-white">
+              <button className="rounded-md h-fit w-40 bg-blue-500 py-2 px-6 text-sm font-medium text-white focus:outline-none data-[hover]:bg-blue-600 data-[focus]:outline-1 data-[focus]:outline-white">
               Buy Now</button>
               </div>
             </div>
@@ -148,14 +164,17 @@ const ProductPage: React.FC<ProductData> = ({
               Company Information
             </h2>
             <p className="text-gray-700 mb-1">
-              <span className="font-medium">Company Name:</span> {companyName}
+              <span className="font-medium">Company Name:</span> {productData?.companyName}
             </p>
             <p className="text-gray-700">
-              <span className="font-medium">Contact Name:</span> {contactName}
+              <span className="font-medium">Contact Name:</span> {productData?.contactName}
             </p>
           </div>
         </div>
       </div>
+    </div>
+
+    <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts} visibleProducts={6} />
     </div>
   );
 };

@@ -2,9 +2,9 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Rating } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { setProductId } from '../../App/features/productId';
-import { RootState } from '../../App/Store';
+
 import toast from 'react-hot-toast';
 
 
@@ -52,8 +52,8 @@ const HandelNavigate = ()=>{
     navigate('/home/productPage')
   },2000)
 }
-const productIdd=useSelector((state: RootState) => state.productID);
-console.log(productIdd.productId)
+
+
   if (isLoading) {
     return (
       <div  className="flex justify-center items-center h-full">

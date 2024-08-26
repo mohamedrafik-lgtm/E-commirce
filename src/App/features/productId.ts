@@ -4,10 +4,10 @@ import { AppDispatch } from '../Store';
 import { useDispatch } from 'react-redux';
 
 export interface IResearch{
-   productId:number 
+   productId:number | null
 }
 const initialState: IResearch = {
-    productId:60
+    productId:null
 }
 
 

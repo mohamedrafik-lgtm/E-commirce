@@ -9,11 +9,11 @@ import ContactPage from "../pages/ContactPage";
 import Login from "../pages/Login";
 import AdminLayout from "../pages/AdminLayout";
 import Register from "../pages/Register";
-import ProductPage from "../Dashboard/Product";
+import ProductsPage from "../Dashboard/Product";
 import AddProduct from "../Dashboard/AddProductPage";
 import VerificationCode from "../pages/VerifcationCode";
 import HomeLayout from "../pages/HomeLayout";
-import ProductPagee from "../pages/ProductPage";
+import ProductPage from "../pages/ProductPage";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
@@ -21,7 +21,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route index element={<Home/>}/>
     </Route>
     <Route path="/" element={<RootLayout/>}>
-       <Route path="/home/productPage" element={<ProductPagee productId={0} productName={""} unitPrice={0} description={null} brand={""} category={""} unitsInStock={0} discontinued={false} productCode={""} companyName={""} contactName={""} isArchived={false} tags={[]} productAttributes={[]} productAttributesValues={[]} imageUrls={[]}/>}/>
+       <Route path="/home/productPage" element={<ProductPage/>}/>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
        <Route path="Register" element={<Register/>}/>
@@ -32,7 +32,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     {/* admin route*/}
     <Route path="/Admin" element={<AdminLayout/>}>
       <Route path="/Admin/AddProduct" element={<AddProduct/>}/>
-      <Route path="/Admin/products" element={<ProductPage/>}/>
+      <Route path="/Admin/products" element={<ProductsPage/>}/>
     </Route>
     
     
