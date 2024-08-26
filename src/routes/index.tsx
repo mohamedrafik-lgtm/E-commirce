@@ -13,15 +13,15 @@ import ProductPage from "../Dashboard/Product";
 import AddProduct from "../Dashboard/AddProductPage";
 import VerificationCode from "../pages/VerifcationCode";
 import HomeLayout from "../pages/HomeLayout";
-// import Register from "../pages/Register";
+import ProductPagee from "../pages/ProductPage";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
     <Route path={"/home"} element={<HomeLayout/>}>
     <Route index element={<Home/>}/>
-    
     </Route>
     <Route path="/" element={<RootLayout/>}>
+       <Route path="/home/productPage" element={<ProductPagee productId={0} productName={""} unitPrice={0} description={null} brand={""} category={""} unitsInStock={0} discontinued={false} productCode={""} companyName={""} contactName={""} isArchived={false} tags={[]} productAttributes={[]} productAttributesValues={[]} imageUrls={[]}/>}/>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
        <Route path="Register" element={<Register/>}/>

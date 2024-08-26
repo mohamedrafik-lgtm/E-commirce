@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import  filterReducer  from './features'
+import productId from './features/productId'
 
 
 // ...
 
 export const store = configureStore({
     reducer : {
-        filterSlice:filterReducer
+        filterSlice:filterReducer,
+        productID:productId
     },
 })
 

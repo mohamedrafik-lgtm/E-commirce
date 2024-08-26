@@ -1,6 +1,13 @@
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Rating } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProductId } from '../../App/features/productId';
+import { RootState } from '../../App/Store';
+import toast from 'react-hot-toast';
+
+
 
 interface ProductCardProps {
   id: number;
@@ -9,7 +16,6 @@ interface ProductCardProps {
   unitPrice: number;
   discount: number;
   rate: number;
- 
   imageUrl: string | undefined;
   isLoading: boolean;
 }
@@ -22,12 +28,32 @@ const ProductCard: React.FC<ProductCardProps> = ({
   discount,
   rate,
   imageUrl,
-  
   isLoading,
   
 }) => {
+  
+  const dispatch = useDispatch() 
 
+const navigate = useNavigate()
 
+const HandelNavigate = ()=>{
+  dispatch(setProductId(productId))
+  toast.success(`You will navigate to the product ${productId}`, {
+    position: "top-right",
+    duration: 1000,
+    style: {
+      backgroundColor: "green",
+      color: "white",
+      width: "fit-content",
+    },
+  });
+  setTimeout(()=>{
+
+    navigate('/home/productPage')
+  },2000)
+}
+const productIdd=useSelector((state: RootState) => state.productID);
+console.log(productIdd.productId)
   if (isLoading) {
     return (
       <div  className="flex justify-center items-center h-full">
@@ -65,7 +91,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       
       
 
-      <div  className="p-4 ">
+      <div  onClick={()=> HandelNavigate()} className="p-4 cursor-pointer">
         {imageUrl ? (
           <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" />
         ) : (

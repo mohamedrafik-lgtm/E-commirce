@@ -10,7 +10,7 @@ const fetchProducts = async () => {
   return data;
 };
 
-const ProductPage = () => {
+const ProductsPage = () => {
   
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -59,7 +59,6 @@ const ProductPage = () => {
             <th className="p-3 text-center text-gray-600">Product Name</th>
             <th className="p-3 text-center text-gray-600">Category</th>
             <th className="p-3 text-center text-gray-600">Brand</th>
-            <th className="p-3 text-center text-gray-600">Supplier</th>
             <th className="p-3 text-center text-gray-600">Unit Price</th>
             <th className="p-3 text-center text-gray-600">Units in Stock</th>
             <th className="p-3 text-center text-gray-600">More choices</th>
@@ -73,7 +72,6 @@ const ProductPage = () => {
               <td className="p-3 text-center">{product.productName}</td>
               <td className="p-3 text-center">{product.category}</td>
               <td className="p-3 text-center">{product.brand}</td>
-              <td className="p-3 text-center">{product.supplier}</td>
               <td className="p-3 text-center">{product.unitPrice}</td>
               <td className="p-3 text-center">{product.unitsInStock}</td>
               <td className="p-3 text-center"><OptionsModel productId={product.productId}/></td>
@@ -140,4 +138,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductsPage;
