@@ -52,7 +52,9 @@ const HandelNavigate = ()=>{
     navigate('/home/productPage')
   },2000)
 }
-
+  const addToCart = ()=>{
+    
+  }
 
   if (isLoading) {
     return (
@@ -105,7 +107,7 @@ const HandelNavigate = ()=>{
           <p className="text-red-500">Discount: {discount}%</p>
         )}
         <Rating name="size-medium" defaultValue={rate}/>
-        <button onClick={() => console.log(productId)} className="block p-2 rounded-md bg-blue-600 text-white">Add to cart</button>
+        <button onClick={addToCart} className="block p-2 rounded-md bg-blue-600 text-white">Add to cart</button>
       
     </div>
       </div>

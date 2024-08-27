@@ -14,6 +14,7 @@ import AddProduct from "../Dashboard/AddProductPage";
 import VerificationCode from "../pages/VerifcationCode";
 import HomeLayout from "../pages/HomeLayout";
 import ProductPage from "../pages/ProductPage";
+import Category from "../Dashboard/Category";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
@@ -31,6 +32,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
     {/* admin route*/}
     <Route path="/Admin" element={<AdminLayout/>}>
+      <Route path="/Admin/category" element={<Category/>}/>
       <Route path="/Admin/AddProduct" element={<AddProduct/>}/>
       <Route path="/Admin/products" element={<ProductsPage/>}/>
     </Route>

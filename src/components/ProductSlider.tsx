@@ -12,9 +12,9 @@ interface IProps{
 }
 const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   const [loading, setLoading] = useState(true);
-  console.log(loading)
+  
     const [products, setProduct] = useState<Products[]>([]);
-    console.log(products)
+    
     useEffect(() => {
       setLoading(true)
         const fetchProducts = async () => {
@@ -30,7 +30,7 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
         fetchProducts();
       }, [endpoint]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(products)
+  
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? products.length - visibleProducts : currentIndex - 1;
@@ -42,7 +42,7 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
-
+  if(!products.length) return;
   return (
     <div className="relative  w-full/12 mr-3">
         <h3 className= "text-2xl p-2 text-center">{sliderTitle}</h3>

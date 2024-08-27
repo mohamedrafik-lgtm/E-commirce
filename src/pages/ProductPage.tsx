@@ -22,24 +22,7 @@ interface ProductData {
   imageUrls: string[];
 }
 
-const ProductPage = (
-//   {
-//   productName,
-//   unitPrice,
-//   description,
-//   brand,
-//   category,
-//   unitsInStock,
-//   discontinued,
-//   productCode,
-//   companyName,
-//   contactName,
-//   tags,
-//   productAttributes,
-//   productAttributesValues,
-//   imageUrls,
-// }
-) => {
+const ProductPage = () => {
 
   const [productData, setProductData] = useState<ProductData | null>(null);
   const productId=useSelector((state: RootState) => state.productID.productId); 

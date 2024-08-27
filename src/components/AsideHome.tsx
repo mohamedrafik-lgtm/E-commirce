@@ -1,59 +1,44 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import InputComponent from "./ui/InputComponent";
+// import InputComponent from "./ui/InputComponent";
 import axiosInstance from "../config/axios.config";
-import Slider from '@mui/material/Slider';
+// import Slider from '@mui/material/Slider';
 import { Transition } from "@headlessui/react";
 import AppleIcon from '@mui/icons-material/Apple';
 import MicrosoftIcon from '@mui/icons-material/Microsoft';
-
+import {faSearch,faBars} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import InputComponent from "./ui/InputComponent";
+import { useDispatch } from "react-redux";
+import { setFilterSlice } from "../App/features";
 interface IResearch{
-    Name: string;
+  Name: string;
   Category: string;
-  Brand: string;
+  Brand: string | null;
   MinPrice: number;
   MaxPrice: number;
   MinDiscount: number;
   MaxDiscount: number;
   MinRate: number;
   MaxRate: number;
-  slide: number;
 }
 
 
 const Sidebar: React.FC = () => {
+  const dispatch = useDispatch()
+  const [research,setResearch] = useState<IResearch>({
+    Name: '',
+    Category: '',
+    Brand: '',
+    MinPrice: 0,
+    MaxPrice: 0,
+    MinDiscount: 0,
+    MaxDiscount: 0,
+    MinRate: 0,
+    MaxRate: 0,
+  })
+
+
   
-  const [mainRating, setMinRating] = useState<number>(0);
-  const [maxRating, setMaxRating] = useState<number>(0);
-  const [hover, setHover] = useState<number>(0);
-  const [hoverMax, setHoverMax] = useState<number>(0);
-  console.log(mainRating)
-  console.log(maxRating)
-  const handleClick = (value: number) => {
-    setMinRating(value);
-  
-  };
-
-  const handleMouseEnter = (value: number) => {
-    setHover(value);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(0);
-  };
-  const handleClick2 = (value: number) => {
-    setMaxRating(value);
-  
-  };
-
-  const handleMouseEnter2 = (value: number) => {
-    setHoverMax(value);
-  };
-
-  const handleMouseLeave2 = () => {
-    setHoverMax(0);
-  };
-
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
   const options = [
@@ -84,29 +69,19 @@ const Sidebar: React.FC = () => {
   ];
 
   const handleSelect = (value: string) => {
-    setSelectedValue(value);
+    setResearch({
+      ...research,
+      Brand:value});
     setIsOpen(false);
-    console.log('القيمة المختارة:', value);
+    
   };
+
   
-  const [research,setResearch] = useState<IResearch>({
-    Name: '',
-    Category: '',
-    Brand: '',
-    MinPrice: 0,
-    MaxPrice: 0,
-    MinDiscount: 0,
-    MaxDiscount: 0,
-    MinRate: 0,
-    MaxRate: 0,
-    slide:0
-  })
-  const [slide,setSlide ] = useState<number>(10000)
-  function valuetext(value: number) {
-    setSlide(value);
-    return `${value}°C`;
-  }
-  console.log(slide)
+  // 
+  
+ 
+  console.log(research)
+
 const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
   const { value, name } = event.target;
   setResearch({
@@ -114,6 +89,7 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
   [name]: value
   })
 }
+dispatch(setFilterSlice({...research}))
   const handelSubmit = (e:FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
 
@@ -129,121 +105,200 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
     }
   }
  
-  
-  return (
-    <div
-    className={`border ml-12 from-gray-800 to-gray-600 p-5 sticky top-0  transition-all duration-300 w-64 z-50`}
-    style={{ height: 'fit-content' }}
-  >
-    <div className="flex items-center justify-between p-4">
-      <h2 className={`text-xl font-bold`}>research</h2>
-    </div>
-    <form onSubmit={handelSubmit} className={`flex flex-col space-y-2`}>
-    <div>
-        
-        <InputComponent
-        onChange={handelChange}
-        name="Name"
-        id="Name"
-        className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Product Name"
-    />
+const [isCollapsed, setIsCollapsed] = useState(false);
 
-      </div>
-      
-      <div className="relative w-full max-w-xs mx-auto">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-      >
-        {selectedValue ? options.find(option => option.value === selectedValue)?.label : 'select brand'}
-        <svg
-          className={`w-5 h-5 transition-transform transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </button>
-      <Transition
-        show={isOpen}
-        enter="transition ease-out duration-100 transform"
-        enterFrom="opacity-0 scale-95"
-        enterTo="opacity-100 scale-100"
-        leave="transition ease-in duration-75 transform"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
-      >
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
-          {options.map(option => (
-            <div
-              key={option.value}
-              onClick={() => handleSelect(option.value)}
-              className="flex items-center px-4 py-2 text-gray-700 cursor-pointer hover:bg-gray-100"
-            >
-              <span className="mr-2">{option.icon}</span>
-              {option.label}
-            </div>
-          ))}
-        </div>
-      </Transition>
-      </div>
-    <div>
-        <label htmlFor="Name" className="text-lx">min price</label>
-        <Slider getAriaValueText={valuetext} defaultValue={10000} step={10000} marks min={10000} max={100000}  />
-      </div>
-      <div>
-        <InputComponent onChange={handelChange} name="MaxPrice" id="MaxPrice" className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Max Price"/>
-      </div>
-      <div>
-        <InputComponent onChange={handelChange} name="MinDiscount" id="MinDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Min Discount"/>
-      </div>
-      <div>
-        <InputComponent onChange={handelChange} name="MaxDiscount" id="MaxDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
-        placeholder="Max Discount"/>
-      </div>
-      <div>
-      <div className="flex space-x-1 text-2xl">
-      <p className="text-lg">min rating :</p>
-      {[1, 2, 3, 4, 5].map((value) => (
-        <span
-          key={value}
-          className={`cursor-pointer transition-colors duration-300 ${value <= (hover || mainRating) ? 'text-yellow-400' : 'text-gray-300'}`}
-          onClick={() => handleClick(value)}
-          onMouseEnter={() => handleMouseEnter(value)}
-          onMouseLeave={handleMouseLeave}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-      </div>
-      <div>
-        
-      <div className="flex space-x-1 text-2xl">
-      <p className="text-lg">max rating :</p>
-      {[1, 2, 3, 4, 5].map((value) => (
-        <span
-          key={value}
-          className={`cursor-pointer transition-colors duration-300 ${value <= (hoverMax || maxRating) ? 'text-yellow-400' : 'text-gray-300'}`}
-          onClick={() => handleClick2(value)}
-          onMouseEnter={() => handleMouseEnter2(value)}
-          onMouseLeave={handleMouseLeave2}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-      </div>
-      
-    <button className="p-1 mt-10 w-full text-xl rounded-md bg-blue-600 text-white">research</button>
-    </form>
+
+
+return (
+  <form
+  className={`border h-full  from-gray-800 to-gray-600 p-2  transition-all duration-300 ${isCollapsed ? 'w-16 space-y-12' : 'w-64 space-y-6'} z-50`}
+  style={{ height: '100vh' }}
+  onSubmit={handelSubmit}
+>
+  
+  <div className={`flex items-center ${isCollapsed ?`justify-center ` : `justify-between`}  mt-5`}>
+    <h2 className={`text-2xl font-extrabold  ${isCollapsed ? 'hidden' : ''}`}>Filter</h2>
+    <button
+      className="focus:outline-none items-center"
+      onClick={() => setIsCollapsed(!isCollapsed)}
+    >
+      <FontAwesomeIcon icon={isCollapsed ? faBars :faSearch} className="text-xl" />
+    </button>
   </div>
-  );
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+</svg>
+
+            : 
+            <div>
+            <InputComponent onChange={handelChange} name="Name" id="Name" className="custom-input mb-1 w-full p-2 rounded-md"
+              placeholder="Product Name"/>
+            </div>
+            }
+  </div>
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122" />
+                  </svg>
+            : 
+            <div>
+            <InputComponent onChange={handelChange} name="Category" id="Category" className="custom-input mb-1 w-full p-2 rounded-md"
+              placeholder="Category"/>
+            </div>
+            }
+  </div>
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+          {isCollapsed ? 
+               <div className="line-through">
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                 </svg>
+               </div>
+            : 
+            <div>
+            <InputComponent onChange={handelChange} name="MinPrice"  id="MinPrice" className="custom-input mb-1 w-full p-2 rounded-md"
+              placeholder="MinPrice"/>
+            </div>
+            }
+  </div>
+
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 ">
+                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.121 7.629A3 3 0 0 0 9.017 9.43c-.023.212-.002.425.028.636l.506 3.541a4.5 4.5 0 0 1-.43 2.65L9 16.5l1.539-.513a2.25 2.25 0 0 1 1.422 0l.655.218a2.25 2.25 0 0 0 1.718-.122L15 15.75M8.25 12H12m9 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+            : 
+            <div>
+            <InputComponent onChange={handelChange} name="MaxPrice" type="number" id="MaxPrice" className="custom-input mb-1 w-full p-2 rounded-md"
+              placeholder="MaxPrice"/>
+            </div>
+            }
+  </div>
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+    {isCollapsed ? 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+  </svg>
+  
+  
+    : 
+    <div className="relative w-full max-w-xs mx-auto">
+    <button
+      onClick={() => setIsOpen(!isOpen)}
+      className="flex items-center justify-between w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+    >
+      {research.Brand ? options.find(option => option.value === research.Brand)?.label : 'select brand'}
+      <svg
+        className={`w-5 h-5 transition-transform transform ${isOpen ? 'rotate-180' : ''}`}
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    <Transition
+      show={isOpen}
+      enter="transition ease-out duration-100 transform"
+      enterFrom="opacity-0 scale-95"
+      enterTo="opacity-100 scale-100"
+      leave="transition ease-in duration-75 transform"
+      leaveFrom="opacity-100 scale-100"
+      leaveTo="opacity-0 scale-95"
+    >
+      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+        {options.map(option => (
+          <div
+            key={option.value}
+            onClick={() => handleSelect(option.value)}
+            className="flex items-center px-4 py-2 text-gray-700 cursor-pointer hover:bg-gray-100"
+          >
+            <span className="mr-2">{option.icon}</span>
+            {option.label}
+          </div>
+        ))}
+      </div>
+    </Transition>
+    </div>
+    }
+  </div>
+
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? 
+             <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" strokeWidth="1.5" />
+                  </svg>
+             </div>
+            : 
+            <div>
+            <InputComponent onChange={handelChange} name="MinDiscount" type="number" id="MinDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
+              placeholder="Min Discount"/>
+            </div>
+            }
+  </div>
+
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? 
+             <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" strokeWidth="1.5" />
+                  </svg>
+             </div>
+            : 
+            <div>
+            <InputComponent onChange={handelChange} name="MaxDiscount" id="MaxDiscount" type="number" className="custom-input mb-1 w-full p-2 rounded-md"
+              placeholder="Max Discount"/>
+            </div>
+            }
+  </div>
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? 
+             <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181" />
+                  </svg>
+             </div>
+            : 
+            <div >
+            <InputComponent onChange={handelChange} name="MinRate" id="MinRate" type="number" max={5}  className="w-full custom-input mb-1 p-2 rounded-md"
+              placeholder="Min Rate"/>
+            </div>
+            }
+  </div>
+
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? 
+             <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" />
+                  </svg>
+             </div>
+            : 
+            <div >
+            <InputComponent onChange={handelChange} name="MaxRate" id="MaxRate" type="number" max={5}  className="w-full custom-input mb-1 p-2 rounded-md"
+              placeholder="MaxRate"/>
+            </div>
+            }
+  </div>
+  <div className={`flex flex-col mt-6 ${isCollapsed ? 'items-center' : 'items-start'}`}>
+  {isCollapsed ? 
+             <div>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                       <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                  </svg>
+             </div>
+            : 
+            <div className="w-full">
+            <button className="w-full py-3 font-semibold tracking-wider text-xl rounded-md bg-blue-600 text-white">Filter</button>
+            </div>
+            }
+  </div>
+</form>
+);
 };
 
 export default Sidebar;

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 export interface IResearch{
     Name: string;
   Category: string;
-  Brand: string;
+  Brand: string | null;
   MinPrice: number;
   MaxPrice: number;
   MinDiscount: number;
