@@ -4,33 +4,27 @@ import { AppDispatch } from '../Store';
 import { useDispatch } from 'react-redux';
 
 export interface IResearch{
-    Name: string;
-  Category: string;
-  Brand: string | null;
-  MinPrice: number;
-  MaxPrice: number;
-  MinDiscount: number;
-  MaxDiscount: number;
-  MinRate: number;
-  MaxRate: number;
+  productId: number| null;
+  productName:string;
+  imageUrl:string;
+  discount:number;
+  rate:number;
+  unitPrice:number;
 }
 const initialState: IResearch = {
-    Name: '',
-    Category: '',
-    Brand: '',
-    MinPrice: 0,
-    MaxPrice: 0,
-    MinDiscount: 0,
-    MaxDiscount: 0,
-    MinRate: 0,
-    MaxRate: 0,
+  productId: null,
+  productName:'',
+  imageUrl:'',
+  discount:0,
+  rate:0,
+  unitPrice:0,
 }
 
 export const filter = createSlice({
   name: 'filterSlice',
   initialState,
   reducers: {
-    setFilterSlice:(state, action: PayloadAction<IResearch>)=>{
+    setFilterSlice:(state, action: PayloadAction<IResearch[]>)=>{
         Object.assign(state, action.payload);
     }
   },

@@ -1,7 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-// import InputComponent from "./ui/InputComponent";
 import axiosInstance from "../config/axios.config";
-// import Slider from '@mui/material/Slider';
 import { Transition } from "@headlessui/react";
 import AppleIcon from '@mui/icons-material/Apple';
 import MicrosoftIcon from '@mui/icons-material/Microsoft';
@@ -75,11 +73,7 @@ const Sidebar: React.FC = () => {
     setIsOpen(false);
     
   };
-
   
-  // 
-  
- 
   console.log(research)
 
 const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
@@ -89,23 +83,32 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
   [name]: value
   })
 }
-dispatch(setFilterSlice({...research}))
-  const handelSubmit = (e:FormEvent<HTMLFormElement>) =>{
-    e.preventDefault();
 
+  const handelSubmit =async (e:FormEvent<HTMLFormElement>) =>{
+    e.preventDefault();
+    
     try {
-       const response = axiosInstance.get("/api/Home/filter",{
+       const response =await axiosInstance.get("/api/Home/filter",{
         params: {
-         ...research
+         Name:research.Name,
+         Category:research.Category,
+         Brand: research.Brand,
+         MinPrice:research.MinPrice,
+         MaxPrice:research.MaxPrice,
+         MinDiscount:research.MinDiscount,
+         MaxDiscount:research.MaxDiscount,
+         MinRate: research.MinRate,
+         MaxRate: research.MaxRate,
         }
-       })
-       console.log(response)
+       }).then( (response) => response.data)
+      
+       dispatch(setFilterSlice({...response}))
     } catch (error) {
       console.log(error)
     }
   }
  
-const [isCollapsed, setIsCollapsed] = useState(false);
+const [isCollapsed, setIsCollapsed] = useState(true);
 
 
 
@@ -169,8 +172,8 @@ return (
                   </svg>
             : 
             <div>
-            <InputComponent onChange={handelChange} name="MaxPrice" type="number" id="MaxPrice" className="custom-input mb-1 w-full p-2 rounded-md"
-              placeholder="MaxPrice"/>
+            <InputComponent onChange={handelChange} name="MaxPrice"  id="MaxPrice" className="custom-input mb-1 w-full p-2 rounded-md"
+              placeholder="Max Price"/>
             </div>
             }
   </div>
@@ -179,8 +182,6 @@ return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
     <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
   </svg>
-  
-  
     : 
     <div className="relative w-full max-w-xs mx-auto">
     <button
@@ -234,7 +235,7 @@ return (
              </div>
             : 
             <div>
-            <InputComponent onChange={handelChange} name="MinDiscount" type="number" id="MinDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
+            <InputComponent onChange={handelChange} name="MinDiscount"  id="MinDiscount" className="custom-input mb-1 w-full p-2 rounded-md"
               placeholder="Min Discount"/>
             </div>
             }
@@ -250,7 +251,7 @@ return (
              </div>
             : 
             <div>
-            <InputComponent onChange={handelChange} name="MaxDiscount" id="MaxDiscount" type="number" className="custom-input mb-1 w-full p-2 rounded-md"
+            <InputComponent onChange={handelChange} name="MaxDiscount" id="MaxDiscount"  className="custom-input mb-1 w-full p-2 rounded-md"
               placeholder="Max Discount"/>
             </div>
             }
@@ -264,7 +265,7 @@ return (
              </div>
             : 
             <div >
-            <InputComponent onChange={handelChange} name="MinRate" id="MinRate" type="number" max={5}  className="w-full custom-input mb-1 p-2 rounded-md"
+            <InputComponent onChange={handelChange} name="MinRate" id="MinRate" className="w-full custom-input mb-1 p-2 rounded-md"
               placeholder="Min Rate"/>
             </div>
             }
@@ -279,8 +280,8 @@ return (
              </div>
             : 
             <div >
-            <InputComponent onChange={handelChange} name="MaxRate" id="MaxRate" type="number" max={5}  className="w-full custom-input mb-1 p-2 rounded-md"
-              placeholder="MaxRate"/>
+            <InputComponent onChange={handelChange} name="MaxRate" id="MaxRate"  className="w-full custom-input mb-1 p-2 rounded-md"
+              placeholder="Max Rate"/>
             </div>
             }
   </div>
@@ -293,7 +294,7 @@ return (
              </div>
             : 
             <div className="w-full">
-            <button className="w-full py-3 font-semibold tracking-wider text-xl rounded-md bg-blue-600 text-white">Filter</button>
+            <button  className="w-full py-3 font-semibold tracking-wider text-xl rounded-md bg-blue-600 text-white">Filter</button>
             </div>
             }
   </div>
