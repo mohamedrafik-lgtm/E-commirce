@@ -8,7 +8,7 @@ export interface IResearch{
   productName:string;
   imageUrl:string;
   discount:number;
-  rate:number;
+  rate?:number;
   unitPrice:number;
 }
 const initialState: IResearch = {

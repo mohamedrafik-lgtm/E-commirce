@@ -121,3 +121,11 @@ export interface ISettings{
     label?:string;
     placeholder:string;
   }
+
+  export interface ISearchValue {
+    productName:string;
+    productId:number | null;
+    imageUrl:string;
+    discount:number;
+    unitPrice:number;
+}

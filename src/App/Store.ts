@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import  filterReducer  from './features'
 import productId from './features/productId'
+import  SearchSlice  from './features/Search'
 
 
 // ...
@@ -8,7 +9,8 @@ import productId from './features/productId'
 export const store = configureStore({
     reducer : {
         filterSlice:filterReducer,
-        productID:productId
+        productID:productId,
+        Search:SearchSlice
     },
 })
 

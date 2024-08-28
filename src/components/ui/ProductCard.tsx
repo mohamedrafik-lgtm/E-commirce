@@ -4,7 +4,6 @@ import { Rating } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch} from 'react-redux';
 import { setProductId } from '../../App/features/productId';
-
 import toast from 'react-hot-toast';
 
 
@@ -29,7 +28,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   rate,
   imageUrl,
   isLoading,
-  
 }) => {
   
   const dispatch = useDispatch() 
