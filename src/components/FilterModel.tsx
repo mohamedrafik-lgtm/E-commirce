@@ -12,7 +12,7 @@ import { setFilterSlice } from '../App/features';
 import { RootState } from '../App/Store';
 type Anchor = 'right';
 interface IResearch{
-    Name: string;
+  Name: string;
   Category: string;
   Brand: string;
   MinPrice: number;

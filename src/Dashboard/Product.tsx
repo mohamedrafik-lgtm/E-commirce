@@ -4,6 +4,7 @@ import axiosInstance from '../config/axios.config';
 import{IProduct} from "../interface/index";
 import OptionsModel from "../components/DetailsModel"
 import FilterModel from '../components/FilterModel';
+import toast from 'react-hot-toast';
 
 const fetchProducts = async () => {
   const { data } = await axiosInstance.get('/api/Product');
@@ -43,6 +44,26 @@ const ProductsPage = () => {
     setCurrentPage(1); 
   };
 
+  const ExportPdf =async () => {
+    // Export to PDF code goes here
+    try {
+      const {status} = await axiosInstance.get("/api/Product/export-pdf")
+      if (status === 200) {
+        toast.success("The product file has been exported successfully.", {
+          position: "top-right",
+          duration: 1500,
+          style: {
+            backgroundColor: "black",
+            color: "white",
+            width: "fit-content",
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (isLoading) return <div className="text-center py-4">Loading...</div>;
   if (error) return <div className="text-center py-4 text-red-600">Error loading products</div>;
 
@@ -50,7 +71,10 @@ const ProductsPage = () => {
     <div className="w-full h-min m-5 p-4 border rounded-md flex flex-col bg-white shadow-lg">
       <div className='mb-3 flex justify-between'>
            <h3 className='text-xl'>Products</h3>
-          <FilterModel/>
+           <div className='flex space-x-3'>
+            <button onClick={ExportPdf} className='py-2 px-4 text-blue-500 font-semibold  rounded-md border'>Export-pdf</button>
+           <FilterModel/>
+           </div>
       </div>
       <table className="min-w-full border-collapse bg-gray-50">
         <thead>

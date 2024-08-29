@@ -77,7 +77,7 @@ export default function Modal({productId}:IProp) {
 
         fileArray.forEach(file => {
           const kbSize = bytesToKb(file.size);
-          console.log(`حجم الصورة: ${kbSize} KB`);
+          console.log(`image size: ${kbSize} KB`);
         });
       });
     }
