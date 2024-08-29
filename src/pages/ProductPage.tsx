@@ -36,8 +36,8 @@ const ProductPage = () => {
   // setSelectedImage(productData?.imageUrls[0])
    const SimilarProducts: string = `/api/Home/${productId}/similar`
   return (
-    <div className="space-y-10">
-      <div className="container mx-auto p-8 mt-10 bg-white shadow-lg rounded-lg max-w-7xl border">
+    <div className="w-full">
+      <div className="container mx-auto p-8 mt-10 mb-10 bg-white shadow-lg rounded-lg max-w-7xl border">
       <div className="flex flex-col md:flex-row gap-10">
         {/* Main Product Image */}
         <div className="md:w-1/2">
@@ -155,9 +155,9 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
 
-    <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts} visibleProducts={6} />
+      <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts} visibleProducts={6} />
     </div>
   );
 };

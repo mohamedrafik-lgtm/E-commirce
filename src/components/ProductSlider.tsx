@@ -44,7 +44,7 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   };
   if(!products.length) return;
   return (
-    <div className="relative  w-full/12 mr-3">
+    <div className="relative  w-full mr-3">
         <h3 className= "text-2xl p-2 text-center">{sliderTitle}</h3>
          <hr className="w-3/4 mx-auto"/>
       <button

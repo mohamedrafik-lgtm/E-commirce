@@ -114,8 +114,8 @@ const [isCollapsed, setIsCollapsed] = useState(true);
 
 return (
   <form
-  className={`border h-full  from-gray-800 to-gray-600 p-2  transition-all duration-300 ${isCollapsed ? 'w-16 space-y-12' : 'w-64 space-y-6'} z-50`}
-  style={{ height: '100vh' }}
+  className={`border h-full  from-gray-800 to-gray-600 p-2  transition-all duration-300 ${isCollapsed ? 'w-16 space-y-12 h-96' : 'w-64 space-y-6'} z-50`}
+  // style={{ height: '100vh' }}
   onSubmit={handelSubmit}
 >
   

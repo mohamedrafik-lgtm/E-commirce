@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 
 // import AccountDropdownWithaccount from "./ui/AccountDropdownWithaccount"
 import Dropdown from "./ui/Dropdown"
@@ -10,8 +10,8 @@ import { useDispatch } from "react-redux";
 import { setSearchSlice } from "../App/features/Search";
 
 const NavPar = () => {
+    const navigate = useNavigate()
     const [searchText, setSearchText] = useState('')
-    console.log(searchText)
     const isLogdin: boolean = false
     const options = [
         { label: 'Account Settings', icon: faCog, path:"#" },
@@ -19,7 +19,7 @@ const NavPar = () => {
         { label: 'Dashboard', icon: faDashboard , path:"#"}
       ];
       const dispatch = useDispatch()
-    
+     
       const onSubmit =async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         
@@ -29,7 +29,7 @@ const NavPar = () => {
                     searchTerm:searchText
                 }
             }).then( (response)=> response.data)
-            console.log(res)
+            navigate("/home/search")
             dispatch(setSearchSlice(res))
         } catch (error) {
             console.log(error)

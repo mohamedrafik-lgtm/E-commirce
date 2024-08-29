@@ -15,20 +15,23 @@ import VerificationCode from "../pages/VerifcationCode";
 import HomeLayout from "../pages/HomeLayout";
 import ProductPage from "../pages/ProductPage";
 import Category from "../Dashboard/Category";
+import FilterProduct from "../components/FilterProduct";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
+    {/* home route */}
     <Route path={"/home"} element={<HomeLayout/>}>
-    <Route index element={<Home/>}/>
-    </Route>
-    <Route path="/" element={<RootLayout/>}>
+       <Route index element={<Home/>}/>
        <Route path="/home/productPage" element={<ProductPage/>}/>
+       <Route path={"/home/search"} element={<FilterProduct/>}/>
+    </Route>
+    {/* root route */}
+    <Route path="/" element={<RootLayout/>}>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
        <Route path="Register" element={<Register/>}/>
        <Route path="VerificationCode" element={<VerificationCode/>}/>
        <Route path="Login" element={<Login/>}/>
-       
     </Route>
     {/* admin route*/}
     <Route path="/Admin" element={<AdminLayout/>}>

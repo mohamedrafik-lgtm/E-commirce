@@ -12,8 +12,8 @@ const HomeLayout = () => {
            <NavPar/>
            <div >
 
-            <main className="flex ">
-                <div  className="sticky">
+            <main>
+                <div  className="absolute top-24 h-fit bg-white z-50">
                 <AsideHome />
                 </div>
                 <Outlet />

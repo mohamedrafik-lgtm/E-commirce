@@ -10,7 +10,7 @@ const FilterProduct = ()=>{
     isLoading={false} productId={product.productId as number} productName={product.productName}/>
  </div>)
     return (
-        <div className="flex mt-5 mx-auto ml-8 space-y-4 flex-wrap">
+        <div className="flex ml-20 space-y-4 flex-wrap">
             {
                 rinderFilterProduct
             }

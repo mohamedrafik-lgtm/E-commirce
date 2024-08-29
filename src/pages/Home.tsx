@@ -2,18 +2,17 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ImageSlider from "../components/Slider";
 import ProductSlider from "../components/ProductSlider";
-import { useSelector } from "react-redux";
-import { RootState } from "../App/Store";
-import FilterProduct from "../components/FilterProduct";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../App/Store";
+// import FilterProduct from "../components/FilterProduct";
 
 
 export const Home = () => {
 
   
   // const filterdValue = useSelector((state:RootState) => state.filterSlice)
-  const searchValue = useSelector((state:RootState) => state.Search)
+  // const searchValue = useSelector((state:RootState) => state.Search)
   
-  console.log(searchValue)
   const images = [
     '/IMG/iphone-14-lg-fornece-tela-oled_2.jpg',
     '/IMG/iphone-14-lg-fornece-tela-oled_2.jpg',
@@ -24,10 +23,10 @@ export const Home = () => {
    const topSelling:string = '/api/Home/top-selling'
    const outOfStock:string = '/api/Home/out-of-stock'
    const onSale:string = "/api/Home/on-sale"
-   const renderSearchComponent =  <FilterProduct/>
-   if(searchValue.length){
-    return renderSearchComponent
-   }
+    
+  //  if(searchValue.length){
+  //   return <FilterProduct/>
+  //  }
   return (
     <div className="overflow-hidden">
                  
