@@ -1,9 +1,10 @@
+import SliderCategory from "../components/SliderCategory";
 
 const ContactPage = () => {
     
     return (
-        <div className="bg-gray-100 min-h-screen flex items-center justify-center">
-            
+        <div className="w-2/4 mx-auto">
+            <SliderCategory visibleProducts={5} endpoint={"/GetAll"} sliderTitle={"Category"}/>
         </div>
     )
 }
