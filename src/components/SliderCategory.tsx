@@ -1,7 +1,6 @@
 import  { useEffect, useState } from "react";
-import { Products } from "../interface";
 import axiosInstance from "../config/axios.config";
-import ProductCard from "./ui/ProductCard";
+import CategoryCard from "./ui/CategoryCart";
 
 
 
@@ -12,14 +11,14 @@ interface IProps{
 }
 const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   const [loading, setLoading] = useState(true);
-  
-    const [products, setProduct] = useState<Products[]>([]);
+     console.log(loading)
+    const [products, setProduct] = useState<{name:string,description:string}[]>([]);
     
     useEffect(() => {
       setLoading(true)
         const fetchProducts = async () => {
           try {
-            const {data} = await axiosInstance.get(endpoint);
+            const {data} = await axiosInstance.get("/GetAll");
             setProduct(data);
             setLoading(false)
           } catch (error) {
@@ -44,12 +43,14 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   };
   if(!products.length) return;
   return (
-    <div className="relative  w-full mr-3">
-        <h3 className= "text-2xl p-2 text-center">{sliderTitle}</h3>
-         <hr className="w-3/4 mx-auto"/>
+    <div style={{
+        borderRadius: '15px'
+    }} className="relative w-full mr-3 p-4 border rounded-md">
+        <h3 className= "text-2xl p-2 ml-6">{sliderTitle} :</h3>
+         <hr className="w-48 ml-6"/>
       <button
         onClick={goToPrevious}
-        className="absolute top-1/2 transform -translate-y-1/2 left-4 w-7 h-7 bg-gray-800 text-white  rounded-full hover:bg-gray-700 transition duration-300 z-10"
+        className="absolute top-36 transform -translate-y-1/2 -left-5 w-7 h-7 bg-gray-800 text-white  rounded-full hover:bg-gray-700 transition duration-300 z-10"
       >
         ❮
       </button>
@@ -62,21 +63,22 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
         >
 
 
-          {products.map((product, index) => (
+          {products.map((Category, index) => (
             <div
               key={index}
               className="flex-shrink-0 duration-300 hover:scale-105 p-4"
               style={{ width: `${100 / visibleProducts}%` }}
             >
-              <ProductCard key={product.productId} id={product.id} discount={product.discount} imageUrl={product.imageUrl} rate={product.rate} unitPrice={product.unitPrice}
-               isLoading={loading} productId={product.productId} productName={product.productName}/>
+              <div className="flex justify-center items-center h-fit bg-gray-100">
+                <CategoryCard name={Category.name} description={"The apple is one of the pome (fleshy) fruits. Apples at harvest vary widely in size"} />
+                 </div>
             </div>
           ))}
         </div>
       </div>
       <button
         onClick={goToNext}
-        className="absolute top-1/2 transform -translate-y-1/2 right-0 w-7 h-7 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition duration-300 z-10"
+        className="absolute top-36 transform -translate-y-1/2 -right-5 w-7 h-7 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition duration-300 z-10"
       >
         ❯
       </button>

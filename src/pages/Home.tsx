@@ -2,6 +2,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ImageSlider from "../components/Slider";
 import ProductSlider from "../components/ProductSlider";
+import SliderCategory from "@/components/SliderCategory";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../App/Store";
 // import FilterProduct from "../components/FilterProduct";
@@ -42,9 +43,13 @@ export const Home = () => {
                  <div>
                  <ProductSlider sliderTitle="on sale" endpoint={onSale} visibleProducts={6} />
                  </div>
-                 <div>
+                 <div className="mb-14">
                  <ProductSlider sliderTitle="Out Of Stock" endpoint={outOfStock} visibleProducts={6} />
                  </div>
+                 <hr className="w-10/12 mx-auto"/>
+                 <div className="w-4/6 mt-10 mx-auto">
+                        <SliderCategory visibleProducts={5} endpoint={"/GetAll"} sliderTitle={"Category"}/>
+                  </div>
     </div>
   );
 };
