@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import{ useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../App/Store";
 import ProductSlider from "../components/ProductSlider";
+import { setProductId } from "@/App/features/productId";
 
 interface ProductData {
   productId: number;
@@ -23,16 +25,31 @@ interface ProductData {
 }
 
 const ProductPage = () => {
-
+  const dispatch = useDispatch();
   const [productData, setProductData] = useState<ProductData | null>(null);
-  const productId=useSelector((state: RootState) => state.productID.productId); 
+  let productId=useSelector((state: RootState) => state.productID.productId); 
   const [selectedImage, setSelectedImage] = useState(productData?.imageUrls[0]);
-  useEffect(() =>{
-    fetch(`http://localhost:5190/api/Product/${productId}`)
-    .then(response => response.json())
-    .then(data => {setProductData(data); setSelectedImage(data.imageUrls[0])})
-    .catch(error => console.error("Error fetching product data:", error));
-  },[productId])
+  useEffect(() => {
+    if (!productId) {
+        const storedProductId = localStorage.getItem('selectedProductId');
+        if (storedProductId) {
+            
+            productId = +storedProductId; 
+            dispatch(setProductId(productId)); 
+        }
+    }
+
+    if (productId) {
+        fetch(`http://localhost:5190/api/Product/${productId}`)
+            .then(response => response.json())
+            .then(data => {
+                setProductData(data);
+                setSelectedImage(data.imageUrls[0]);
+            })
+            .catch(error => console.error("Error fetching product data:", error));
+    }
+}, [productId, dispatch]);
+
   // setSelectedImage(productData?.imageUrls[0])
    const SimilarProducts: string = `/api/Home/${productId}/similar`
   return (

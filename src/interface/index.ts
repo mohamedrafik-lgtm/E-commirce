@@ -129,3 +129,12 @@ export interface ISettings{
     discount:number;
     unitPrice:number;
 }
+
+export interface IDiscount {
+  discountId:number;
+  discountAmount:number;
+  startDate:string;
+  endDate:string;
+  productId:number;
+  product:string 
+}

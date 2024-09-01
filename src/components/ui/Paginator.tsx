@@ -11,7 +11,6 @@ const PaginationControlled = () => {
 
   return (
     <Stack spacing={2}>
-      
       <Pagination count={10} page={page} onChange={handleChange} />
     </Stack>
   );

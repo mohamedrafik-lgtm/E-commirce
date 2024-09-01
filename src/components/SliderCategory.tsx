@@ -18,7 +18,7 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
       setLoading(true)
         const fetchProducts = async () => {
           try {
-            const {data} = await axiosInstance.get("/GetAll");
+            const {data} = await axiosInstance.get(endpoint);
             setProduct(data);
             setLoading(false)
           } catch (error) {

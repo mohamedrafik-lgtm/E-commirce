@@ -1,11 +1,10 @@
-import React from 'react';
 
 interface CategoryCardProps {
   name: string;
   description: string;
 }
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ name, description }) => {
+const CategoryCard = ({ name, description }:CategoryCardProps) => {
   return (
     <div style={{
         borderRadius:"15px"

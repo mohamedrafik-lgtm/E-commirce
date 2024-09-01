@@ -70,6 +70,8 @@ const AddProduct = () => {
     brands:''
   })
    console.log(errors)
+
+  //  handlers
   const bytesToKb = (bytes: number): number => {
     return Math.round(bytes / 1024);
   };
@@ -216,18 +218,11 @@ const AddProduct = () => {
   const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEndDate(event.target.value);
   };
-  
-
-  // const handleShowToast = () => {
-  //   setShowToast(true);
-  //   setTimeout(() => {
-  //     setShowToast(false);
-  //   }, 3000); 
-  // };
- 
   const url: string = "/api/Product";
   const [loading, setLoading] = useState(false);
   
+
+  // add product request
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
@@ -243,7 +238,6 @@ const AddProduct = () => {
       return;
     }
     setLoading(true)
-    // product request
     const previewsString: string = previews.join(',');
     const formData = new FormData();
     formData.append('ProductName', ProductInformation.productName);
@@ -277,7 +271,6 @@ const AddProduct = () => {
           style: {
             backgroundColor: "#90ee90",
             color: "#000000",
-            
             width: "fit-content",
           },
         });

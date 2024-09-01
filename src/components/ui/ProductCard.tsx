@@ -36,6 +36,7 @@ const navigate = useNavigate()
 
 const HandelNavigate = ()=>{
   dispatch(setProductId(productId))
+  localStorage.setItem('selectedProductId', productId.toString());
   toast.success(`You will navigate to the product ${productId}`, {
     position: "top-right",
     duration: 1000,
@@ -72,25 +73,6 @@ const HandelNavigate = ()=>{
   
   return (
     <div  className="bg-white border rounded-lg shadow-md overflow-hidden ml-5">
-      {isLoading ?
-
-      <div>
-      <Stack spacing={1}>
-      {/* For variant="text", adjust the height via font-size */}
-      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-
-      {/* For other variants, adjust the size with `width` and `height` */}
-      <Skeleton variant="circular" width={40} height={40} />
-      <Skeleton variant="rectangular" width={210} height={60} />
-      <Skeleton variant="rounded" width={210} height={60} />
-    </Stack> 
-      </div>
-    
-    : null}
-    
-      
-      
-
       <div  onClick={()=> HandelNavigate()} className="p-4 cursor-pointer">
         {imageUrl ? (
           <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" />
