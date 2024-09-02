@@ -45,12 +45,12 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   return (
     <div style={{
         borderRadius: '15px'
-    }} className="relative w-full mr-3 p-4 border rounded-md">
-        <h3 className= "text-2xl p-2 ml-6">{sliderTitle} :</h3>
-         <hr className="w-48 ml-6"/>
+    }} className="relative w-full mr-3 p-4">
+        <h3 className= "text-2xl p-2 ml-6 mb-4 sliderTitle">{sliderTitle} :</h3>
+         
       <button
         onClick={goToPrevious}
-        className="absolute top-36 transform -translate-y-1/2 -left-5 w-7 h-7 bg-gray-800 text-white  rounded-full hover:bg-gray-700 transition duration-300 z-10"
+        className="absolute top-52 transform -translate-y-1/2 -left-5 w-7 h-7 bg-gray-800 text-white  rounded-full hover:bg-gray-700 transition duration-300 z-10"
       >
         ❮
       </button>
@@ -66,10 +66,12 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
           {products.map((Category, index) => (
             <div
               key={index}
-              className="flex-shrink-0 duration-300 hover:scale-105 p-4"
-              style={{ width: `${100 / visibleProducts}%` }}
+              className="flex-shrink-0 duration-300 h-fit hover:scale-105 p-4"
+              style={{ width: `${100 / visibleProducts}%` ,
+                
+              }}
             >
-              <div className="flex justify-center items-center h-fit bg-gray-100">
+              <div className="flex w-fit bg-gray-100">
                 <CategoryCard name={Category.name} description={"The apple is one of the pome (fleshy) fruits. Apples at harvest vary widely in size"} />
                  </div>
             </div>
@@ -78,7 +80,7 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
       </div>
       <button
         onClick={goToNext}
-        className="absolute top-36 transform -translate-y-1/2 -right-5 w-7 h-7 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition duration-300 z-10"
+        className="absolute top-52 transform -translate-y-1/2 -right-5 w-7 h-7 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition duration-300 z-10"
       >
         ❯
       </button>

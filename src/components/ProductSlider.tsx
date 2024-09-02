@@ -45,8 +45,10 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   if(!products.length) return;
   return (
     <div className="relative  w-full mr-3">
+        <div className="mb-5">
         <h3 className= "text-2xl p-2 text-center">{sliderTitle}</h3>
-         <hr className="w-3/4 mx-auto"/>
+        <hr className="w-3/4 mx-auto"/>
+        </div>
       <button
         onClick={goToPrevious}
         className="absolute top-1/2 transform -translate-y-1/2 left-4 w-7 h-7 bg-gray-800 text-white  rounded-full hover:bg-gray-700 transition duration-300 z-10"

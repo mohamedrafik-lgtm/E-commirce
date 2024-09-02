@@ -91,6 +91,15 @@
   background: none;
 }
 
+.sliderTitle::before{
+  content: '';
+  width: 1px;
+  height: 20px;
+  padding: 6px;
+  position: relative;
+  left: -6px;
+  background: black;
+}
 
   
   
