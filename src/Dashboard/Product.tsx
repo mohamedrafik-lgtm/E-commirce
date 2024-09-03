@@ -48,6 +48,7 @@ const ProductsPage = () => {
     // Export to PDF code goes here
     try {
       const {status} = await axiosInstance.get("/api/Product/export-pdf")
+      
       if (status === 200) {
         toast.success("The product file has been exported successfully.", {
           position: "top-right",
@@ -63,6 +64,7 @@ const ProductsPage = () => {
       console.log(error);
     }
   };
+
 
   if (isLoading) return <div className="text-center py-4">Loading...</div>;
   if (error) return <div className="text-center py-4 text-red-600">Error loading products</div>;

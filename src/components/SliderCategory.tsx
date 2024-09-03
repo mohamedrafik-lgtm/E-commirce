@@ -11,9 +11,8 @@ interface IProps{
 }
 const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   const [loading, setLoading] = useState(true);
-     console.log(loading)
     const [products, setProduct] = useState<{name:string,description:string}[]>([]);
-    
+    console.log(loading)
     useEffect(() => {
       setLoading(true)
         const fetchProducts = async () => {
@@ -28,6 +27,7 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
         
         fetchProducts();
       }, [endpoint]);
+      
   const [currentIndex, setCurrentIndex] = useState(0);
   
   const goToPrevious = () => {

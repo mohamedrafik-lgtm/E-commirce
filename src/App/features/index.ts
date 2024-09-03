@@ -11,20 +11,13 @@ export interface IResearch{
   rate?:number;
   unitPrice:number;
 }
-const initialState: IResearch = {
-  productId: null,
-  productName:'',
-  imageUrl:'',
-  discount:0,
-  rate:0,
-  unitPrice:0,
-}
+const initialState: IResearch[] = []
 
 export const filter = createSlice({
   name: 'filterSlice',
   initialState,
   reducers: {
-    setFilterSlice:(state, action: PayloadAction<IResearch[]>)=>{
+    setFilterSlice:(state, action: PayloadAction<IResearch>)=>{
         Object.assign(state, action.payload);
     }
   },

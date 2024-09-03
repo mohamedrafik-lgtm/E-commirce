@@ -50,7 +50,7 @@ const ProductPage = () => {
     }
 }, [productId, dispatch]);
 
-  // setSelectedImage(productData?.imageUrls[0])
+  
    const SimilarProducts: string = `/api/Home/${productId}/similar`
   return (
     <div className="w-full">

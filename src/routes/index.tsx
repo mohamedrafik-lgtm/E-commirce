@@ -15,8 +15,9 @@ import VerificationCode from "../pages/VerifcationCode";
 import HomeLayout from "../pages/HomeLayout";
 import ProductPage from "../pages/ProductPage";
 import Category from "../Dashboard/Category";
-import FilterProduct from "../components/FilterProduct";
+import {SearchProduct} from "../components/SearchProduct";
 import Discount from "@/Dashboard/Discount";
+import { FilterProduct } from "@/components/FilterProduct";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
@@ -24,7 +25,9 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path={"/home"} element={<HomeLayout/>}>
        <Route index element={<Home/>}/>
        <Route path="/home/productPage" element={<ProductPage/>}/>
-       <Route path={"/home/search"} element={<FilterProduct/>}/>
+       <Route path={"/home/search"} element={<SearchProduct/>}/>
+       <Route path={"/home/filter"} element={<FilterProduct/>}/>
+
     </Route>
     {/* root route */}
     <Route path="/" element={<RootLayout/>}>

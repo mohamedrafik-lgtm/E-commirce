@@ -8,6 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InputComponent from "./ui/InputComponent";
 import { useDispatch } from "react-redux";
 import { setFilterSlice } from "../App/features";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@/App/Store";
+
 interface IResearch{
   Name: string;
   Category: string;
@@ -84,29 +88,32 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
   })
 }
 
+
+const navigate = useNavigate()
+const filterSlice = useSelector((state:RootState) => state.filterSlice)
   const handelSubmit =async (e:FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
-    
     try {
        const response =await axiosInstance.get("/api/Home/filter",{
         params: {
-         Name:research.Name,
-         Category:research.Category,
-         Brand: research.Brand,
-         MinPrice:research.MinPrice,
-         MaxPrice:research.MaxPrice,
-         MinDiscount:research.MinDiscount,
-         MaxDiscount:research.MaxDiscount,
-         MinRate: research.MinRate,
-         MaxRate: research.MaxRate,
+         research
         }
        }).then( (response) => response.data)
       
-       dispatch(setFilterSlice({...response}))
-    } catch (error) {
+       dispatch(setFilterSlice(response))
+       console.log(filterSlice)
+       if (filterSlice){ 
+        navigate('/home/filter')
+      }
+    } 
+    catch (error) {
       console.log(error)
     }
+    
+
   }
+  
+  
  
 const [isCollapsed, setIsCollapsed] = useState(true);
 
@@ -115,7 +122,6 @@ const [isCollapsed, setIsCollapsed] = useState(true);
 return (
   <form
   className={`border h-full  from-gray-800 to-gray-600 p-2  transition-all duration-300 ${isCollapsed ? 'w-16 space-y-12 h-96' : 'w-64 space-y-6'} z-50`}
-  // style={{ height: '100vh' }}
   onSubmit={handelSubmit}
 >
   

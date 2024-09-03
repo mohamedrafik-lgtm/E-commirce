@@ -15,7 +15,6 @@ const Discount: React.FC = () => {
           try {
             const response = await axiosInstance.get('/api/Discount');
             setProduct(response.data);
-            console.log(product)
           } catch (err: unknown) {
             if (err instanceof AxiosError) {
               
@@ -33,7 +32,7 @@ const Discount: React.FC = () => {
         };
     
         fetchProductData();
-      }, [product]);
+      }, []);
   
     if (loading) {
       return <div className="text-center mt-10">Loading...</div>;

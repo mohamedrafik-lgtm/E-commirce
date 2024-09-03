@@ -8,25 +8,27 @@ import { Transition } from "@headlessui/react";
 import AppleIcon from '@mui/icons-material/Apple';
 import MicrosoftIcon from '@mui/icons-material/Microsoft';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilterSlice } from '../App/features';
+import {  setFilterSlice } from '../App/features';
 import { RootState } from '../App/Store';
+import axiosInstance from '@/config/axios.config';
 type Anchor = 'right';
-interface IResearch{
-  Name: string;
-  Category: string;
-  Brand: string;
-  MinPrice: number;
-  MaxPrice: number;
-  MinDiscount: number;
-  MaxDiscount: number;
-  MinRate: number;
-  MaxRate: number;
-}
+
 export default function FilterModel() {
   const [state, setState] = useState({
     right: false,
   });
 
+  interface IResearch{
+    Name:string,
+    Category:string,
+    Brand: string | null,
+    MinPrice: number,
+    MaxPrice: number,
+    MinDiscount: number,
+    MaxDiscount: number,
+    MinRate:number,
+    MaxRate: number,
+  }
   const [research,setResearch] = useState<IResearch>({
     Name: '',
     Category: '',
@@ -39,10 +41,10 @@ export default function FilterModel() {
     MaxRate: 0,
   })
   const dispatch = useDispatch()
-  dispatch(setFilterSlice(research))
   const [isOpen, setIsOpen] = useState(false);
   const filterState = useSelector((state: RootState) => state.filterSlice);
-  console.log(filterState)
+  
+ 
   const options = [
     { value: 'apple', label: 'Apple', icon: <AppleIcon className="w-5 h-5 text-gray-500" /> },
     { value: 'samsung', label: 'Samsung', icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" className="w-6 h-6" viewBox="0 0 48 48">
@@ -100,16 +102,24 @@ export default function FilterModel() {
       setState({ [anchor]: open });
     };
 
-    // const onClose = ()=>{
-    //   toggleDrawer("right", false)
-    // }
-
+   const onSubmit = async ()=>{
+    
+    const {data} = await axiosInstance.get('/api/Home/filter',{
+      params: {
+        ...research
+      }
+    })
+    dispatch(setFilterSlice(data))
+    console.log(filterState);
+   }
+   
   const list = () => (
     <Box
       sx={{ width: 300}}
       role="presentation">
       <List>
-        <div className='p-5 flex justify-between mt-3 mb-3'>
+        
+        <div  className='p-5 flex justify-between mt-3 mb-3'>
             <h3 className='text-2xl'>Filter</h3>
             <button onClick={toggleDrawer("right", false)}>
                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-8 hover:text-red-500 transition-all">
@@ -119,7 +129,7 @@ export default function FilterModel() {
         </div>
 
 
-        <div className='px-5 space-y-9'>
+        <form onSubmit={onSubmit} className='px-5 space-y-9'>
             <div>
                 <InputComponent value={research.Name} onChange={handelChange} name="Name" id="Name" className="custom-input mb-1 w-full p-2 rounded-md"
                 placeholder="Max Price"/>
@@ -198,9 +208,9 @@ export default function FilterModel() {
                 <InputComponent type='number' onChange={handelChange} value={research.MaxRate} name="MaxRate" id="MaxRate" className="custom-input mb-1 w-full p-2 rounded-md"
                 placeholder="Max Rate"/>
            </div>
-
-           <button  className='w-full text-lg bg-blue-500 text-white py-2 rounded-md hover:bg-white hover:text-blue-500 hover:border transition-all'>search</button>
-        </div>
+           <button   className='w-full text-lg bg-blue-500 text-white py-2 rounded-md hover:bg-white hover:text-blue-500 hover:border transition-all'>search</button>
+        </form>
+        
       </List>
     </Box>
   );

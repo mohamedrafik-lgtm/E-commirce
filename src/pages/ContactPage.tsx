@@ -1,13 +1,67 @@
-import SliderCategory from "../components/SliderCategory";
+import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
 
 const ContactPage = () => {
     
+  
     return (
-        <div className="w-4/6 mx-auto">
-            <SliderCategory visibleProducts={5} endpoint={"/GetAll"} sliderTitle={"Category"}/>
+        <div>
+           
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
         </div>
-    )
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      <ScrollAnimatedComponent direction="right">
+        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
+          This component slides in from the right.
+        </div>
+      </ScrollAnimatedComponent>
+      
+        </div>
+    );
 }
 
 
 export default ContactPage;
+
+
