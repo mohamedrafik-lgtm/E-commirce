@@ -1,4 +1,4 @@
-import { ILogin, IRegister, IUpdateProductInputData } from "../interface";
+import { IAddDiscountInput, ILogin, IRegister, IUpdateProductInputData } from "../interface";
 import { v4 as uuid } from 'uuid';
 
 const RENDERER_INPUTS:IRegister[] = [
@@ -147,6 +147,37 @@ export const updateProductInputData:IUpdateProductInputData[] = [
         placeholder:"Discontinued",
     },
 
+
+]
+{/* "discountAmount": 0,
+  "startDate": "2024-09-04T23:16:01.804Z",
+  "endDate": "2024-09-04T23:16:01.804Z",
+  "productId": 0 */}
+
+export const AddDiscountInput:IAddDiscountInput[] = [{
+  name:"discountAmount",
+  id:uuid(),
+  type:"number",
+  placeholder:"Enter Discount Amount",
+}
+,{
+    name:"productId",
+    id:uuid(),
+    type:"number",
+    placeholder:"Product ID",
+},
+{
+    name:"startDate",
+    id:uuid(),
+    type:"date",
+    placeholder:"Start Date",
+},
+{
+    name:"endDate",
+    id:uuid(),
+    type:"date",
+    placeholder:"End Date",
+}
 
 ]
 

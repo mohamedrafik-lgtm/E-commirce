@@ -8,7 +8,7 @@ import { Transition } from "@headlessui/react";
 import AppleIcon from '@mui/icons-material/Apple';
 import MicrosoftIcon from '@mui/icons-material/Microsoft';
 import { useDispatch, useSelector } from 'react-redux';
-import {  setFilterSlice } from '../App/features';
+import {  setFilterSlice } from '../App/features/filter';
 import { RootState } from '../App/Store';
 import axiosInstance from '@/config/axios.config';
 type Anchor = 'right';

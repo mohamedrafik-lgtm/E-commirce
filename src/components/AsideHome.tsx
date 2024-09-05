@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import axiosInstance from "../config/axios.config";
 import { Transition } from "@headlessui/react";
 import AppleIcon from '@mui/icons-material/Apple';
@@ -7,10 +7,11 @@ import {faSearch,faBars} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InputComponent from "./ui/InputComponent";
 import { useDispatch } from "react-redux";
-import { setFilterSlice } from "../App/features";
+import { setFilterSlice } from "../App/features/filter";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "@/App/Store";
+import CircularProgress from '@mui/material/CircularProgress';
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/App/Store";
 
 interface IResearch{
   Name: string;
@@ -38,10 +39,8 @@ const Sidebar: React.FC = () => {
     MinRate: 0,
     MaxRate: 0,
   })
-
-
-  
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const options = [
     { value: 'apple', label: 'Apple', icon: <AppleIcon className="w-5 h-5 text-gray-500" /> },
@@ -78,7 +77,7 @@ const Sidebar: React.FC = () => {
     
   };
   
-  console.log(research)
+  
 
 const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
   const { value, name } = event.target;
@@ -90,27 +89,25 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
 
 
 const navigate = useNavigate()
-const filterSlice = useSelector((state:RootState) => state.filterSlice)
-  const handelSubmit =async (e:FormEvent<HTMLFormElement>) =>{
+
+// const filterSlice = useSelector((state:RootState) => state.filterSlice)
+
+  const handelSubmit =async (e:React.FormEvent<HTMLFormElement>) =>{
+    setIsLoading(true)
     e.preventDefault();
     try {
-       const response =await axiosInstance.get("/api/Home/filter",{
+       const {data} =await axiosInstance.get("/api/Home/filter",{
         params: {
          research
-        }
-       }).then( (response) => response.data)
-      
-       dispatch(setFilterSlice(response))
-       console.log(filterSlice)
-       if (filterSlice){ 
-        navigate('/home/filter')
-      }
+        }})
+       console.log(data)
+       navigate('/home/filter')
+       dispatch(setFilterSlice(data))
+       setIsLoading(false)
     } 
     catch (error) {
       console.log(error)
     }
-    
-
   }
   
   
@@ -128,6 +125,7 @@ return (
   <div className={`flex items-center ${isCollapsed ?`justify-center ` : `justify-between`}  mt-5`}>
     <h2 className={`text-2xl font-extrabold  ${isCollapsed ? 'hidden' : ''}`}>Filter</h2>
     <button
+      type="button"
       className="focus:outline-none items-center"
       onClick={() => setIsCollapsed(!isCollapsed)}
     >
@@ -191,6 +189,7 @@ return (
     : 
     <div className="relative w-full max-w-xs mx-auto">
     <button
+      type="button"
       onClick={() => setIsOpen(!isOpen)}
       className="flex items-center justify-between w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
     >
@@ -300,7 +299,11 @@ return (
              </div>
             : 
             <div className="w-full">
-            <button  className="w-full py-3 font-semibold tracking-wider text-xl rounded-md bg-blue-600 text-white">Filter</button>
+              {
+                isLoading ? <div className="w-full flex items-center justify-center"><CircularProgress /></div> :
+                <button  className="w-full py-3 font-semibold tracking-wider text-xl rounded-md bg-blue-600 text-white">Filter</button>
+              }
+            
             </div>
             }
   </div>

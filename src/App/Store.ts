@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import  filterReducer  from './features'
+import  filterReducer  from './features/filter'
 import productId from './features/productId'
 import  SearchSlice  from './features/Search'
 

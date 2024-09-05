@@ -1,62 +1,11 @@
-import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
+import DiscountMenu from "@/components/ui/DiscountMenu";
 
 const ContactPage = () => {
     
   
     return (
         <div>
-           
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      <ScrollAnimatedComponent direction="right">
-        <div style={{ padding: '20px', backgroundColor: 'lightgreen', height: '200px' }}>
-          This component slides in from the right.
-        </div>
-      </ScrollAnimatedComponent>
-      
+          <DiscountMenu/>
         </div>
     );
 }

@@ -48,12 +48,6 @@ export const Home = () => {
                       <ProductSlider sliderTitle="on sale" endpoint={onSale} visibleProducts={6} />
                  </ScrollAnimatedComponent>
                  </div >
-                 <div className="mb-14 mr-3">
-                 <ScrollAnimatedComponent direction="left">
-                      <ProductSlider sliderTitle="Out Of Stock" endpoint={outOfStock} visibleProducts={6} />
-                 </ScrollAnimatedComponent>
-                 </div>
-
                  <hr className="w-10/12 mx-auto"/>
 
                  <div className="w-10/12  mt-10 mx-auto ">
@@ -61,6 +55,13 @@ export const Home = () => {
                       <SliderCategory visibleProducts={5} endpoint={getAll} sliderTitle={"Category"}/>
                  </ScrollAnimatedComponent>
                  </div>
+                 <div className="mb-14 mr-3">
+                 <ScrollAnimatedComponent direction="left">
+                      <ProductSlider sliderTitle="Out Of Stock" endpoint={outOfStock} visibleProducts={6} />
+                 </ScrollAnimatedComponent>
+                 </div>
+
+                 
                  
     </div>
   );

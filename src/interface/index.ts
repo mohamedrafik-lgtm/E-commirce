@@ -138,3 +138,10 @@ export interface IDiscount {
   productId:number;
   product:string 
 }
+
+export interface IAddDiscountInput{
+  name:string;
+  id:string;
+  type:string;
+  placeholder:string
+}

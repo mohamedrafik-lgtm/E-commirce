@@ -17,7 +17,7 @@ export const filter = createSlice({
   name: 'filterSlice',
   initialState,
   reducers: {
-    setFilterSlice:(state, action: PayloadAction<IResearch>)=>{
+    setFilterSlice:(state, action: PayloadAction<IResearch[]>)=>{
         Object.assign(state, action.payload);
     }
   },
