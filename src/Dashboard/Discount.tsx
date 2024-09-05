@@ -4,6 +4,7 @@ import axiosInstance from '../config/axios.config';
 import{IDiscount} from "../interface/index";
 import DiscountMenu from '@/components/ui/DiscountMenu';
 import AddDiscountModel from '@/components/ui/AddDiscountModel';
+import ScrollAnimatedComponent from '@/components/ScrollAnimatedComponent';
 
 
 const fetchProducts = async () => {
@@ -54,7 +55,9 @@ const DiscountPage = () => {
  
   return (
     <div className="w-full h-min m-5 p-4 border rounded-md flex flex-col bg-white shadow-lg">
+         {/* add Discound model*/}
       {/* Search */}
+        <ScrollAnimatedComponent direction="top">
         <div className='mb-5 flex justify-between'>
              <div>
                 <div className="relative w-full max-w-md">
@@ -70,10 +73,9 @@ const DiscountPage = () => {
                   </div>
                 </div>
            </div>
-         {/* add Discound model*/}
           <AddDiscountModel/>
         </div>
-      
+
       <table className="min-w-full border-collapse bg-gray-50">
         <thead>
           <tr className="bg-gray-200 border-b">
@@ -154,6 +156,7 @@ const DiscountPage = () => {
           </button>
         </div>
       </div>
+        </ScrollAnimatedComponent>
     </div>
   );
 };

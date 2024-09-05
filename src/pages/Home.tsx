@@ -25,6 +25,8 @@ export const Home = () => {
    const onSale:string = "/api/Home/on-sale"
    const getAll:string  = "/GetAll"
     
+
+    
   return (
     <div className="overflow-hidden space-y-5">
                  

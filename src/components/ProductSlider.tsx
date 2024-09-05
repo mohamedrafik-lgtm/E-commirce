@@ -2,6 +2,7 @@ import  { useEffect, useState } from "react";
 import { Products } from "../interface";
 import axiosInstance from "../config/axios.config";
 import ProductCard from "./ui/ProductCard";
+import Variants from "./ui/Scilaton";
 
 
 
@@ -27,7 +28,7 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
           }
         };
         
-        fetchProducts();
+        fetchProducts().finally(() => setLoading(false));
       }, [endpoint]);
   const [currentIndex, setCurrentIndex] = useState(0);
   
@@ -42,6 +43,7 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
+  if(loading) return <Variants/>
   if(!products.length) return;
   return (
     <div className="relative  w-full mr-3">

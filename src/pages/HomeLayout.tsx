@@ -16,7 +16,6 @@ const HomeLayout = () => {
             <main>
                 <div  className="absolute top-24 h-fit bg-white z-50">
                 <ScrollAnimatedComponent direction="left">
-
                 <AsideHome />
                 </ScrollAnimatedComponent>
                 </div>

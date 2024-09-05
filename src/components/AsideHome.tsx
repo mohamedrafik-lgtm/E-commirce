@@ -6,10 +6,12 @@ import MicrosoftIcon from '@mui/icons-material/Microsoft';
 import {faSearch,faBars} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import InputComponent from "./ui/InputComponent";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFilterSlice } from "../App/features/filter";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
+import { RootState } from "@/App/Store";
+import toast from "react-hot-toast";
 // import { useSelector } from "react-redux";
 // import { RootState } from "@/App/Store";
 
@@ -90,7 +92,7 @@ const handelChange = (event: ChangeEvent<HTMLInputElement>)=>{
 
 const navigate = useNavigate()
 
-// const filterSlice = useSelector((state:RootState) => state.filterSlice)
+const filterSlice = useSelector((state:RootState) => state.filterSlice)
 
   const handelSubmit =async (e:React.FormEvent<HTMLFormElement>) =>{
     setIsLoading(true)
@@ -100,13 +102,23 @@ const navigate = useNavigate()
         params: {
          research
         }})
-       console.log(data)
-       navigate('/home/filter')
        dispatch(setFilterSlice(data))
+       if(filterSlice.length){
+         navigate('/home/filter')
+       }
        setIsLoading(false)
     } 
     catch (error) {
-      console.log(error)
+      toast.success(`${error}`, {
+        position: "top-right",
+        duration: 5000,
+        style: {
+          backgroundColor: "red",
+          color: "white",
+          width: "fit-content",
+        },
+      });
+      
     }
   }
   

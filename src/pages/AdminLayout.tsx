@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom"
 import NavPar from "../components/NavPar"
 import Sidebar from "../Dashboard/Sidebar"
+import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent"
 
 
 const AdminLayout = () => {
@@ -11,7 +12,9 @@ const AdminLayout = () => {
 
            <NavPar/>
             <main className="flex">
+            <ScrollAnimatedComponent direction="left">
                 <Sidebar />
+            </ScrollAnimatedComponent>
                 <Outlet />
            </main>
     

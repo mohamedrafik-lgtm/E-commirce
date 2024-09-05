@@ -5,6 +5,7 @@ import{IProduct} from "../interface/index";
 import OptionsModel from "../components/DetailsModel"
 import FilterModel from '../components/FilterModel';
 import toast from 'react-hot-toast';
+import ScrollAnimatedComponent from '@/components/ScrollAnimatedComponent';
 
 const fetchProducts = async () => {
   const { data } = await axiosInstance.get('/api/Product');
@@ -70,7 +71,9 @@ const ProductsPage = () => {
   if (error) return <div className="text-center py-4 text-red-600">Error loading products</div>;
 
   return (
+    
     <div className="w-full h-min m-5 p-4 border rounded-md flex flex-col bg-white shadow-lg">
+      <ScrollAnimatedComponent direction="top">
       <div className='mb-3 flex justify-between'>
            <h3 className='text-xl'>Products</h3>
            <div className='flex space-x-3'>
@@ -78,6 +81,7 @@ const ProductsPage = () => {
            <FilterModel/>
            </div>
       </div>
+
       <table className="min-w-full border-collapse bg-gray-50">
         <thead>
           <tr className="bg-gray-200 border-b">
@@ -105,6 +109,7 @@ const ProductsPage = () => {
           ))}
         </tbody>
       </table>
+      </ScrollAnimatedComponent>
       <div className="flex flex-col items-center mt-4 space-y-4">
         <div className="flex items-center space-x-4">
           <label htmlFor="items-per-page" className="text-gray-600">Items per page:</label>

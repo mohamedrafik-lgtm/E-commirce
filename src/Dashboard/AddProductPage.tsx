@@ -9,6 +9,7 @@ import { AddProductValidation } from "../validations";
 import InputErrorMsg from "../components/ui/InputErrorMsg";
 import CircularProgress from '@mui/material/CircularProgress';
 import toast from "react-hot-toast";
+import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
 
 const AddProduct = () => {
     
@@ -291,7 +292,9 @@ const AddProduct = () => {
       <div className="w-full">
          <form onSubmit={onSubmit} className="grid grid-cols-3 gap-6 p-5">
             <div className="col-span-2 space-y-3">
-                <div className="border rounded-md shadow-md">
+                
+                 <ScrollAnimatedComponent direction="top">
+                 <div className="border rounded-md shadow-md">
                     <div className="flex p-5 border-b  content-center">
                        <h4 className="font-bold">Product information</h4>
                      <br />
@@ -349,9 +352,13 @@ const AddProduct = () => {
                </div>
               
             </div>
-        </div>
+            </div>
+                 </ScrollAnimatedComponent>
+        
 
          {/* upload images */}
+         <ScrollAnimatedComponent direction="left">
+
         <div className="mt-10 p-6 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-6 text-center">Upload Images</h1>
       <div className="grid grid-cols-3 gap-4 mb-4">
@@ -391,10 +398,12 @@ const AddProduct = () => {
         
       </div>
       
-    </div>
+        </div>
+         </ScrollAnimatedComponent>
              
 
               {/* DynamicPropertiesInput*/}
+              <ScrollAnimatedComponent direction="bottom">
               <div className="dynamic-properties-input p-4 border border-gray-200 rounded-md shadow-md">
       <h3 className="text-lg font-bold mb-4">Product Features:</h3>
       {propertyNames.map((name, index) => (
@@ -439,9 +448,12 @@ const AddProduct = () => {
         </div>
         
       )}
-    </div>
+              </div>
+              </ScrollAnimatedComponent>
 
             </div>
+
+            <ScrollAnimatedComponent direction="right">
             <div className="space-y-5">
             <div className="border rounded-md shadow-md">
             <div className="flex p-5 border-b  content-center">
@@ -611,6 +623,7 @@ const AddProduct = () => {
         </div>
 
             </div>
+            </ScrollAnimatedComponent>
             
               {/* <AddProductForm loading={true}/> */}
               <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
