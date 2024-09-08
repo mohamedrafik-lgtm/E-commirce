@@ -45,7 +45,6 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="/Admin/products" element={<ProductsPage/>}/>
     </Route>
     
-    
     </>
 ));
 
