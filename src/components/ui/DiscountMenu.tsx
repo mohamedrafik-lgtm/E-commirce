@@ -9,6 +9,7 @@ import Delete from '@mui/icons-material/Delete';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import axiosInstance from '@/config/axios.config';
+import UbdateDiscountModel from './UbdateDiscountModel';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -105,11 +106,11 @@ export default function DiscountMenu({discountId}:ID) {
       >
         <MenuItem  style={{
           color:'#FF7F50'
-        }} onClick={handleClose} disableRipple>
+        }}  disableRipple>
           <EditIcon style={{
             color:'#FF7F50'
           }}/>
-          Edit
+          <UbdateDiscountModel id={discountId}/>
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
        
