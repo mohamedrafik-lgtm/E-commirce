@@ -1,11 +1,12 @@
-import DiscountMenu from "@/components/ui/DiscountMenu";
+import AdvertisingBanner from "@/components/ui/AdvertisingBanner";
+
 
 const ContactPage = () => {
     
   
     return (
         <div>
-          <DiscountMenu/>
+          <AdvertisingBanner/>
         </div>
     );
 }

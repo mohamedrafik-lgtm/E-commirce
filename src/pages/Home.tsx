@@ -4,6 +4,7 @@ import ImageSlider from "../components/Slider";
 import ProductSlider from "../components/ProductSlider";
 import SliderCategory from "@/components/SliderCategory";
 import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
+import AdvertisingBanner from "@/components/ui/AdvertisingBanner";
 
 
 
@@ -40,11 +41,17 @@ export const Home = () => {
                       <ProductSlider sliderTitle="NEW EST" endpoint={newEst} visibleProducts={6} />
                    </ScrollAnimatedComponent>
                  </div>
+                 <div>
+                 <ScrollAnimatedComponent direction="left">
+                 <AdvertisingBanner/>
+                 </ScrollAnimatedComponent>
+                 </div>
                  <div className="mr-3">
                    <ScrollAnimatedComponent direction="left">
                       <ProductSlider sliderTitle="Top Selling" endpoint={topSelling} visibleProducts={6} />
                    </ScrollAnimatedComponent>
                  </div>
+                 
                  <div className="mr-3">
                  <ScrollAnimatedComponent direction="right">
                       <ProductSlider sliderTitle="on sale" endpoint={onSale} visibleProducts={6} />

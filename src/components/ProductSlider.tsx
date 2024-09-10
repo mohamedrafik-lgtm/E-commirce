@@ -43,8 +43,8 @@ const ProductSlider  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
-  if(loading) return <Variants/>
   if(!products.length) return;
+  if(loading) return <Variants/>
   return (
     <div className="relative  w-full mr-3">
         <div className="mb-5">
