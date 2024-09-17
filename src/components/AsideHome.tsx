@@ -12,8 +12,7 @@ import { useNavigate } from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import { RootState } from "@/App/Store";
 import toast from "react-hot-toast";
-// import { useSelector } from "react-redux";
-// import { RootState } from "@/App/Store";
+
 
 interface IResearch{
   Name: string;
@@ -102,9 +101,11 @@ const filterSlice = useSelector((state:RootState) => state.filterSlice)
         params: {
          research
         }})
+        console.log(data)
        dispatch(setFilterSlice(data))
        if(filterSlice.length){
          navigate('/home/filter')
+         console.log(filterSlice.length)
        }
        setIsLoading(false)
     } 

@@ -294,7 +294,9 @@ const AddProduct = () => {
             <div className="col-span-2 space-y-3">
                 
                  <ScrollAnimatedComponent direction="top">
-                 <div className="border rounded-md shadow-md">
+                 <div style={{
+          borderRadius:"15px"
+        }} className="border rounded-md shadow-md">
                     <div className="flex p-5 border-b  content-center">
                        <h4 className="font-bold">Product information</h4>
                      <br />
@@ -354,12 +356,12 @@ const AddProduct = () => {
             </div>
             </div>
                  </ScrollAnimatedComponent>
-        
-
          {/* upload images */}
          <ScrollAnimatedComponent direction="left">
 
-        <div className="mt-10 p-6 bg-white rounded-lg shadow-md">
+        <div style={{
+          borderRadius:"15px"
+        }} className="mt-10 p-6 bg-white rounded-lg shadow-md ">
       <h1 className="text-3xl font-bold mb-6 text-center">Upload Images</h1>
       <div className="grid grid-cols-3 gap-4 mb-4">
         {previews.map((preview, index) => (
@@ -404,7 +406,9 @@ const AddProduct = () => {
 
               {/* DynamicPropertiesInput*/}
               <ScrollAnimatedComponent direction="bottom">
-              <div className="dynamic-properties-input p-4 border border-gray-200 rounded-md shadow-md">
+              <div style={{
+          borderRadius:"15px"
+        }} className="dynamic-properties-input p-4 border border-gray-200 rounded-md shadow-md">
       <h3 className="text-lg font-bold mb-4">Product Features:</h3>
       {propertyNames.map((name, index) => (
         <div key={index} className="flex items-center space-x-4 mb-2">
@@ -455,7 +459,9 @@ const AddProduct = () => {
 
             <ScrollAnimatedComponent direction="right">
             <div className="space-y-5">
-            <div className="border rounded-md shadow-md">
+            <div style={{
+              borderRadius:"15px"
+              }} className="border rounded-md shadow-md">
             <div className="flex p-5 border-b  content-center">
                 <h4 className="font-bold">Pricing</h4>
                 <br />
@@ -527,11 +533,13 @@ const AddProduct = () => {
                </div>:null}
                
             </div>
-        </div>
+            </div>
              
-              {/* border rounded-md p-2 transition focus:shadow-xl focus:outline-double focus:outline-none */}
-              <div className="border rounded-md shadow-md ">
-            <div className="flex p-5 border-b  content-center">
+             
+              <div style={{
+          borderRadius:"15px"
+        }} className="border rounded-md shadow-md ">
+              <div className="flex p-5 border-b  content-center">
                 <h4 className="font-bold">Organization</h4>
                 <br />
             </div>
@@ -570,7 +578,7 @@ const AddProduct = () => {
                </div>
 
                </div>
-               <div className="flex flex-wrap items-center p-4 border rounded-lg bg-white shadow-md">
+               <div  className="flex flex-wrap items-center p-4 border rounded-lg bg-white shadow-md">
                <label htmlFor="tags">tags:</label>
       {tags.map((tag, index) => (
         <span
@@ -598,9 +606,9 @@ const AddProduct = () => {
         className="flex-1 border-none outline-none p-2"
       />
       <InputErrorMsg msg={errors.tags}/>
-    </div>
+               </div>
 
-    <div className="mb-4">
+    <div  className="mb-4">
       <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="productCode">
         Product Code
       </label>

@@ -1,4 +1,5 @@
-import AdvertisingBanner from "@/components/ui/AdvertisingBanner";
+import Cart from "./Cart";
+
 
 
 const ContactPage = () => {
@@ -6,7 +7,7 @@ const ContactPage = () => {
   
     return (
         <div>
-          <AdvertisingBanner/>
+          <Cart/>
         </div>
     );
 }

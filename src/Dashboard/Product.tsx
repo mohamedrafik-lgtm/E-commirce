@@ -6,7 +6,7 @@ import OptionsModel from "../components/DetailsModel"
 import FilterModel from '../components/FilterModel';
 import toast from 'react-hot-toast';
 import ScrollAnimatedComponent from '@/components/ScrollAnimatedComponent';
-
+import { Skeleton } from 'antd';
 const fetchProducts = async () => {
   const { data } = await axiosInstance.get('/api/Product');
   return data;
@@ -67,7 +67,7 @@ const ProductsPage = () => {
   };
 
 
-  if (isLoading) return <div className="text-center py-4">Loading...</div>;
+  
   if (error) return <div className="text-center py-4 text-red-600">Error loading products</div>;
 
   return (
@@ -98,13 +98,10 @@ const ProductsPage = () => {
           {currentProducts.map((product:IProduct) => (
            
             <tr onClick={()=> console.log(product.productId)} key={product.productId} className="hover:bg-gray-100 border-b">
-              <td className="p-3 text-center">{product.productId}</td>
-              <td className="p-3 text-center">{product.productName}</td>
-              <td className="p-3 text-center">{product.category}</td>
-              <td className="p-3 text-center">{product.brand}</td>
-              <td className="p-3 text-center">{product.unitPrice}</td>
-              <td className="p-3 text-center">{product.unitsInStock}</td>
-              <td className="p-3 text-center"><OptionsModel productId={product.productId}/></td>
+              {isLoading ? 
+                <Skeleton  active paragraph={{ rows: 2 }}/>
+                :
+              <><td className="p-3 text-center">{product.productId}</td><td className="p-3 text-center">{product.productName}</td><td className="p-3 text-center">{product.category}</td><td className="p-3 text-center">{product.brand}</td><td className="p-3 text-center">{product.unitPrice}</td><td className="p-3 text-center">{product.unitsInStock}</td><td className="p-3 text-center"><OptionsModel productId={product.productId} /></td></>}
             </tr>
           ))}
         </tbody>

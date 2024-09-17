@@ -29,7 +29,7 @@ export const Home = () => {
 
     
   return (
-    <div className="overflow-hidden space-y-5">
+    <div className="overflow-hidden space-y-8">
                  
                  <div className="mb-20">
                  <ScrollAnimatedComponent direction="top">

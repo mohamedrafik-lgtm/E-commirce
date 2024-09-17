@@ -149,10 +149,7 @@ export const updateProductInputData:IUpdateProductInputData[] = [
 
 
 ]
-{/* "discountAmount": 0,
-  "startDate": "2024-09-04T23:16:01.804Z",
-  "endDate": "2024-09-04T23:16:01.804Z",
-  "productId": 0 */}
+
 
 export const AddDiscountInput:IAddDiscountInput[] = [{
   name:"discountAmount",

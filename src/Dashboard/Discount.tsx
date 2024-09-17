@@ -55,8 +55,7 @@ const DiscountPage = () => {
  
   return (
     <div className="w-full h-min m-5 p-4 border rounded-md flex flex-col bg-white shadow-lg">
-         {/* add Discound model*/}
-      {/* Search */}
+         
         <ScrollAnimatedComponent direction="top">
         <div className='mb-5 flex justify-between'>
              <div>

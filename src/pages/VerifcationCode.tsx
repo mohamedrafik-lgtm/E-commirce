@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 interface IProp{
     email?: string;
-  
 }
 
 const VerificationCode= ({email}:IProp) => {

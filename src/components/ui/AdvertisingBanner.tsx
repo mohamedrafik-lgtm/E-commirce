@@ -2,12 +2,12 @@
 
 const AdvertisingBanner = ()=>{
     return(
-        <div className="w-9/12 mx-auto">
-          <div className="flex space-x-3 justify-center items-center mb-7">
+        <div className=" mx-auto">
+          {/* <div className="flex space-x-3 justify-center items-center mb-7">
             <div className="h-0.5 w-full bg-black mt-3"></div>
             <h3 className="text-2xl">offer</h3>
             <div className="h-0.5 w-full mt-3 bg-black"></div>
-          </div>
+          </div> */}
         <div className="bg-black flex justify-around py-5 AdvertisingBanner">
             
             <div className="text-white space-y-3">
@@ -40,7 +40,9 @@ const AdvertisingBanner = ()=>{
                 </div>
             </div>
             <div>
-                <img className="w-96 object-contain h-full" src="/IMG/maxresdefault.jpg" alt="" />
+                <img style={{
+                    width:"500px"
+                }} className=" object-contain h-full" src="/IMG/maxresdefault.jpg" alt="" />
             </div>
             
         </div>
