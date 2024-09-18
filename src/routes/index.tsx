@@ -18,6 +18,7 @@ import Category from "../Dashboard/Category";
 import {SearchProduct} from "../components/SearchProduct";
 import Discount from "@/Dashboard/Discount";
 import { FilterProduct } from "@/components/FilterProduct";
+import Cart from "@/pages/Cart";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <>
@@ -33,6 +34,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<RootLayout/>}>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
+       <Route path="cart" element={<Cart/>}/>
        <Route path="Register" element={<Register/>}/>
        <Route path="VerificationCode" element={<VerificationCode/>}/>
        <Route path="Login" element={<Login/>}/>
