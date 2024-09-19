@@ -1,18 +1,26 @@
 import InputComponent from "@/components/ui/InputComponent";
 import axiosInstance from "@/config/axios.config";
-import { ChangeEvent, FormEvent, useState } from "react";
+import CategoryCartItem from "@/pages/CategoryCartItem";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+import { v4 as uuid } from 'uuid';
 
 interface ICategory{
     CategoryName: string;
     CategoryDescription:string
+}
+
+interface IProps{
+    name:string,
+    description: null
 }
 const Category = ()=>{
     const [CategoryValue, setCategoryValue] = useState<ICategory>({
         CategoryName: '',
         CategoryDescription: ''
     })
+
+    const [category,setCategory] = useState<IProps[]>([])
 
     console.log(CategoryValue)
     // handlers
@@ -23,8 +31,22 @@ const Category = ()=>{
         [name]: value
         })
     }
-
-
+   
+    useEffect(()=>{
+        const categoryRequst =async ()=>{
+            try {
+                const { data } = await axiosInstance.get('/GetAll')
+                setCategory(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        categoryRequst()
+    },[])
+    console.log(category)
+    const renderCategoryItems = category.map((data) =><div key={uuid()}>
+        <CategoryCartItem name={data.name}/>
+    </div>)
     const handelSubmit = async(e:FormEvent<HTMLFormElement>)=>{
      e.preventDefault()
 
@@ -64,8 +86,8 @@ const Category = ()=>{
        
         }
     return (
-        <div className="flex w-full h-fit justify-around">
-            <div className="p-5 border mt-5" style={{borderRadius:"15px"}}>
+        <div className="flex flex-col w-full h-fit justify-around">
+            <div className="p-5 border mt-5 w-fit mx-auto" style={{borderRadius:"15px"}}>
                 <div className="text-2xl space-y-3 mb-3">
                   <h3>Add Category</h3>
                   <hr />
@@ -85,7 +107,9 @@ const Category = ()=>{
                     </form>
                 </div>
             </div>
-    
+             <div className="grid grid-cols-5 gap-4 px-3">
+             {renderCategoryItems}
+             </div>
         </div>
     )
 }

@@ -1,4 +1,3 @@
-import Cart from "./Cart";
 
 
 
@@ -7,7 +6,7 @@ const ContactPage = () => {
   
     return (
         <div>
-          <Cart/>
+          contact page
         </div>
     );
 }

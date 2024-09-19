@@ -13,6 +13,7 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   const [loading, setLoading] = useState(true);
     const [products, setProduct] = useState<{name:string,description:string}[]>([]);
     console.log(loading)
+    
     useEffect(() => {
       setLoading(true)
         const fetchProducts = async () => {
@@ -45,7 +46,7 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   return (
     <div style={{
         borderRadius: '15px'
-    }} className="relative w-full mr-3 p-4">
+    }} className="relative w-full  ">
         <h3 className= "text-2xl p-2 ml-6 mb-4 sliderTitle">{sliderTitle} :</h3>
          
       <button
@@ -66,12 +67,12 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
           {products.map((Category, index) => (
             <div
               key={index}
-              className="flex-shrink-0 duration-300 h-fit hover:scale-105 p-4"
+              className="flex-shrink-0 duration-300 h-fit hover:scale-105 p-2"
               style={{ width: `${100 / visibleProducts}%` ,
                 
               }}
             >
-              <div className="flex w-fit bg-gray-100">
+              <div className="flex w-fit">
                 <CategoryCard name={Category.name} description={"The apple is one of the pome (fleshy) fruits. Apples at harvest vary widely in size"} />
                  </div>
             </div>
