@@ -36,8 +36,8 @@ const VerificationCode= ({email}:IProp) => {
   const url = "/api/Auth/complete-registration"
   const handleSubmit =async () => {
     try {
-        const {status,data} = await axiosInstance.post(url,{email: email,code:code})
-        console.log(data)
+        const {status} = await axiosInstance.post(url,{email: email,code:code})
+        
         if (status === 200) {
             toast.success("You will navigate to the login page in 3 seconds!", {
               position: "bottom-center",

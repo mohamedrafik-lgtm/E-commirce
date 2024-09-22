@@ -20,8 +20,14 @@ import Discount from "@/Dashboard/Discount";
 import { FilterProduct } from "@/components/FilterProduct";
 import Cart from "@/pages/Cart";
 
+const storageKey = "loginData"
+const userDataString = localStorage.getItem(storageKey)
+const userData =userDataString ? JSON.parse(userDataString) : null;
+console.log(userData)
 const router = createBrowserRouter(createRoutesFromElements(
-    <>
+    
+  <>
+
     {/* home route */}
     <Route path={"/home"} element={<HomeLayout/>}>
        <Route index element={<Home/>}/>

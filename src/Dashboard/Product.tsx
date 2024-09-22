@@ -101,7 +101,16 @@ const ProductsPage = () => {
               {isLoading ? 
                 <Skeleton  active paragraph={{ rows: 2 }}/>
                 :
-              <><td className="p-3 text-center">{product.productId}</td><td className="p-3 text-center">{product.productName}</td><td className="p-3 text-center">{product.category}</td><td className="p-3 text-center">{product.brand}</td><td className="p-3 text-center">{product.unitPrice}</td><td className="p-3 text-center">{product.unitsInStock}</td><td className="p-3 text-center"><OptionsModel productId={product.productId} /></td></>}
+              <>
+              <td className="p-3 text-center">{product.productId}</td>
+              <td className="p-3 text-center">{product.productName}</td>
+              <td className="p-3 text-center">{product.category}</td>
+              <td className="p-3 text-center">{product.brand}</td>
+              <td className="p-3 text-center">{product.unitPrice}</td>
+              <td className="p-3 text-center">{product.unitsInStock}</td>
+              <td className="p-3 text-center"><OptionsModel productId={product.productId} />
+              </td>
+              </>}
             </tr>
           ))}
         </tbody>

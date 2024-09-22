@@ -226,6 +226,7 @@ const AddProduct = () => {
   // add product request
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true)
     
     
     const errors = AddProductValidation({productName: ProductInformation.productName,SKU: ProductInformation.SKU,Discription: ProductInformation.Discription,combanyName:organization.combanyName,contactName:organization.contactName,
@@ -238,7 +239,6 @@ const AddProduct = () => {
       setErrors(errors)
       return;
     }
-    setLoading(true)
     const previewsString: string = previews.join(',');
     const formData = new FormData();
     formData.append('ProductName', ProductInformation.productName);
@@ -264,7 +264,7 @@ const AddProduct = () => {
     formData.append('DiscountEndDate', endDate);
     try {
       const {status} = await axiosInstance.post(url, formData);
-      setLoading(false)
+      
       if (status === 200){
         toast.success("The product has been added successfully.", {
           position: "top-right",
@@ -275,13 +275,12 @@ const AddProduct = () => {
             width: "fit-content",
           },
         });
-    setTimeout(() => {
-      
-    }, 3000); 
       }
       
     } catch (error) {
       console.error(error);
+    }finally{
+      setLoading(false)
     }
   };
    
@@ -635,7 +634,7 @@ const AddProduct = () => {
             
               {/* <AddProductForm loading={true}/> */}
               <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
-        {loading ? <CircularProgress />   : <button
+              {loading ? <CircularProgress />   : <button
         
         className="bg-blue-500  text-white py-3 px-6 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:bg-blue-500 focus:ring-opacity-50"
       >

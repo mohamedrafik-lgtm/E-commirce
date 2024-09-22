@@ -38,7 +38,6 @@ const ProductPage = () => {
             dispatch(setProductId(productId)); 
         }
     }
-
     if (productId) {
         fetch(`http://localhost:5190/api/Product/${productId}`)
             .then(response => response.json())

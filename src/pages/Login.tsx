@@ -8,13 +8,14 @@ import axiosInstance from '../config/axios.config';
 import Toast from "../components/Toast";
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+
+
 const Login: React.FC = () => {
     const [showToast, setShowToast] = useState(false);
     const { register, handleSubmit, formState: { errors } } = useForm<{ email: string; password: string }>({
         resolver: yupResolver(loginSchema)
     });
     const navigate = useNavigate();
-      // استيراد useToast
    
     
 
@@ -23,18 +24,18 @@ const Login: React.FC = () => {
 
         try {
             const { status, data } = await axiosInstance.post(url, userData);
-            console.log(status);
-            console.log(data);
+            
             if (status === 200) {
                 toast.success("You will navigate to the login page in 2 seconds!", {
                   position: "top-right",
-                  duration: 1000,
+                  duration: 2000,
                   style: {
                     backgroundColor: "green",
                     color: "white",
                     width: "fit-content",
                   },
                 });
+                localStorage.setItem("loginData", JSON.stringify(data));
                 setTimeout(() => {
                   navigate("/home");
                 }, 2000);
