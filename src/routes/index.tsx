@@ -19,11 +19,15 @@ import {SearchProduct} from "../components/SearchProduct";
 import Discount from "@/Dashboard/Discount";
 import { FilterProduct } from "@/components/FilterProduct";
 import Cart from "@/pages/Cart";
+import ProtectedRoute from "@/components/Auth/ProtectedRoute";
+
 
 const storageKey = "loginData"
 const userDataString = localStorage.getItem(storageKey)
 const userData =userDataString ? JSON.parse(userDataString) : null;
-console.log(userData)
+console.log(userData?.token)
+
+
 const router = createBrowserRouter(createRoutesFromElements(
     
   <>
@@ -47,10 +51,28 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
     {/* admin route*/}
     <Route path="/Admin" element={<AdminLayout/>}>
-      <Route path="/Admin/Discount" element={<Discount/>}/>
-      <Route path="/Admin/category" element={<Category/>}/>
-      <Route path="/Admin/AddProduct" element={<AddProduct/>}/>
-      <Route path="/Admin/products" element={<ProductsPage/>}/>
+
+      <Route path="/Admin/Discount" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <Discount/>
+        </ProtectedRoute>
+        }/>
+
+      <Route path="/Admin/category" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <Category/>
+        </ProtectedRoute>
+        }/>
+      <Route path="/Admin/AddProduct" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <AddProduct/>
+        </ProtectedRoute>
+        }/>
+      <Route path="/Admin/products" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <ProductsPage/>
+        </ProtectedRoute>
+        }/>
     </Route>
     
     </>

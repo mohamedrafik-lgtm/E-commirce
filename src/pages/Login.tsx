@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../validations';
 import InputErrorMsg from '../components/ui/InputErrorMsg';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axiosInstance from '../config/axios.config';
 import Toast from "../components/Toast";
 import { useState } from 'react';
@@ -65,9 +65,15 @@ const Login: React.FC = () => {
                     
                 </div>
 
+                <div className='space-y-3'>
                 <button type="submit" className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     log in 
                 </button>
+                <div className="text-xl mr-10 flex items-center space-x-1.5">
+                    <p className='text-base'>Create an account</p> 
+                    <NavLink className="text-base text-indigo-500" to={"/Register"}>Register</NavLink>
+                    </div>
+                </div>
                 {showToast && (
         <Toast message="add product successfully!" onClose={() => setShowToast(false)} />
       )}
