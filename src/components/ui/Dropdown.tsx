@@ -27,6 +27,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+ 
 
   return (
     <div className="relative inline-block " ref={dropdownRef}>
@@ -37,20 +38,26 @@ const Dropdown: React.FC<DropdownProps> = ({ options }) => {
         <FontAwesomeIcon icon={faUser} className="h-5 w-5" />
       </button>
       <div
-        className={`z-50 transition-transform duration-300 ease-in-out transform ${
-          showDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
-        } absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg`}
+        style={{
+          border: '1px solid',
+          borderRadius: '15px',
+        }} 
+        className={`z-50 transition-transform bg-white/5 backdrop-blur-xl duration-300 ease-in-out transform ${
+          showDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} absolute right-0 mt-2 w-48 bg-white rounded-lg`}
       >
         {options.map((option, index) => (
           <NavLink
             key={index}
             to={option.path}
-            className={({ isActive }) =>
-              ` px-4 py-2 text-gray-800 flex items-center transition-colors ${
-                isActive ? 'bg-gray-100 text-blue-600' : 'hover:bg-gray-100'
-              } ${isActive ? 'border-b-2 border-blue-500' : ''}`
+            className={
+              ` px-4 py-2 flex items-center transition-colors !border-b-0`
             }
-            onClick={() => setShowDropdown(false)}
+            onClick={() => {
+              setShowDropdown(false)
+              if(option.label === "log out"){
+                localStorage.removeItem('loginData');
+              }
+            } }
           >
             <FontAwesomeIcon icon={option.icon} className="mr-2" />
             {option.label}
