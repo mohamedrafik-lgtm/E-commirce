@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch} from 'react-redux';
 import { setProductId } from '../../App/features/productId';
 import toast from 'react-hot-toast';
+import axiosInstance from '@/config/axios.config';
 
 
 
@@ -31,9 +32,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   
   const dispatch = useDispatch() 
-
-const navigate = useNavigate()
-
+  const navigate = useNavigate()
+ 
+  const storageKey = "loginData"
+    const userDataString = localStorage.getItem(storageKey)
+    const userData =userDataString ? JSON.parse(userDataString) : null;
 const HandelNavigate = ()=>{
   dispatch(setProductId(productId))
   localStorage.setItem('selectedProductId', productId.toString());
@@ -52,7 +55,34 @@ const HandelNavigate = ()=>{
   },2000)
 }
   const addToCart = ()=>{
+    try {
+      axiosInstance.post('/api/CartItem/addOrUpdate', {
+        productId: productId,
+        quantity: 1,
+    }, {
+        headers: {
+            'Authorization': `Bearer ${userData?.token}`,
+        }
+    }).then((response) => {
+      if(response.status === 200){
+        toast.success(`Product added to cart successfully`, {
+          position: "top-right",
+          duration: 1000,
+          style: {
+            backgroundColor: "green",
+            color: "white",
+            width: "fit-content",
+          },
+        });
+      }
+    }
     
+    )
+      .catch((error) => console.error(error));
+    
+  } catch (error) {
+      console.log(error)
+  }
   }
 
   if (isLoading) {
@@ -73,9 +103,9 @@ const HandelNavigate = ()=>{
   
   return (
     <div  className="bg-white border rounded-lg shadow-md overflow-hidden ml-5">
-      <div  onClick={()=> HandelNavigate()} className="p-4 cursor-pointer">
+      <div className="p-4 cursor-pointer">
         {imageUrl ? (
-          <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" />
+          <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" onClick={()=> HandelNavigate()}/>
         ) : (
           <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
             <span className="text-gray-600">No Image</span>
