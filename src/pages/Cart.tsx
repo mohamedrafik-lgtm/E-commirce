@@ -114,21 +114,10 @@ const Cart = ()=>{
                     <li>Dlete</li>
                 </ul>
             </div>
-            <div className="w-9/12 mx-auto space-y-5  h-72 overflow-scroll overflow-x-hidden px-4 py-4">
-                {/* <ul className="cart grid grid-cols-6 text-center items-center bg-white px-3 py-1 !rounded-xl text-lg">
-                    <li className="flex items-center space-x-4">
-                        <img style={{borderRadius:"5px"}} className="w-10 object-center" src="/IMG/26be56634ad9773c9d8f6315cac2cba7.jpg"/>
-                        <p>iphone 15 pro</p>
-                    </li>
-                    <li>Apple</li>
-                    <li>1</li>
-                    <li>phone</li>
-                    <li>$100</li>
-                    <button style={{borderRadius:"10px"}} className="px-4 py-2 w-fit bg-red-600 text-white hover:bg-red-700 mx-auto transition-all duration-300">Delete</button>
-                </ul>
-                 */}
-
-                 {renderCartItems}
+            <div className={`w-9/12 mx-auto space-y-5  h-72 ${cartItems.length ? `overflow-scroll overflow-x-hidden` : ``} px-4 py-4`}>
+                 {cartItems.length ? renderCartItems :<div className="flex justify-center items-center w-full h-96 text-3xl" > 
+              <h2>There are no products in the card.</h2>
+            </div>}
             </div>
             <div className="w-8/12 mx-auto mt-5">
                     <button onClick={()=> HandelNavigate()} style={{
