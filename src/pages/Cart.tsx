@@ -1,3 +1,4 @@
+import UpdateCartModel from "@/components/UpdateCartModel";
 import axiosInstance from "@/config/axios.config";
 import { ReactNode, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -63,7 +64,7 @@ const Cart = ()=>{
             : cart.productName;
 
         return (
-            <ul key={uuid()} className="cart grid grid-cols-6 text-center items-center bg-white px-3 py-3 !rounded-xl text-lg">
+            <ul key={uuid()} className="cart grid grid-cols-7 text-center items-center bg-white px-5 py-3 !rounded-xl text-lg">
                 <li className="flex items-center space-x-4">
                     <img style={{ borderRadius: "5px" }} className="w-20 object-contain" src={`${cart.productImage}`} />
                     <p>{productName}</p>
@@ -72,6 +73,7 @@ const Cart = ()=>{
                 <li>{cart.quantity}</li>
                 <li>{cart.category}</li>
                 <li>${cart.price}</li>
+                <UpdateCartModel cartId={cart.productId} productId={cart.productId}/>
                 <button 
                     onClick={()=> handleDeleteCartItem(cart.productId)}
                     style={{ borderRadius: "10px" }} 
@@ -104,17 +106,18 @@ const Cart = ()=>{
               </div>
             
           <div className="space-y-4 mt-10">
-            <div className="w-9/12 mx-auto">
-                <ul style={{borderRadius:"15px"}} className="cart grid grid-cols-6 text-center bg-white px-5 py-4 text-2xl">
+            <div className="w-10/12 mx-auto">
+                <ul style={{borderRadius:"15px"}} className="cart grid grid-cols-7 text-center bg-white px-5 py-4 text-2xl">
                     <li>Product</li>
                     <li>Brand</li>
                     <li>quantity</li>
                     <li>Category</li>
                     <li>Price</li>
+                    <li>Update</li>
                     <li>Dlete</li>
                 </ul>
             </div>
-            <div className={`w-9/12 mx-auto space-y-5  h-72 ${cartItems.length ? `overflow-scroll overflow-x-hidden` : ``} px-4 py-4`}>
+            <div className={`w-10/12 mx-auto space-y-5  h-72 ${cartItems.length ? `overflow-scroll overflow-x-hidden` : ``} px-4 py-4`}>
                  {cartItems.length ? renderCartItems :<div className="flex justify-center items-center w-full h-96 text-3xl" > 
               <h2>There are no products in the card.</h2>
             </div>}
