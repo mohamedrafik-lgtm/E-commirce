@@ -79,7 +79,7 @@ const Wishlist = ()=>{
             style: {
               backgroundColor: 'rgba(0, 0, 0, 0.05)',
               backdropFilter: 'blur(20px)',
-              color: "black",
+              color: "green",
               width: "fit-content",
             },
           });
