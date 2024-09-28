@@ -20,6 +20,7 @@ import Discount from "@/Dashboard/Discount";
 import { FilterProduct } from "@/components/FilterProduct";
 import Cart from "@/pages/Cart";
 import ProtectedRoute from "@/components/Auth/ProtectedRoute";
+import Wishlist from "@/pages/WishlistPage";
 
 
 const storageKey = "loginData"
@@ -44,7 +45,17 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<RootLayout/>}>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
-       <Route path="cart" element={<Cart/>}/>
+       
+          <Route path="Wishlist" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <Wishlist/>
+          </ProtectedRoute>
+          }/>
+       
+       
+         <Route path="cart" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+         <Cart/>
+         </ProtectedRoute>}
+         />
        <Route path="Register" element={<Register/>}/>
        <Route path="VerificationCode" element={<VerificationCode/>}/>
        <Route path="Login" element={<Login/>}/>
