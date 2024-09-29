@@ -51,10 +51,11 @@ export default function AddCategoryModel() {
                    position: "top-right",
                    duration: 1500,
                    style: {
-                     backgroundColor: "#90ee90",
-                     color: "#000000",
-                     width: "fit-content",
-                   },
+                    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                    backdropFilter: 'blur(20px)',
+                    color: "green",
+                    width: "fit-content",
+                  },
                  });
     
              }

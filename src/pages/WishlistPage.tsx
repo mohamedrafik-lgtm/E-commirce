@@ -36,7 +36,7 @@ const Wishlist = ()=>{
     const handleDeleteCartItem = (id:number) => {
 
         try {
-            axiosInstance.delete(`/api/CartItem/delete/${id}`,{
+            axiosInstance.delete(`/api/WishlistItem/${id}`,{
                 headers: {
                     'Authorization': `Bearer ${userData?.token}`
                 }

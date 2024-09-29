@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Rating } from "@mui/material";
@@ -19,17 +19,52 @@ interface ProductCardProps {
   isLoading: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitPrice, discount, rate, imageUrl, isLoading }) => {
+interface WishlistItem {
+  productId: number;
+  productName: string;
+  productImage: string;
+  brand: string;
+  category: string;
+  price: number;
+}
 
+const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitPrice, discount, rate, imageUrl, isLoading }) => {
   const storageKey = "loginData";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  // State to control icon visibility
+
   const [isHovered, setIsHovered] = useState(false);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+
+  useEffect(() => {
+    const fetchWishlistItems = async () => {
+      if (!userData) return; // إذا لم يكن هناك بيانات للمستخدم، لا حاجة لجلب العناصر
+
+      try {
+        const response = await axiosInstance.get('/api/WishlistItem', {
+          headers: {
+            'Authorization': `Bearer ${userData?.token}`
+          }
+        });
+
+        const data: WishlistItem[] = response.data;
+       
+
+
+        const foundInWishlist = data.some(item => item.productId === productId);
+        setIsInWishlist(foundInWishlist);
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching wishlist items:', error);
+        toast.error('Failed to load wishlist.');
+      }
+    };
+
+    fetchWishlistItems();
+  }, [userData?.token, productId, userData]);
 
   const HandelNavigate = () => {
     dispatch(setProductId(productId));
@@ -70,7 +105,36 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
           });
         }
       })
-        .catch((error) => console.error(error));
+      .catch((error) => console.error(error));
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addToWishlist = (productId: number) => {
+    try {
+      axiosInstance.post('/api/WishlistItem', {
+        productId,
+      }, {
+        headers: {
+          'Authorization': `Bearer ${userData?.token}`,
+        }
+      }).then((response) => {
+        if (response.status === 200) {
+          toast.success(`Product added to wishlist successfully`, {
+            position: "top-right",
+            duration: 1000,
+            style: {
+              backgroundColor: "green",
+              color: "white",
+              width: "fit-content",
+            },
+          });
+          setIsInWishlist(true); // تعيين الحالة إلى true بعد إضافته إلى قائمة الأمنيات
+        }
+      })
+      .catch((error) => console.error(error));
 
     } catch (error) {
       console.log(error);
@@ -99,18 +163,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
     >
       <div className="p-4 cursor-pointer">
         <div className="flex justify-end">
-          
           <button
             className={`absolute top-3 right-3 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-            style={{ pointerEvents: isHovered ? 'auto' : 'none' }} // Prevents interaction when not visible
+            style={{ pointerEvents: isHovered ? 'auto' : 'none' }}
+            onClick={() => addToWishlist(productId)}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-8 text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill={isInWishlist ? 'red' : 'none'} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className={`size-8 ${isInWishlist ? 'text-white' : 'text-black'}`}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
             </svg>
           </button>
         </div>
         {imageUrl ? (
-          <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" onClick={() => HandelNavigate()} />
+          <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" onClick={HandelNavigate} />
         ) : (
           <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
             <span className="text-gray-600">No Image</span>

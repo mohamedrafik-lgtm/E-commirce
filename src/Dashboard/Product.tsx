@@ -55,8 +55,9 @@ const ProductsPage = () => {
           position: "top-right",
           duration: 1500,
           style: {
-            backgroundColor: "black",
-            color: "white",
+            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+            backdropFilter: 'blur(20px)',
+            color: "green",
             width: "fit-content",
           },
         });

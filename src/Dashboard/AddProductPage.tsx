@@ -270,8 +270,9 @@ const AddProduct = () => {
           position: "top-right",
           duration: 5000,
           style: {
-            backgroundColor: "#90ee90",
-            color: "#000000",
+            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+            backdropFilter: 'blur(20px)',
+            color: "green",
             width: "fit-content",
           },
         });
