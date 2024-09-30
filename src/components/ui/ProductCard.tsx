@@ -83,9 +83,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
     }, 2000);
   };
 
-  const addToCart = () => {
+  const addToCart = async() => {
     try {
-      axiosInstance.post('/api/CartItem/addOrUpdate', {
+     await axiosInstance.post('/api/CartItem/addOrUpdate', {
         productId: productId,
         quantity: 1,
       }, {
@@ -98,8 +98,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
             position: "top-right",
             duration: 1000,
             style: {
-              backgroundColor: "green",
-              color: "white",
+              backgroundColor: 'rgba(0, 0, 0, 0.05)',
+              backdropFilter: 'blur(20px)',
+              color: "green",
               width: "fit-content",
             },
           });
@@ -126,12 +127,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
             position: "top-right",
             duration: 1000,
             style: {
-              backgroundColor: "green",
-              color: "white",
+              backgroundColor: 'rgba(0, 0, 0, 0.05)',
+              backdropFilter: 'blur(20px)',
+              color: "green",
               width: "fit-content",
             },
           });
-          setIsInWishlist(true); // تعيين الحالة إلى true بعد إضافته إلى قائمة الأمنيات
+          setIsInWishlist(true);
         }
       })
       .catch((error) => console.error(error));

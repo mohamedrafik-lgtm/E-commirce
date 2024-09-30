@@ -26,7 +26,6 @@ import Wishlist from "@/pages/WishlistPage";
 const storageKey = "loginData"
 const userDataString = localStorage.getItem(storageKey)
 const userData =userDataString ? JSON.parse(userDataString) : null;
-console.log(userData?.token)
 
 
 const router = createBrowserRouter(createRoutesFromElements(

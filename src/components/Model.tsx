@@ -136,7 +136,10 @@ export default function Modal({productId}:IProp) {
     <>
       <Button
         onClick={open}
-        className="rounded-md bg-green-500 py-2 px-2 text-sm font-medium text-white focus:outline-none data-[hover]:bg-green-600 data-[focus]:outline-1 data-[focus]:outline-white"
+        className="rounded-md border px-2 text-base font-medium py-3 w-full focus:outline-none"
+        style={{
+          borderRadius: '10px'
+         }}
       >
         Update Product
       </Button>
