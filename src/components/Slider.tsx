@@ -71,7 +71,11 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height }) => {
             </div>
 
             <div>
-            <img src={image} alt={`slide-${index}`}  className="object-contain h-full" />
+              <picture>
+                <source srcSet={image.replace('.jpg', '.webp')} type="image/webp" />
+                {/* <img src={image} alt={`slide-${index}`} className="object-contain h-full" loading="lazy" /> */}
+                <img src={image} alt={`slide-${index}`}  className="object-contain h-full" loading="lazy"/>
+              </picture>
             </div>
         </div>
             

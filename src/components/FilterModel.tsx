@@ -102,7 +102,6 @@ export default function FilterModel() {
       setState({ [anchor]: open });
     };
 
-   // eslint-disable-next-line @typescript-eslint/no-unused-vars
    const onSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     const {data} = await axiosInstance.get('/api/Home/filter',{

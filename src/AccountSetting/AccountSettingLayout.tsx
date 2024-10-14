@@ -1,19 +1,19 @@
 import { Outlet } from "react-router-dom"
 import NavPar from "../components/NavPar"
-import Sidebar from "../Dashboard/Sidebar"
 import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent"
+import AsideAccountSetting from "./AsideAccountSetting"
 
  
-const AdminLayout = () => {
+const AccountSettingLayout = () => {
 
     return(
         <>
            
-
-           <NavPar/>
-            <main className="flex">
+ 
+            <NavPar/>
+            <main className="flex h-screen space-x-2">
             <ScrollAnimatedComponent direction="left">
-                <Sidebar />
+                <AsideAccountSetting />
             </ScrollAnimatedComponent>
                 <Outlet />
            </main>
@@ -22,4 +22,4 @@ const AdminLayout = () => {
     )
 }
 
-export default AdminLayout
+export default AccountSettingLayout

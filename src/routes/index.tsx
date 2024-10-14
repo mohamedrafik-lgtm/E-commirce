@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
     Route,
     createBrowserRouter,
@@ -21,27 +22,38 @@ import { FilterProduct } from "@/components/FilterProduct";
 import Cart from "@/pages/Cart";
 import ProtectedRoute from "@/components/Auth/ProtectedRoute";
 import Wishlist from "@/pages/WishlistPage";
+import ErrorPage from "@/pages/ErrorPage";
+import { useSelector } from "react-redux";
+import { RootState } from "../App/Store";
+import AccountSettingLayout from "@/AccountSetting/AccountSettingLayout";
+import UserProfile from "@/AccountSetting/userProfile";
+
 
 
 const storageKey = "loginData"
 const userDataString = localStorage.getItem(storageKey)
 const userData =userDataString ? JSON.parse(userDataString) : null;
-
+const searchProduct = ()=>{
+  const searchValue = useSelector((state:RootState) => state.Search)
+  return searchValue
+}
 
 const router = createBrowserRouter(createRoutesFromElements(
     
   <>
 
     {/* home route */}
-    <Route path={"/home"} element={<HomeLayout/>}>
+    <Route path={"/home"} element={<HomeLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
        <Route index element={<Home/>}/>
        <Route path="/home/productPage" element={<ProductPage/>}/>
-       <Route path={"/home/search"} element={<SearchProduct/>}/>
+       <Route path="/home/search" element={<ProtectedRoute isAllowed={!searchProduct.length} redirectPath="/home">
+          <SearchProduct/>
+      </ProtectedRoute>} />
        <Route path={"/home/filter"} element={<FilterProduct/>}/>
 
     </Route>
     {/* root route */}
-    <Route path="/" element={<RootLayout/>}>
+    <Route path="/" element={<RootLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
        
@@ -60,7 +72,7 @@ const router = createBrowserRouter(createRoutesFromElements(
        <Route path="Login" element={<Login/>}/>
     </Route>
     {/* admin route*/}
-    <Route path="/Admin" element={<AdminLayout/>}>
+    <Route path="/Admin" element={<AdminLayout/>} errorElement={<ErrorPage msg="500 page not fount" statusCode="500"/>}>
 
       <Route path="/Admin/Discount" element={
         <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
@@ -83,6 +95,12 @@ const router = createBrowserRouter(createRoutesFromElements(
           <ProductsPage/>
         </ProtectedRoute>
         }/>
+    </Route>
+
+    {/* Account Setting route */}
+
+    <Route path="/AccountSetting" element={<AccountSettingLayout/>}>
+      <Route path="/AccountSetting/userProfile" element={<UserProfile/>}/>
     </Route>
     
     </>

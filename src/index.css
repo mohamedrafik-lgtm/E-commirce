@@ -59,7 +59,7 @@
     height: 40px;
   }
   .slick-prev, .slick-next::before {
-    color: black !important;; 
+    color: black !important; 
     border-radius: 50%;
     width: 40px;
     margin-right: 0px;

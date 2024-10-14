@@ -32,11 +32,11 @@ const AdvertisingBanner = ()=>{
                  <p>Second</p>
                  </div>
                 </div>
-                <div style={{marginTop:"19px",borderRadius:'8px',}} className="shadow-lg shadow-green-400 w-fit transition duration-300 transform hover:translate-x-2">
+                <div style={{marginTop:"19px",borderRadius:'8px',}} className="hover:shadow-lg hover:shadow-green-200 w-fit transition duration-300 transform hover:translate-x-2">
                    <button style={{
                     borderRadius:'8px',
                     transitionDuration:"600ms"
-                   }} className="bg-green-500  px-10 py-2  hover:bg-green-600  ">Buy Now!</button>
+                   }} className="bg-green-400  px-10 py-2  hover:bg-green-500  ">Buy Now!</button>
                 </div>
             </div>
             <div>

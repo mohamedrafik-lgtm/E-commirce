@@ -41,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
 
   useEffect(() => {
     const fetchWishlistItems = async () => {
-      if (!userData) return; // إذا لم يكن هناك بيانات للمستخدم، لا حاجة لجلب العناصر
+      if (!userData) return;
 
       try {
         const response = await axiosInstance.get('/api/WishlistItem', {
@@ -64,7 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
     };
 
     fetchWishlistItems();
-  }, [userData?.token, productId, userData]);
+  }, [productId, userData]);
 
   const HandelNavigate = () => {
     dispatch(setProductId(productId));
@@ -176,7 +176,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
           </button>
         </div>
         {imageUrl ? (
-          <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" onClick={HandelNavigate} />
+          <img src={imageUrl} alt={productName} className="w-full h-48 object-contain" onClick={HandelNavigate}  loading="lazy"/>
         ) : (
           <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
             <span className="text-gray-600">No Image</span>

@@ -14,7 +14,7 @@ export interface ISettings{
   }
 
   export interface IStatuess{
-      statusCode: string,
+      statusCode?: string,
       msg:string
   }
 

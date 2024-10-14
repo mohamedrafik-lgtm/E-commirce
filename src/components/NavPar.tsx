@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import Dropdown from "./ui/Dropdown";
-import { faCog, faShieldAlt, faDashboard,faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faDashboard,faLongArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 import axiosInstance from "../config/axios.config";
 import { ISearchValue } from "../interface";
@@ -44,9 +44,9 @@ const NavPar = () => {
     };
   }, []);
   const options = [
-    { label: 'Account Settings', icon: faCog, path: "#" },
-    { label: 'Admin Page', icon: faShieldAlt, path: "/Admin" },
-    { label: 'Dashboard', icon: faDashboard, path: "#" },
+    { label: 'Account Settings', icon: faCog, path: "/AccountSetting" },
+    // { label: 'Admin Page', icon: faShieldAlt, path: "/Admin" },
+    { label: 'Dashboard', icon: faDashboard, path: "/Admin" },
     { label: 'log out', icon:faLongArrowLeft , path: "/Login" },
   ];
 
@@ -101,7 +101,7 @@ const NavPar = () => {
                 placeholder="What are you looking for?"
               />
               <button
-                onClick={() => console.log(searchText)}
+                name="Search"
                 className="absolute cursor-pointer inset-y-0 start-0 flex items-center content-center ps-3"
               >
                 <svg
@@ -123,6 +123,7 @@ const NavPar = () => {
             </div>
           </form>
           <div className="flex space-x-5">
+          {isLoggedIn ? <Dropdown options={options} /> : null}
             <svg
               onClick={()=> navigate('/Wishlist')}
               xmlns="http://www.w3.org/2000/svg"
@@ -153,7 +154,7 @@ const NavPar = () => {
                 d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
               />
             </svg>
-            {isLoggedIn ? <Dropdown options={options} /> : null}
+            
           </div>
         </div>
       </div>

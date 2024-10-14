@@ -15,7 +15,7 @@ const ErrorPage = ({statusCode,msg}:IStatuess) => {
                 <p>{msg}</p>
             </div>
             <div className="items-center bg-red-600 w-64 p-4 rounded-md text-white text-lg text-center">
-            <NavLink to={"/"}>Back to home page</NavLink>
+               <NavLink to={"/Home"}>Back to home page</NavLink>
             </div>
         </div>
     )

@@ -1,12 +1,11 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ImageSlider from "../components/Slider";
 import ProductSlider from "../components/ProductSlider";
 import SliderCategory from "@/components/SliderCategory";
 import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
-import AdvertisingBanner from "@/components/ui/AdvertisingBanner";
-
-
+import { lazy, Suspense } from "react";
+const LazyLoadingAdvertisingBanner = lazy(() => import("@/components/ui/AdvertisingBanner"))
+const LazyLoadingImageSlider = lazy(() => import("../components/Slider"))
 
 export const Home = () => {
 
@@ -32,42 +31,56 @@ export const Home = () => {
     <div className="overflow-hidden space-y-8">
                  
                  <div className="mb-20">
-                 <ScrollAnimatedComponent direction="top">
-                      <ImageSlider images={images} width="1200px" height="320px"/>
-                 </ScrollAnimatedComponent>
+                      <Suspense fallback={<h3>Loding...</h3>}>
+                        <ScrollAnimatedComponent direction="top">
+                          <LazyLoadingImageSlider images={images} width="1200px" height="320px"/>
+                        </ScrollAnimatedComponent>
+                      </Suspense>
                  </div>
                  <div className="mr-3 ml-14">
-                   <ScrollAnimatedComponent direction="right">
-                      <ProductSlider sliderTitle="NEW EST" endpoint={newEst} visibleProducts={6} />
-                   </ScrollAnimatedComponent>
+                   <Suspense fallback={<h3>Loding...</h3>}>
+                     <ScrollAnimatedComponent direction="right">
+                       <ProductSlider sliderTitle="NEW EST" endpoint={newEst} visibleProducts={6} />
+                     </ScrollAnimatedComponent>
+                   </Suspense>
                  </div>
                  <div>
-                 <ScrollAnimatedComponent direction="left">
-                 <AdvertisingBanner/>
-                 </ScrollAnimatedComponent>
+                 <Suspense fallback={<h3>Loding...</h3>}>
+                   <ScrollAnimatedComponent direction="left">
+                      <LazyLoadingAdvertisingBanner/>
+                   </ScrollAnimatedComponent>
+                  </Suspense>
                  </div>
                  <div className="mr-3">
+                 <Suspense fallback={<h3>Loding...</h3>}>
                    <ScrollAnimatedComponent direction="left">
                       <ProductSlider sliderTitle="Top Selling" endpoint={topSelling} visibleProducts={6} />
                    </ScrollAnimatedComponent>
+                 </Suspense>
                  </div>
                  
                  <div className="mr-3">
-                 <ScrollAnimatedComponent direction="right">
+                 <Suspense fallback={<h3>Loding...</h3>}>
+                   <ScrollAnimatedComponent direction="right">
                       <ProductSlider sliderTitle="on sale" endpoint={onSale} visibleProducts={6} />
-                 </ScrollAnimatedComponent>
+                   </ScrollAnimatedComponent>
+                 </Suspense>
                  </div >
                  <hr className="w-10/12 mx-auto"/>
 
                  <div className="w-10/12  mt-10 mx-auto ">
-                 <ScrollAnimatedComponent direction="right">
+                 <Suspense fallback={<h3>Loding...</h3>}>
+                   <ScrollAnimatedComponent direction="right">
                       <SliderCategory visibleProducts={5} endpoint={getAll} sliderTitle={"Category"}/>
-                 </ScrollAnimatedComponent>
+                   </ScrollAnimatedComponent>
+                 </Suspense>
                  </div>
                  <div className="mb-14 mr-3">
-                 <ScrollAnimatedComponent direction="left">
+                 <Suspense fallback={<h3>Loding...</h3>}>
+                   <ScrollAnimatedComponent direction="left">
                       <ProductSlider sliderTitle="Out Of Stock" endpoint={outOfStock} visibleProducts={6} />
-                 </ScrollAnimatedComponent>
+                   </ScrollAnimatedComponent>
+                 </Suspense>
                  </div>
 
                  

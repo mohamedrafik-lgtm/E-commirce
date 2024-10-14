@@ -64,7 +64,6 @@ const Cart = () => {
                 item.productId === id ? { ...item, quantity: newQuantity } : item
             ));
 
-            toast.success("Quantity updated successfully!");
 
         } catch (error) {
             console.error("Failed to update quantity", error);
@@ -109,7 +108,7 @@ const Cart = () => {
         );
     });
 
-    const handleNavigate = () => {
+    const handleNavigate = (url:string) => {
         toast.success(`navigate to home page after 1.5 second`, {
             position: "top-right",
             duration: 1000,
@@ -121,12 +120,12 @@ const Cart = () => {
             },
         });
         setTimeout(() => {
-            navigate('/home');
+            navigate(url);
         }, 1500);
     };
 
     return (
-        <div className=" pt-10 pb-10 overflow-hidden">
+        <div className=" pt-10 pb-10 overflow-hidden space-y-3">
             
             <div>
                 <h3 className=" ml-80 text-3xl">Cart Items</h3>
@@ -148,14 +147,21 @@ const Cart = () => {
                         <h2>There are no products in the cart.</h2>
                     </div>}
                 </div>
-                <div className="w-10/12 mx-auto mt-5">
-                    <button onClick={() => handleNavigate()} style={{
+                <div className="w-10/12 mx-auto mt-5 grid grid-cols-2">
+                    <div className="">
+                    <button onClick={() => handleNavigate('/Home')} style={{
                         borderRadius:"5px"
-                    }} className="ml-2 border border-black py-2 px-7 hover:bg-black hover:text-white transition-all duration-300">Return To Shop</button>
+                    }} className="ml-2 border border-black py-2 px-7 text-lg hover:bg-black hover:text-white transition-all duration-300">Return To Shop</button>
+                    </div>
+                    <div className="mx-auto">
+                        <button onClick={() => handleNavigate('/CheckOut')} style={{
+                        borderRadius:"5px"
+                    }} className="ml-2 border border-black py-2 px-11 text-lg hover:bg-black hover:text-white transition-all duration-300">Check Out</button></div>
                 </div>
             </div>
 
             <div className="flex justify-end w-8/12 mx-auto">
+                
                 <div style={{
                     borderRadius:"5px",
                 }} className="px-3 py-5 w-80 border border-black">

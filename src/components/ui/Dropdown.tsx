@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
@@ -35,14 +34,17 @@ const Dropdown: React.FC<DropdownProps> = ({ options }) => {
         onClick={toggleDropdown}
         className=" font-semibold  inline-flex items-center justify-center"
       >
-        <FontAwesomeIcon icon={faUser} className="h-5 w-5" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+        </svg>
+
       </button>
       <div
         style={{
-          border: '1px solid',
+          // border: '1px solid',
           borderRadius: '15px',
         }} 
-        className={`z-50 transition-transform bg-white/5 backdrop-blur-xl duration-300 ease-in-out transform ${
+        className={`z-50 transition-transform !bg-gray-600/25 backdrop-blur-xl text-white duration-300 ease-in-out transform ${
           showDropdown ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} absolute right-0 mt-2 w-48 bg-white rounded-lg`}
       >
         {options.map((option, index) => (
