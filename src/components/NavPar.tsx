@@ -44,7 +44,7 @@ const NavPar = () => {
     };
   }, []);
   const options = [
-    { label: 'Account Settings', icon: faCog, path: "/AccountSetting" },
+    { label: 'Account Settings', icon: faCog, path: "/AccountSetting/userProfile" },
     // { label: 'Admin Page', icon: faShieldAlt, path: "/Admin" },
     { label: 'Dashboard', icon: faDashboard, path: "/Admin" },
     { label: 'log out', icon:faLongArrowLeft , path: "/Login" },

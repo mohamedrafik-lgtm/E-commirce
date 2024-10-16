@@ -1,10 +1,34 @@
+import { useState } from "react"
+import EditProfileDataModel from "./EditModle"
 
 
-
+interface User{
+  email: string;
+  expireAt: string;
+  isAuthenticated: boolean;
+  isVerified: boolean;
+  message: null;
+  refreshToken: string;
+  refreshTokenExpireAt: string;
+  roles: string[];
+  "0": string;
+  token: string;
+  userName: null;
+}
 
 const UserProfile = ()=>{
+  const storageKey = "loginData";
+  const userDataString = localStorage.getItem(storageKey);
+  const userData:User = userDataString ? JSON.parse(userDataString) : null;
+     const [isHover,setIsHover] = useState(false)
+     const showEditIcon = ()=>{
+      setIsHover(true)
+     }
+     const hideEditIcon = ()=>{
+      setIsHover(false)
+     }
 
-
+     console.log(isHover)
     return(
       <div className="mt-7 w-full px-5 space-y-5 mb-7">
         
@@ -23,20 +47,15 @@ const UserProfile = ()=>{
             </div>
             <div className="space-y-1">
               <h3 className="text-xl font-semibold">User Name</h3>
-              <p className="text-lg">Admin</p>
+              <div onMouseEnter={showEditIcon} onMouseLeave={hideEditIcon} className="flex space-x-2">
+                 <p  className="text-lg">Admin</p>
+                 {
+                  isHover ? <EditProfileDataModel NameOfTheContentToBeModified="Admin" token={userData.token}/> : null
+                 }
+              </div>
               <p className="text-lg">the address</p>
             </div></div>
-            <div>
-              <button style={{
-                borderRadius: "5px"
-              }} className="px-7 py-2 bg-orange-400 text-white hover:bg-orange-600 transition-all duration-300 flex space-x-1 justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
-  <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-</svg>
-
-                <p>Edit</p>
-                </button>
-            </div>
+            
 
           </div>
 

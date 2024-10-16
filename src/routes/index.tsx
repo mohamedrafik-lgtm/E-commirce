@@ -100,7 +100,28 @@ const router = createBrowserRouter(createRoutesFromElements(
     {/* Account Setting route */}
 
     <Route path="/AccountSetting" element={<AccountSettingLayout/>}>
-      <Route path="/AccountSetting/userProfile" element={<UserProfile/>}/>
+
+      <Route index path="/AccountSetting/userProfile" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+        <UserProfile/>
+        </ProtectedRoute>
+        }/>
+
+      <Route index path="/AccountSetting/Security" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <p>Security page</p>
+        </ProtectedRoute>}/>
+
+        <Route index path="/AccountSetting/myOrder" element={
+          <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <p>My Order page</p>
+        </ProtectedRoute>}/>
+        
+        <Route index path="/AccountSetting/orderStatus" element={
+          <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <p>order status page</p>
+        </ProtectedRoute>}/>
+
     </Route>
     
     </>
