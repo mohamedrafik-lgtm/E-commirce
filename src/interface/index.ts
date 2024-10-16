@@ -145,3 +145,13 @@ export interface IAddDiscountInput{
   type:string;
   placeholder:string
 }
+
+// FirstName:string;
+//   LastName:string;
+//   StreetAddress:string;
+//   City:string;
+//   Country:string;
+//   PostalCode:string;
+//   PhoneNumber:string;
+//   Email:string;
+

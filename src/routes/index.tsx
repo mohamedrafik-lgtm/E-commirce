@@ -27,6 +27,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../App/Store";
 import AccountSettingLayout from "@/AccountSetting/AccountSettingLayout";
 import UserProfile from "@/AccountSetting/userProfile";
+import CheckOut from "@/pages/CheckOut";
 
 
 
@@ -56,9 +57,14 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<RootLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
        <Route path="contact" element={<ContactPage/>}/>
        <Route path="About" element={<h3>About page</h3>}/>
-       
+           {/* /CheckOut */}
           <Route path="Wishlist" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
           <Wishlist/>
+          </ProtectedRoute>
+          }/>
+
+          <Route path="/CheckOut" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <CheckOut/>
           </ProtectedRoute>
           }/>
        
