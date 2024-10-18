@@ -23,7 +23,7 @@ export const Home = () => {
    const topSelling:string = '/api/Home/top-selling'
    const outOfStock:string = '/api/Home/out-of-stock'
    const onSale:string = "/api/Home/on-sale"
-   const getAll:string  = "/GetAll"
+   const getAll:string  = "/api/Category"
     
 
     

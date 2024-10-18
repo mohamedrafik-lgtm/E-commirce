@@ -44,14 +44,19 @@ const CheckOut = ()=>{
     const renderCartItems = cartItems.map(item =><div>
         <ProductCartInCartPage imgUrl={item.productImage} productPrice={4000} productName={item.productName}/>
       </div>)
+
+      
     const renderInput = FormBillingDetails.map((data) =>{
         return <div className="flex flex-col space-y-1">
             <label className="opacity-85 text-gray-400 text-sm" htmlFor={data.name}>{data.label}</label>
             <InputComponent style={{
                 borderRadius:'5px'
-            }} type={data.type} name={data.name} className="w-full bg-gray-100 p-2"/>
+            }} type={data.type} name={data.name} id={data.name} className="w-full bg-gray-100 p-2"/>
         </div>
     })
+
+
+    
     return(
         <div className="w-full h-screen">
           <div className="w-10/12 mx-auto grid grid-cols-2 gap-28 mt-14">

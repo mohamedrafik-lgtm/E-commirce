@@ -28,6 +28,7 @@ import { RootState } from "../App/Store";
 import AccountSettingLayout from "@/AccountSetting/AccountSettingLayout";
 import UserProfile from "@/AccountSetting/userProfile";
 import CheckOut from "@/pages/CheckOut";
+import Brand from "@/Dashboard/Brand";
 
 
 
@@ -77,6 +78,7 @@ const router = createBrowserRouter(createRoutesFromElements(
        <Route path="VerificationCode" element={<VerificationCode/>}/>
        <Route path="Login" element={<Login/>}/>
     </Route>
+
     {/* admin route*/}
     <Route path="/Admin" element={<AdminLayout/>} errorElement={<ErrorPage msg="500 page not fount" statusCode="500"/>}>
 
@@ -91,16 +93,27 @@ const router = createBrowserRouter(createRoutesFromElements(
           <Category/>
         </ProtectedRoute>
         }/>
+
+
       <Route path="/Admin/AddProduct" element={
         <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
           <AddProduct/>
         </ProtectedRoute>
         }/>
+
+        {/* /Admin/Brand */}
       <Route path="/Admin/products" element={
         <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
           <ProductsPage/>
         </ProtectedRoute>
         }/>
+
+        <Route path="/Admin/Brand" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <Brand/>
+        </ProtectedRoute>
+        }/>
+        
     </Route>
 
     {/* Account Setting route */}

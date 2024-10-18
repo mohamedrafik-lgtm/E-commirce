@@ -8,7 +8,8 @@ import toast from 'react-hot-toast'
 
 interface ICategory{
     CategoryName: string;
-    CategoryDescription:string
+    CategoryDescription:string;
+    ImageFile:string;
 }
 
 export default function AddCategoryModel() {
@@ -26,8 +27,10 @@ export default function AddCategoryModel() {
 
   const [CategoryValue, setCategoryValue] = useState<ICategory>({
     CategoryName: '',
-    CategoryDescription: ''
+    CategoryDescription: '',
+    ImageFile:''
 })
+console.log(CategoryValue)
   // handlers
   const handelChange = (e:ChangeEvent<HTMLInputElement>)=>{
       const { value, name } = e.target;
@@ -40,13 +43,14 @@ export default function AddCategoryModel() {
   
     const handelSubmit = async(e:FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-    
+           const formData = new FormData
+           formData.append("Name",CategoryValue.CategoryName),
+           formData.append("CategoryDescription",CategoryValue.CategoryDescription),
+           formData.append("ImageFile",CategoryValue.ImageFile)
            try {
-             const {status}= await axiosInstance.post('/Add',{
-               Name:CategoryValue.CategoryName,
-               CategoryDescription:CategoryValue.CategoryDescription,
-             })
-             if(status===200){
+             const data= await axiosInstance.post('/api/Category',formData)
+             console.log(data)
+             if(data.status===200){
                  toast.success(`Add Category successfully`, {
                    position: "top-right",
                    duration: 1500,
@@ -59,7 +63,9 @@ export default function AddCategoryModel() {
                  });
     
              }
+                
            } catch (error) {
+            console.log(error)
                toast.error(`${error}`, {
                    position: "top-right",
                    duration: 1500,
@@ -70,12 +76,13 @@ export default function AddCategoryModel() {
                    },
                  });
            }finally{
+               close()
                setCategoryValue({
                    CategoryName: '',
-                   CategoryDescription: ''
+                   CategoryDescription: '',
+                   ImageFile: '',
                })
            }
-          
            }
   
   return (
@@ -96,7 +103,7 @@ export default function AddCategoryModel() {
             >
                 <div className='flex justify-between'>
                     <DialogTitle as="h3" className="text-2xl font-medium ">
-                      Add Categoru
+                      Add Category
                     </DialogTitle>
                     <Button
                   className=""
@@ -118,6 +125,10 @@ export default function AddCategoryModel() {
                         <div className="w-full">
                            <label htmlFor="CategoryDescription">Category Description</label>
                            <InputComponent onChange={handelChange} value={CategoryValue.CategoryDescription} type="text" id="CategoryDescription" name="CategoryDescription" placeholder="Enter Category description" className="custom-input mb-1 w-full p-2 rounded-md" />
+                        </div>
+                        <div className="w-full">
+                           <label htmlFor="CategoryimgUrl">chose image for category</label>
+                           <InputComponent onChange={handelChange} value={CategoryValue.ImageFile} type="file" id="ImageFile" name="ImageFile" className="custom-input mb-1 w-full p-2 rounded-md" />
                         </div>
                         <button className='w-full text-lg bg-black text-white py-2 rounded-md hover:black/20 hover:text-white hover:border transition-all'style={{borderRadius:"15px"}} type="submit">Add Category</button>
                     </form>

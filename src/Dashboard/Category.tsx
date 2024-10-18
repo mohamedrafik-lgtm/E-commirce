@@ -7,8 +7,10 @@ import AddCategoryModel from "./AddCategoryModel";
 
 
 interface IProps{
+    id:number,
     name:string,
-    description: null
+    description: string,
+    imageUrl:string,
 }
 const Category = ()=>{
     
@@ -16,7 +18,7 @@ const Category = ()=>{
     useEffect(()=>{
         const categoryRequst =async ()=>{
             try {
-                const { data } = await axiosInstance.get('/GetAll')
+                const { data } = await axiosInstance.get('/api/Category')
                 setCategory(data)
             } catch (error) {
                 console.log(error)
@@ -26,12 +28,11 @@ const Category = ()=>{
     },[])
     console.log(category)
     const renderCategoryItems = category.map((data) =><div key={uuid()}>
-        <CategoryCartItem name={data.name}/>
+        <CategoryCartItem name={data.name} imageUrl={data.imageUrl} id={data.id}/>
     </div>)
     
     return (
         <div className="flex flex-col w-full h-fit justify-around">
-            
              <div className="grid grid-cols-5 gap-4 px-3">
              {renderCategoryItems}
              <div className="flex items-center">

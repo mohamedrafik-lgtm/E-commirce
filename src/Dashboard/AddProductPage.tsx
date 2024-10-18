@@ -14,10 +14,10 @@ import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
 const AddProduct = () => {
     
   const options = [
-    { value: 'nvidia', label: 'nvidia' },
-    { value: 'AMD', label: 'AMD' },
-    { value: 'intel', label: 'intel' },
-    { value: 'Apple', label: 'Apple' },
+    { value: 'Smart watches', label: 'Smart watches' },
+    { value: 'headphones', label: 'headphones' },
+    { value: 'labtop', label: 'labtop' },
+    { value: 'phone', label: 'phone' },
   ];
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
@@ -262,6 +262,7 @@ const AddProduct = () => {
     formData.append('DiscountAmount', price.discount.toString());
     formData.append('DiscountStartDate', startDate);
     formData.append('DiscountEndDate', endDate);
+    formData.append('DiscountName', 'discountList');
     try {
       const {status} = await axiosInstance.post(url, formData);
       
@@ -277,7 +278,7 @@ const AddProduct = () => {
           },
         });
       }
-      
+      setLoading(false)
     } catch (error) {
       console.error(error);
     }finally{

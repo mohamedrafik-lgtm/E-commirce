@@ -52,8 +52,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
 
         const data: WishlistItem[] = response.data;
        
-
-
         const foundInWishlist = data.some(item => item.productId === productId);
         setIsInWishlist(foundInWishlist);
         console.log(data);

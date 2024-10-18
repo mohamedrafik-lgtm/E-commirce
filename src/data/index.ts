@@ -192,14 +192,7 @@ export const AddDiscountInput:IAddDiscountInput[] = [{
 
 ]
 
-// FirstName:string;
-//   LastName:string;
-//   StreetAddress:string;
-//   City:string;
-//   Country:string;
-//   PostalCode:string;
-//   PhoneNumber:string;
-//   Email:string;
+
 export const FormBillingDetails: FormBillingDetails[] = [
     {
         name:"FirstName",

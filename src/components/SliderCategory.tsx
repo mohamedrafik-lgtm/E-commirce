@@ -9,10 +9,16 @@ interface IProps{
   endpoint:string,
   sliderTitle: string;
 }
+interface ICategoryCard {
+  name:string;
+  description:string;
+  imageUrl:string;
+}
 const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   const [loading, setLoading] = useState(true);
-    const [products, setProduct] = useState<{name:string,description:string}[]>([]);
+    const [products, setProduct] = useState<ICategoryCard[]>([]);
     console.log(loading)
+    console.log(products)
     
     useEffect(() => {
       setLoading(true)
@@ -73,7 +79,7 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
               }}
             >
               <div className="flex w-fit">
-                <CategoryCard name={Category.name} description={"The apple is one of the pome (fleshy) fruits. Apples at harvest vary widely in size"} />
+                <CategoryCard name={Category.name} description={"The apple is one of the pome (fleshy) fruits. Apples at harvest vary widely in size"} imgUrl={Category.imageUrl} />
                  </div>
             </div>
           ))}

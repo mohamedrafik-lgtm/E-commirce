@@ -1,31 +1,40 @@
+import axiosInstance from "@/config/axios.config"
+import toast from "react-hot-toast"
+
 interface IProps{
-    name:string,
+  name: string,
+  imageUrl:string,
+  id:number,
 }
-const CategoryCartItem = ({name}:IProps)=>{
-    const  DefineCtegoryImage = (name :string): string | null =>{
-        if(name === "phone"){
-          return "/IMG/e89299e60ad5ab5352de01f1536856df.jpg";
-        }else if(name === "labtop"){
-          return '/IMG/d84c891b4df125a86bf883bc3dea39b2.jpg'
-        }else if(name === "Ipad"){
-          return '/IMG/73cef35823138a24acd86ba674fd7cef.jpg'
-        }else if(name === "smartWatch"){
-           return "/IMG/8ce49fdb6a97356de8aa3c63a1c364d9.jpg"
-        }else if(name === "headphones"){
-          return "/IMG/17481a2423d5b5cfcf115578aa2b6025.jpg"
-        }else if (name === "speakers"){
-          return "/IMG/da9a8b046146a124707d5cb523200e88.jpg"
+
+const CategoryCartItem = ({imageUrl,name,id}:IProps)=>{
+     
+
+
+    const DeleteCategory = async (id:number)=>{
+    
+        try {
+            await axiosInstance.delete(`/api/Category/${id}`)
+            toast.success(`Category deleted`)
+        } catch (error) {
+            console.log(error)
         }
-        return null
-      }
+    }
     const discription:string = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore ducimus quia, reiciendis quaerat velit fugit magni ipsam amet esse itaque!"
     return (
         <div style={{
             borderRadius: 15,
-        }} className="space-y-3 p-3 !border mx-auto mt-10">
+        }} className="space-y-3 p-3 !border mx-auto mt-10 relative">
+            <div className="absolute inset-0 flex flex-col opacity-0 h-72 hover:opacity-100 transition-opacity duration-500 ease-in-out items-end mr-3 mt-1">
+                <button onClick={()=> DeleteCategory(id)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-red-600 hover:text-red-700">
+                         <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                    </svg>
+                </button>
+            </div>
             <div className="w-64 h-full overflow-hidden mx-auto">
                 <img 
-             src={`${DefineCtegoryImage(name)}`}
+             src={imageUrl}
              className="w-full h-64 object-top mx-auto" 
           style={{
             objectFit: "cover", 
@@ -37,7 +46,7 @@ const CategoryCartItem = ({name}:IProps)=>{
                 <p>{discription.length > 50 ? `${discription.slice(0, 50)}...` : discription}</p>
             </div>
             <div>
-                <button className='w-full py-2 border hover:text-white hover:bg-black transition-all duration-300'>
+                <button className='w-full py-2 border hover:text-white hover:bg-black transition-all duration-300 '>
                     Update Category
                 </button>
             </div>
