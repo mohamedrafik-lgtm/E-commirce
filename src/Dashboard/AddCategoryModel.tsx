@@ -127,8 +127,10 @@ console.log(CategoryValue)
                            <InputComponent onChange={handelChange} value={CategoryValue.CategoryDescription} type="text" id="CategoryDescription" name="CategoryDescription" placeholder="Enter Category description" className="custom-input mb-1 w-full p-2 rounded-md" />
                         </div>
                         <div className="w-full">
-                           <label htmlFor="CategoryimgUrl">chose image for category</label>
-                           <InputComponent onChange={handelChange} value={CategoryValue.ImageFile} type="file" id="ImageFile" name="ImageFile" className="custom-input mb-1 w-full p-2 rounded-md" />
+                           <label htmlFor="CategoryimgUrl" className="cursor-pointer border  py-2 px-4 rounded-md hover:bg-black hover:text-white transition duration-200">
+                            chose image for category
+                            </label>
+                           <InputComponent onChange={handelChange} value={CategoryValue.ImageFile} type="file" id="ImageFile" name="ImageFile" className="hidden" />
                         </div>
                         <button className='w-full text-lg bg-black text-white py-2 rounded-md hover:black/20 hover:text-white hover:border transition-all'style={{borderRadius:"15px"}} type="submit">Add Category</button>
                     </form>

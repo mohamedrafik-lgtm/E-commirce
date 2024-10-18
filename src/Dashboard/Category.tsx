@@ -28,7 +28,7 @@ const Category = ()=>{
     },[])
     console.log(category)
     const renderCategoryItems = category.map((data) =><div key={uuid()}>
-        <CategoryCartItem name={data.name} imageUrl={data.imageUrl} id={data.id}/>
+        <CategoryCartItem name={data.name} imageUrl={data.imageUrl} id={data.id} description={data.description}/>
     </div>)
     
     return (

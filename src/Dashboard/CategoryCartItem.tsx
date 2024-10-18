@@ -1,3 +1,4 @@
+import UbdateCategory from "@/components/UpdateCategoryModel"
 import axiosInstance from "@/config/axios.config"
 import toast from "react-hot-toast"
 
@@ -5,9 +6,10 @@ interface IProps{
   name: string,
   imageUrl:string,
   id:number,
+  description:string,
 }
 
-const CategoryCartItem = ({imageUrl,name,id}:IProps)=>{
+const CategoryCartItem = ({imageUrl,name,id,description}:IProps)=>{
      
 
 
@@ -20,7 +22,7 @@ const CategoryCartItem = ({imageUrl,name,id}:IProps)=>{
             console.log(error)
         }
     }
-    const discription:string = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore ducimus quia, reiciendis quaerat velit fugit magni ipsam amet esse itaque!"
+    // const discription:string = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore ducimus quia, reiciendis quaerat velit fugit magni ipsam amet esse itaque!"
     return (
         <div style={{
             borderRadius: 15,
@@ -43,12 +45,14 @@ const CategoryCartItem = ({imageUrl,name,id}:IProps)=>{
             </div>
             <div>
                 <h3 className="mb-2 text-xl mt-2">{name}</h3>
-                <p>{discription.length > 50 ? `${discription.slice(0, 50)}...` : discription}</p>
+                <p>{description.length > 50 ? `${description.slice(0, 50)}...` : description}</p>
             </div>
             <div>
-                <button className='w-full py-2 border hover:text-white hover:bg-black transition-all duration-300 '>
+
+                <UbdateCategory ImageUrl={imageUrl} Id={id} Name={name} Description={'jkhfsikpjdpfishdf'}/>
+                {/* <button className='w-full py-2 border hover:text-white hover:bg-black transition-all duration-300 '>
                     Update Category
-                </button>
+                </button> */}
             </div>
         </div>
     )
