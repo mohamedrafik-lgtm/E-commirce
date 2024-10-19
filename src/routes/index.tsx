@@ -29,6 +29,7 @@ import AccountSettingLayout from "@/AccountSetting/AccountSettingLayout";
 import UserProfile from "@/AccountSetting/userProfile";
 import CheckOut from "@/pages/CheckOut";
 import Brand from "@/Dashboard/Brand";
+import CategoryPage from "@/pages/Category";
 
 
 
@@ -39,7 +40,12 @@ const searchProduct = ()=>{
   const searchValue = useSelector((state:RootState) => state.Search)
   return searchValue
 }
+// const searchCategory = ()=>{
+//   const categoryId = useSelector((state:RootState) => state.category)
+//   return categoryId
+// }
 
+ 
 const router = createBrowserRouter(createRoutesFromElements(
     
   <>
@@ -64,7 +70,7 @@ const router = createBrowserRouter(createRoutesFromElements(
           </ProtectedRoute>
           }/>
 
-          <Route path="/CheckOut" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <Route path="CheckOut" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
           <CheckOut/>
           </ProtectedRoute>
           }/>
@@ -74,6 +80,7 @@ const router = createBrowserRouter(createRoutesFromElements(
          <Cart/>
          </ProtectedRoute>}
          />
+         <Route path={`categoryItems`} element={<CategoryPage/>}/>
        <Route path="Register" element={<Register/>}/>
        <Route path="VerificationCode" element={<VerificationCode/>}/>
        <Route path="Login" element={<Login/>}/>

@@ -9,7 +9,7 @@ interface IProps{
   description:string,
 }
 
-const CategoryCartItem = ({imageUrl,name,id,description}:IProps)=>{
+const CategoryCartItem = ({imageUrl,name,id,description = "no description yet"}:IProps)=>{
      
 
 
@@ -45,14 +45,11 @@ const CategoryCartItem = ({imageUrl,name,id,description}:IProps)=>{
             </div>
             <div>
                 <h3 className="mb-2 text-xl mt-2">{name}</h3>
-                <p>{description.length > 50 ? `${description.slice(0, 50)}...` : description}</p>
+                <p>{description && description.length > 50 ? `${description.slice(0, 50)}...` : description || "no description yet"}</p>
             </div>
             <div>
 
-                <UbdateCategory ImageUrl={imageUrl} Id={id} Name={name} Description={'jkhfsikpjdpfishdf'}/>
-                {/* <button className='w-full py-2 border hover:text-white hover:bg-black transition-all duration-300 '>
-                    Update Category
-                </button> */}
+                <UbdateCategory ImageUrl={imageUrl} Id={id} Name={name} Description={description}/>
             </div>
         </div>
     )

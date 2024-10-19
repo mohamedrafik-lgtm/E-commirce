@@ -1,11 +1,17 @@
+import { setCategoryId } from "@/App/features/categoryId";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 interface CategoryCardProps {
   name: string;
   description: string;
   imgUrl: string;
+  id:number
 }
 
-const CategoryCard = ({ name, description,imgUrl = "/IMG/e89299e60ad5ab5352de01f1536856df.jpg"}: CategoryCardProps) => {
+const CategoryCard = ({ name, description,imgUrl = "/IMG/e89299e60ad5ab5352de01f1536856df.jpg" , id}: CategoryCardProps) => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
   // const  DefineCtegoryImage = ({name}:IProps): string | null =>{
   //   if(name === "phone"){
   //     return "/IMG/e89299e60ad5ab5352de01f1536856df.jpg";
@@ -22,10 +28,17 @@ const CategoryCard = ({ name, description,imgUrl = "/IMG/e89299e60ad5ab5352de01f
   //   }
   //   return null
   // }
-  console.log(imgUrl)
+  
+    const handleNavigate = (id:number)=>{
+      dispatch(setCategoryId(id))
+      navigate(`/categoryItems`)
+    }
+
+  console.log(id)
   return (
     <div 
       className="relative bg-gray-900 rounded-lg justify-center overflow-hidden cursor-pointer !w-64 !h-64" 
+      onClick={()=> handleNavigate(id)}
       style={{
         borderRadius: "20px",
       }}

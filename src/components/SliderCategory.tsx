@@ -13,6 +13,7 @@ interface ICategoryCard {
   name:string;
   description:string;
   imageUrl:string;
+  id:number
 }
 const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
   const [loading, setLoading] = useState(true);
@@ -79,7 +80,7 @@ const SliderCategory  = ( {visibleProducts,endpoint,sliderTitle}:IProps) => {
               }}
             >
               <div className="flex w-fit">
-                <CategoryCard name={Category.name} description={"The apple is one of the pome (fleshy) fruits. Apples at harvest vary widely in size"} imgUrl={Category.imageUrl} />
+                <CategoryCard id={Category.id} name={Category.name} description={"The apple is one of the pome (fleshy) fruits. Apples at harvest vary widely in size"} imgUrl={Category.imageUrl} />
                  </div>
             </div>
           ))}
