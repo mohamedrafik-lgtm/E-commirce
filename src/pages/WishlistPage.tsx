@@ -135,7 +135,7 @@ const Wishlist = ()=>{
         <div className=" pt-10 pb-10 overflow-hidden">
             
               <div>
-              <h3 className=" ml-60 text-3xl">Wish list</h3>
+              <h3 className=" ml-60 text-3xl">Wish list ({WishlistItem.length})</h3>
               </div>
             
           <div className="space-y-4 mt-10">

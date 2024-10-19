@@ -103,7 +103,7 @@ export default function OptionsModel({productId}:IProp) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}><Model productId={productId}/></MenuItem>
+        <MenuItem><Model productId={productId}/></MenuItem>
 
         <MenuItem onClick={handleClose}>
                     <button

@@ -81,6 +81,8 @@ const router = createBrowserRouter(createRoutesFromElements(
          </ProtectedRoute>}
          />
          <Route path={`categoryItems`} element={<CategoryPage/>}/>
+
+         
        <Route path="Register" element={<Register/>}/>
        <Route path="VerificationCode" element={<VerificationCode/>}/>
        <Route path="Login" element={<Login/>}/>

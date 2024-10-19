@@ -147,12 +147,12 @@ export const updateProductInputData:IUpdateProductInputData[] = [
         type:"text",
         placeholder:"Enter Contact Name",
     },
-    {
-        name:"ContactName",
-        id:uuid(),
-        type:"text",
-        placeholder:"Enter Contact Name",
-    },
+    // {
+    //     name:"ContactName",
+    //     id:uuid(),
+    //     type:"text",
+    //     placeholder:"Enter Contact Name",
+    // },
     {
         name:"Discontinued",
         id:uuid(),

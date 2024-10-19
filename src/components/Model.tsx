@@ -1,10 +1,45 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { ChangeEvent, ReactNode, useState } from 'react'
+import { ChangeEvent, ReactNode, useEffect, useState } from 'react'
 import InputComponent from "../components/ui/InputComponent"
 import { updateProductInputData } from '../data'
+import axiosInstance from '@/config/axios.config';
 
 interface IProp{
   productId: number;
+}
+interface IProduct{
+  brand:string;
+  category:string;
+  companyName:string;
+  contactName:string;
+  description:string;
+  discontinued: boolean;
+  imageUrls:string[];
+  isArchived: boolean;
+  productAttributes:string[];
+  productAttributesValues: string[];
+  productCode: string;
+  productId:number;
+  productImages:string;
+  productName:string;
+  reorderLevel:number;
+  tags:string[];
+  unitPrice:number;
+  unitsInStock: number;
+}
+
+interface IInput{
+  ProductName:string;
+  UnitPrice:number;
+  Description:string;
+  Brand:string;
+  Category:string;
+  UnitsInStock:string;
+  ReorderLevel:string;
+  ProductCodeL:string;
+  CompanyName:string;
+  ContactName:string;
+  Discontinued: boolean;
 }
 export default function Modal({productId}:IProp) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -15,6 +50,40 @@ export default function Modal({productId}:IProp) {
   const [previews, setPreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [filePaths, setFilePaths] = useState<string[]>([]);
+  const [data,setData] = useState<IProduct>({
+    brand: '',
+    category: '',
+    companyName: '',
+    contactName: '',
+    description: '',
+    discontinued: false,
+    imageUrls: [],
+    isArchived: false,
+    productAttributes: [],
+    productAttributesValues: [],
+    productCode: '',
+    productId: productId,
+    productImages: '',
+    productName: '',
+    reorderLevel: 0,
+    tags: [],
+    unitPrice: 0,
+    unitsInStock: 0,
+  })
+
+  const [input,SetInput] = useState<IInput>({
+    ProductName: data.productName,
+    UnitPrice: data.unitPrice,
+    Description: data.description,
+    Brand: data.brand,
+    Category: data.category,
+    UnitsInStock: data.unitsInStock.toString(),
+    ReorderLevel: data.reorderLevel.toString(),
+    ProductCodeL: data.productCode,
+    CompanyName: data.companyName,
+    ContactName: data.contactName,
+    Discontinued: data.discontinued,
+  })
   
   function open() {
     setIsOpen(true)
@@ -53,6 +122,8 @@ export default function Modal({productId}:IProp) {
     newFilePaths.splice(index, 1);
     setFilePaths(newFilePaths);
   };
+
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
@@ -87,7 +158,7 @@ export default function Modal({productId}:IProp) {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-  const maxProperties: number = 4;
+  const maxProperties: number = 10;
 
   const handleAddProperty = () => {
     if (propertyNames.length < maxProperties) {
@@ -115,19 +186,49 @@ export default function Modal({productId}:IProp) {
     updatedValues[index] = e.target.value;
     setPropertyValues(updatedValues);
   };
+  const handleTagRemove = (index: number) => {
+    setTags(prevTags => prevTags.filter((_, i) => i !== index));
+  };
 
+  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>)=>{
+    
+   const {name,value} = e.target
+   SetInput(
+    {
+     ...input,
+      [name]: value
+    }
+   )
+  }
   // render input element
   const renderInput = updateProductInputData.map((data):ReactNode =>{
     return <div className='flex items-center' key={data.id} id={data.name}>
     {data.name === "Discontinued" ? <label className='mr-2' htmlFor={data.name}>{data.label} : </label> : null}
-    <InputComponent key={data.id} type={data.type}  name={data.name} id={data.id} placeholder={data.placeholder} className="custom-input"/>
+    <InputComponent key={data.id} type={data.type}  onChange={handleChangeValue}  name={data.name} id={data.id} placeholder={data.placeholder} className="custom-input"/>
     </div>
 }) 
 
+useEffect(() => {
 
-  const handleTagRemove = (index: number) => {
-    setTags(prevTags => prevTags.filter((_, i) => i !== index));
-  };
+  const fetchProducts = async (productId:number) =>{
+     
+    try {
+      const response = await axiosInstance.get(`/api/Product/${productId}`)
+      setData(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+   }
+   fetchProducts(productId)
+
+  
+},[data.imageUrls, productId])
+useEffect(() => {
+  setTags(data?.tags);
+  setPropertyNames(data?.productAttributes);
+  setPropertyValues(data?.productAttributesValues)
+  setPreviews(data?.imageUrls)
+}, [data.tags, data.productAttributes, data.productAttributesValues, data.imageUrls])
 
 
   
@@ -243,7 +344,7 @@ export default function Modal({productId}:IProp) {
         </div>
         
       )}
-    </div>   
+               </div>   
     <div className=" p-6  rounded-lg shadow-md">
       <h1 className="text-3xl font-bold mb-6 text-center">Upload Images</h1>
       <div className={`${previews.length ? "border" : null} space-y-2 rounded-md mb-3 p-3`}>

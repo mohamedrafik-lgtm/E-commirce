@@ -94,7 +94,7 @@ const Cart = () => {
                     value={cart.quantity} 
                     onChange={(e: ChangeEvent<HTMLInputElement>) => handleQuantityChange(cart.productId, parseInt(e.target.value))}
                     type="number" 
-                    className="w-9 focus:outline-none"
+                    className="w-14 hover:border text-center px-3 py-2"
                 />
                 </div>
                 <li>{cart.category}</li>
@@ -128,7 +128,7 @@ const Cart = () => {
         <div className=" pt-10 pb-10 overflow-hidden space-y-3">
             
             <div>
-                <h3 className=" ml-80 text-3xl">Cart Items</h3>
+                <h3 className=" ml-80 text-3xl">Cart Items ({cartItems.length})</h3>
             </div>
             
             <div className="space-y-4 mt-10">
