@@ -1,5 +1,6 @@
 import { useState } from "react"
 import EditProfileDataModel from "./EditModle"
+import axiosInstance from "@/config/axios.config";
 
 
 interface User{
@@ -20,6 +21,19 @@ const UserProfile = ()=>{
   const storageKey = "loginData";
   const userDataString = localStorage.getItem(storageKey);
   const userData:User = userDataString ? JSON.parse(userDataString) : null;
+
+    const use  = async ()=>{
+
+      const response = await axiosInstance.get('/api/UserProfiles/Get', {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        }
+      });
+      
+      return response.data;
+    }
+
+    console.log(use())
      const [isHover,setIsHover] = useState(false)
      const showEditIcon = ()=>{
       setIsHover(true)
@@ -46,15 +60,26 @@ const UserProfile = ()=>{
               }} className="w-48" src="/IMG/454375571_1646661866176465_6149835982982053363_n.jpg" alt="account image"/>
             </div>
             <div className="space-y-1">
-              <h3 className="text-xl font-semibold">User Name</h3>
-              <div onMouseEnter={showEditIcon} onMouseLeave={hideEditIcon} className="flex space-x-2">
+              <div className="flex space-x-2" onMouseEnter={showEditIcon} onMouseLeave={hideEditIcon}>
+              <h3 className="text-xl font-semibold" >User Name</h3>
+                {
+                  isHover ? <EditProfileDataModel NameOfTheContentToBeModified="User Name" token={userData.token}/> : null
+                 }
+              </div>
+              {/* <div onMouseEnter={showEditIcon} onMouseLeave={hideEditIcon} className="flex space-x-2">
                  <p  className="text-lg">Admin</p>
                  {
                   isHover ? <EditProfileDataModel NameOfTheContentToBeModified="Admin" token={userData.token}/> : null
                  }
+              </div> */}
+              <div>
+                 <p className="text-lg">the address</p>
+                 {/* {
+                  isHover ? <EditProfileDataModel NameOfTheContentToBeModified="Admin" token={userData.token}/> : null
+                 } */}
               </div>
-              <p className="text-lg">the address</p>
-            </div></div>
+            </div>
+            </div>
             
 
           </div>

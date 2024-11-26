@@ -26,6 +26,8 @@ interface ProductData {
 
 const ProductPage = () => {
   const dispatch = useDispatch();
+  const [isHover,setIsHover]= useState(false)
+  console.log(isHover)
   const [productData, setProductData] = useState<ProductData | null>(null);
   let productId=useSelector((state: RootState) => state.productID.productId); 
   const [selectedImage, setSelectedImage] = useState(productData?.imageUrls[0]);
@@ -53,11 +55,12 @@ const ProductPage = () => {
    const SimilarProducts: string = `/api/Home/${productId}/similar`
   return (
     <div className="w-full">
-      <div className="container mx-auto p-8 mt-10 mb-10 bg-white shadow-lg rounded-lg max-w-7xl border">
+      <div className="container mx-auto p-8 mt-10 mb-10 bg-white rounded-lg max-w-7xl ">
       <div className="flex flex-col md:flex-row gap-10">
         {/* Main Product Image */}
         <div className="md:w-1/2">
           <img
+            style={{ borderRadius: "20px" }}
             src={selectedImage}
             alt={productData?.productName}
             className="w-full h-96 object-contain rounded-lg shadow-md mb-4"
@@ -65,6 +68,7 @@ const ProductPage = () => {
           <div className="flex gap-3 justify-center">
             {productData?.imageUrls.map((url, index) => (
               <img
+                style={{ borderRadius: "5px" }}
                 key={index}
                 src={url}
                 alt={`Thumbnail ${index + 1}`}
@@ -174,6 +178,27 @@ const ProductPage = () => {
       </div>
 
       <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts} visibleProducts={6} />
+
+      <div className="flex justify-center mt-10">
+        <button
+        type="button"
+        onMouseEnter={()=> setIsHover(true)}
+        onMouseLeave={()=> setIsHover(false)}
+        style={{ borderRadius: "30px"}}
+        className="text-xl font-semibold text-blue-600 px-6 py-3 border border-blue-600 hover:text-white hover:bg-blue-600 transition-all duration-300 flex items-center">
+          Write a Review
+          
+          {isHover ? 
+           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 ml-2 mt-1">
+             <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+           </svg>  : null
+        }
+          
+
+        </button>
+      </div>
+
+
     </div>
   );
 };

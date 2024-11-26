@@ -4,6 +4,7 @@ import ProductSlider from "../components/ProductSlider";
 import SliderCategory from "@/components/SliderCategory";
 import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
 import { lazy, Suspense } from "react";
+import BrandSlider from "@/components/BrandSlider";
 const LazyLoadingAdvertisingBanner = lazy(() => import("@/components/ui/AdvertisingBanner"))
 const LazyLoadingImageSlider = lazy(() => import("../components/Slider"))
 
@@ -55,6 +56,15 @@ export const Home = () => {
                  <Suspense fallback={<h3>Loding...</h3>}>
                    <ScrollAnimatedComponent direction="left">
                       <ProductSlider sliderTitle="Top Selling" endpoint={topSelling} visibleProducts={6} />
+                   </ScrollAnimatedComponent>
+                 </Suspense>
+                 </div>
+                 {/* BrandSlider */}
+
+                 <div className="mr-3">
+                 <Suspense fallback={<h3>Loding...</h3>}>
+                   <ScrollAnimatedComponent direction="left">
+                      <BrandSlider/>
                    </ScrollAnimatedComponent>
                  </Suspense>
                  </div>

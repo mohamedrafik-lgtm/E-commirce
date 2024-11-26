@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faCalendar,faBox ,faDownLong,faCartArrowDown,faStar} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCalendar,faBox ,faDownLong,faCartArrowDown,faStar,faTruck} from '@fortawesome/free-solid-svg-icons';
 
 
 const Sidebar: React.FC = () => {
@@ -15,6 +15,7 @@ const Sidebar: React.FC = () => {
     { name: 'category', icon: faCalendar, path: '/Admin/category' },
     { name: 'Discount', icon: faDownLong, path: '/Admin/Discount' },
     { name: 'Brand', icon: faStar, path: '/Admin/Brand' },
+    { name: 'Shipper', icon: faTruck, path: '/Admin/Shipper' },
   ];
   
   return (

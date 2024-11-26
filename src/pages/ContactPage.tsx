@@ -1,12 +1,14 @@
-import Brand from "@/Dashboard/Brand";
+import BrandSlider from "@/components/BrandSlider";
+
 
 
 const ContactPage = () => {
     
   
     return (
-        <div >
-         <Brand/>
+        <div className="space-y-10">
+         <BrandSlider/>
+
         </div>
     );
 }

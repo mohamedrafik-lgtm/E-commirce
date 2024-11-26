@@ -30,6 +30,7 @@ import UserProfile from "@/AccountSetting/userProfile";
 import CheckOut from "@/pages/CheckOut";
 import Brand from "@/Dashboard/Brand";
 import CategoryPage from "@/pages/Category";
+import Shipper from "@/Dashboard/Shipper";
 
 
 
@@ -120,6 +121,12 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path="/Admin/Brand" element={
         <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
           <Brand/>
+        </ProtectedRoute>
+        }/>
+
+        <Route path="/Admin/Shipper" element={
+        <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <Shipper/>
         </ProtectedRoute>
         }/>
         

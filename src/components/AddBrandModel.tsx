@@ -64,6 +64,8 @@ console.log(brand)
                 close()
              } catch (error) {
                 console.log(error)
+             }finally{
+              close()
              }
           
           
@@ -109,7 +111,7 @@ console.log(brand)
                            <label htmlFor="ImageFile" className="cursor-pointer border  py-2 px-4 rounded-md hover:bg-black hover:text-white transition duration-200">
                               Upload Image
                            </label>
-                           <InputComponent onChange={handelChange} value={brand.ImageFile} type="file" id="ImageFile" name="ImageFile" className="hidden" />
+                           <InputComponent onChange={handelChange} type="file" id="ImageFile" name="ImageFile" className="hidden" />
                         </div>
                         <button className='w-full text-lg bg-black text-white py-2 rounded-md hover:black/20 hover:text-white hover:border transition-all'style={{borderRadius:"15px"}} type="submit">Add Category</button>
                     </form>

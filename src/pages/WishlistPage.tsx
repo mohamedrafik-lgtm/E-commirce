@@ -116,7 +116,7 @@ const Wishlist = ()=>{
     });
 
     const HandelNavigate = ()=>{
-        toast.success(`navigate to home page after 1.5 secound`, {
+        toast.success(`navigate to home page after 1.5 second`, {
             position: "top-right",
             duration: 1000,
             style: {
@@ -145,7 +145,7 @@ const Wishlist = ()=>{
                     <li>Brand</li>
                     <li>Category</li>
                     <li>Price</li>
-                    <li>Dlete</li>
+                    <li>Delete</li>
                     <li>Add To Cart</li>
                 </ul>
             </div>

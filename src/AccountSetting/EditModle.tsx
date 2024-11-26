@@ -1,5 +1,6 @@
+import axiosInstance from '@/config/axios.config'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { useEffect, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 
 
 interface IProp{
@@ -9,7 +10,7 @@ interface IProp{
 export default function EditProfileDataModel({NameOfTheContentToBeModified,token}:IProp) {
   const [isOpen, setIsOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
-
+console.log(inputValue)
 
   useEffect(() => {
     setInputValue(NameOfTheContentToBeModified)
@@ -22,7 +23,26 @@ export default function EditProfileDataModel({NameOfTheContentToBeModified,token
   function close() {
     setIsOpen(false)
   }
+  
 
+  const updateProfile = async (e:FormEvent<HTMLFormElement>)=>{
+    e.preventDefault()
+    const formData = new FormData
+    formData.append("Country",inputValue)
+    try {
+     const res= await axiosInstance.patch("/api/UserProfiles/Update",{
+      formData
+      },{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      })
+      console.log(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
 
   return (
     <>
@@ -45,11 +65,10 @@ export default function EditProfileDataModel({NameOfTheContentToBeModified,token
               <DialogTitle as="h3" className="text-xl font-medium mb-3">
                 Edit The Role
               </DialogTitle>
-               <form className='flex flex-col'>
+               <form onSubmit={updateProfile} className='flex flex-col'>
                  <label className='ml-1' htmlFor="role">Role:</label>
                  <input value={inputValue} onChange={e => setInputValue(e.target.value)} type="text" id="role" name="role" placeholder="Enter role" className="py-2 px-2 focus:outline-none border-b focus:border-blue-500 bg-white/5 backdrop-blur-md " />
-               </form>
-              <div className="mt-4 flex justify-between">
+                 <div className="mt-4 flex justify-between">
                 <Button
                 style={{
                     borderRadius:"5px",
@@ -71,6 +90,8 @@ export default function EditProfileDataModel({NameOfTheContentToBeModified,token
                   Update
                 </Button>
               </div>
+               </form>
+              
             </DialogPanel>
           </div>
         </div>

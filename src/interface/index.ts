@@ -146,5 +146,13 @@ export interface IAddDiscountInput{
   placeholder:string
 }
 
+export interface IShipper{
+  id:number;
+  name: string;
+  address: string;
+  phone: string;
+  isDefault:boolean
+}
+
 
 

@@ -263,6 +263,8 @@ const AddProduct = () => {
     formData.append('DiscountStartDate', startDate);
     formData.append('DiscountEndDate', endDate);
     formData.append('DiscountName', 'discountList');
+
+    
     try {
       const {status} = await axiosInstance.post(url, formData);
       
