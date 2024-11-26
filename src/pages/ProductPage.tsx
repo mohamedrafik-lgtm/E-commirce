@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../App/Store";
 import ProductSlider from "../components/ProductSlider";
 import { setProductId } from "@/App/features/productId";
+import { useNavigate } from "react-router-dom";
 
 interface ProductData {
   productId: number;
@@ -27,6 +28,7 @@ interface ProductData {
 const ProductPage = () => {
   const dispatch = useDispatch();
   const [isHover,setIsHover]= useState(false)
+  const navigate = useNavigate()
   console.log(isHover)
   const [productData, setProductData] = useState<ProductData | null>(null);
   let productId=useSelector((state: RootState) => state.productID.productId); 
@@ -181,6 +183,7 @@ const ProductPage = () => {
 
       <div className="flex justify-center mt-10">
         <button
+        onClick={()=> navigate("/home/productPage/WriteAReview")}
         type="button"
         onMouseEnter={()=> setIsHover(true)}
         onMouseLeave={()=> setIsHover(false)}

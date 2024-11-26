@@ -103,6 +103,15 @@
 .cart{
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
+.product-rate::before{
+content: '';
+width: 50px;
+height: 110px;
+border-top-left-radius: 15px;
+border-bottom-left-radius: 15px;
+background-color: #dbeafe;
+opacity: 0.5;
+}
 
   
   

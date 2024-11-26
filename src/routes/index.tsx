@@ -31,6 +31,7 @@ import CheckOut from "@/pages/CheckOut";
 import Brand from "@/Dashboard/Brand";
 import CategoryPage from "@/pages/Category";
 import Shipper from "@/Dashboard/Shipper";
+import WriteAReview from "@/pages/Write_A_Review";
 
 
 
@@ -55,6 +56,10 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path={"/home"} element={<HomeLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
        <Route index element={<Home/>}/>
        <Route path="/home/productPage" element={<ProductPage/>}/>
+       
+       
+       
+
        <Route path="/home/search" element={<ProtectedRoute isAllowed={!searchProduct.length} redirectPath="/home">
           <SearchProduct/>
       </ProtectedRoute>} />
@@ -68,6 +73,10 @@ const router = createBrowserRouter(createRoutesFromElements(
            {/* /CheckOut */}
           <Route path="Wishlist" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
           <Wishlist/>
+          </ProtectedRoute>
+          }/>
+          <Route path="/home/productPage/WriteAReview" element={<ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+          <WriteAReview/>
           </ProtectedRoute>
           }/>
 
