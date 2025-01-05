@@ -29,7 +29,6 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const [isHover,setIsHover]= useState(false)
   const navigate = useNavigate()
-  console.log(isHover)
   const [productData, setProductData] = useState<ProductData | null>(null);
   let productId=useSelector((state: RootState) => state.productID.productId); 
   const [selectedImage, setSelectedImage] = useState(productData?.imageUrls[0]);
@@ -47,6 +46,7 @@ const ProductPage = () => {
             .then(response => response.json())
             .then(data => {
                 setProductData(data);
+                console.log(data);
                 setSelectedImage(data.imageUrls[0]);
             })
             .catch(error => console.error("Error fetching product data:", error));

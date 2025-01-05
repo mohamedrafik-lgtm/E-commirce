@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { FormEvent, useEffect, useState } from 'react';
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const WriteAReview = ()=>{
     interface ProductCardProps {
         id: number;
@@ -22,7 +23,8 @@ const WriteAReview = ()=>{
     const userData = userDataString ? JSON.parse(userDataString) : null;
     const [hover,setHover] = useState(false)
     const [rateValue, setRateValue] = useState<number | null>(0);
-    const [comment,setComment] = useState('')
+    const [comment,setComment] = useState('');
+    const navigate = useNavigate();
     const [ProductReviewData,setProductReviewData] = useState<ProductCardProps>({
         id: 0,
         productId: 0,
@@ -32,6 +34,7 @@ const WriteAReview = ()=>{
         rate: 0,
         imageUrls: [],
     })
+    console.log(rateValue)
     const productId=useSelector((state: RootState) => state.productID.productId);
 
     useEffect(() =>{
@@ -45,43 +48,69 @@ const WriteAReview = ()=>{
         };
         fetchProduct()
     },[productId])
-    console.log(`productId: ${productId}`);
+    
     const onSubmit =async (e:FormEvent<HTMLFormElement>) => {
      e.preventDefault();
-     try {
-        await axiosInstance.post('/api/Rating',{
-            productId,
-            rate:rateValue
-        },{headers: {
-            'Authorization': `Bearer ${userData?.token}`
-        },})
-    
-          await axiosInstance.post('/api/Comments',{
-                productId,
-                content:comment 
-         },{
-            headers: {
-                'Authorization': `Bearer ${userData?.token}`
-            },
-         })
-         toast.success("add commend and rate successful.", {
+
+     if(!comment.length){
+        toast.error("Put the comment text!.", {
             position: "top-right",
             duration: 5000,
             style: {
-              backgroundColor: 'rgba(0, 0, 0, 0.05)',
-              backdropFilter: 'blur(20px)',
-              color: "green",
+              backgroundColor: '#f8f48b',
+              backdropFilter: 'blur(30px)',
+              color: "yalow",
               width: "fit-content",
             },
           });
-          setRateValue(0)
-          setComment('')
-     } catch (error) {
-        console.log(error);
-     }finally{
-        setRateValue(0)
-        setComment('')
-     }
+       return;
+    }
+    try {
+       await axiosInstance.post('/api/Rating',{
+           productId,
+           rate:rateValue
+       },{headers: {
+           'Authorization': `Bearer ${userData?.token}`
+       },})
+   
+         await axiosInstance.post('/api/Comments',{
+               productId,
+               content:comment 
+        },{
+           headers: {
+               'Authorization': `Bearer ${userData?.token}`
+           },
+        })
+        toast.success("add commend and rate successful.", {
+           position: "top-right",
+           duration: 5000,
+           style: {
+             backgroundColor: 'rgba(0, 0, 0, 0.05)',
+             backdropFilter: 'blur(20px)',
+             color: "green",
+             width: "fit-content",
+           },
+         });
+         setRateValue(0)
+         setComment('')
+         setTimeout(() => {
+           navigate(-1)
+         },2000)
+    } catch (error) {
+       toast.error("Something went wrong!.", {
+           position: "top-right",
+           duration: 5000,
+           style: {
+             backgroundColor: 'rgba(0, 0, 0, 0.05)',
+             backdropFilter: 'blur(20px)',
+             color: "red",
+             width: "fit-content",
+           },
+         });
+    }finally{
+       setRateValue(0)
+       setComment('')
+    }
     }
     console.log(ProductReviewData.unitPrice);
     return(

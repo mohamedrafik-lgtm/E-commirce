@@ -56,10 +56,6 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path={"/home"} element={<HomeLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
        <Route index element={<Home/>}/>
        <Route path="/home/productPage" element={<ProductPage/>}/>
-       
-       
-       
-
        <Route path="/home/search" element={<ProtectedRoute isAllowed={!searchProduct.length} redirectPath="/home">
           <SearchProduct/>
       </ProtectedRoute>} />

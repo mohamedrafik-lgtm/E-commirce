@@ -12,7 +12,7 @@ interface IBrand {
 const BrandSlider  = () =>{
     const [showAllBrand, setShowAllBrand] = useState(false);
     const [Brand,setBrand] = useState<IBrand[]>([])
-
+console.log(Brand)
    console.log(Brand)
     useEffect(()=>{
 
@@ -32,7 +32,7 @@ const BrandSlider  = () =>{
     // const brandLength = Brand.slice(0,8)
 
 
-    const renderBrandSliderFirstItems = Brand.slice(0,6).map((brand)=> <div><BrandCart brandId={brand.id} brandName={brand.name} imgUrl={brand.imageUrl}/></div>)
+    const renderBrandSliderFirstItems = Brand.slice(0,6).map((brand)=> <div key={brand.id}><BrandCart brandId={brand.id} brandName={brand.name} imgUrl={brand.imageUrl}/></div>)
     const renderBrandSlider = Brand.map((brand)=> <div><BrandCart brandId={brand.id} brandName={brand.name} imgUrl={brand.imageUrl}/></div>)
     return (
         <div className="w-full">
