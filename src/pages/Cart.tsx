@@ -16,6 +16,7 @@ interface IProps{
 }
 
 const Cart = () => {
+    // xjvixbv
     const storageKey = "loginData";
     const userDataString = localStorage.getItem(storageKey);
     const userData = userDataString ? JSON.parse(userDataString) : null;
