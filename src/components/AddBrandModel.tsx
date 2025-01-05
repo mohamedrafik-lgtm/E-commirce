@@ -3,13 +3,14 @@ import axiosInstance from '@/config/axios.config';
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
-
+import CircularProgress from '@mui/material/CircularProgress';
 interface IBrand {
   BrandName: string;
   ImageFile: File | null;
 }
 
 export default function AddBrandModel() {
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [brand, setBrand] = useState<IBrand>({
     BrandName: '',
@@ -45,6 +46,7 @@ export default function AddBrandModel() {
   };
 
   const handelSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     e.preventDefault();
 
     if (!brand.ImageFile) {
@@ -74,11 +76,13 @@ export default function AddBrandModel() {
         BrandName: '',
         ImageFile: null, 
       });
+      window.location.reload();
       close();
     } catch (error) {
       console.error(error);
     } finally {
       close();
+      setIsLoading(false)
     }
   };
 
@@ -137,7 +141,7 @@ export default function AddBrandModel() {
                       Upload Image
                     </label>
                     <InputComponent
-                      onChange={handleFileChange} // استخدام الدالة الخاصة بتغيير الملف
+                      onChange={handleFileChange} 
                       type="file"
                       id="ImageFile"
                       name="ImageFile"
@@ -145,11 +149,14 @@ export default function AddBrandModel() {
                     />
                   </div>
                   <button
-                    className="w-full text-lg bg-black text-white py-2 rounded-md hover:bg-black/20 hover:text-white hover:border transition-all"
+                    className={`w-full text-lg bg-black text-white py-2 rounded-md hover:bg-black/20 hover:text-white hover:border transition-all ${isLoading ? "cursor-not-allowed" : ""}`}
                     style={{ borderRadius: '15px' }}
                     type="submit"
                   >
-                    Add Category
+                    {isLoading ?  <CircularProgress /> : "Add Brand"
+                    
+                    }
+                    
                   </button>
                 </form>
               </div>

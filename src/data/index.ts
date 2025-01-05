@@ -1,4 +1,4 @@
-import { IAddDiscountInput, ILogin, IRegister, IUpdateProductInputData } from "../interface";
+import { IAddDiscountInput, IFormInput, ILogin, IRegister, IUpdateProductInputData } from "../interface";
 
 import { v4 as uuid } from 'uuid';
 
@@ -193,80 +193,37 @@ export const AddDiscountInput:IAddDiscountInput[] = [{
 ]
 
 
-export const FormBillingDetails: FormBillingDetails[] = [
+export const FormBillingDetails:IFormInput[]=[
     {
-        name:"FirstName",
-        label:"FirstName",
+        name:"name",
+        id:uuid(),
         type:"text",
-        validation:{
-            required:true,
-            minLength:5,
-        }
+        placeholder:"Enter Name",
+        label:"Name"
     },
     {
-        name:"LastName",
-        label:"LastName",
+        name:"address",
+        id:uuid(),
         type:"text",
-        validation:{
-            required:true,
-            minLength:5,
-        }
+        placeholder:"Enter address",
+        label:"address"
     },
     {
-        name:"StreetAddress",
-        label:"StreetAddress",
+        name:"phone",
+        id:uuid(),
         type:"text",
-        validation:{
-            required:true,
-            minLength:10,
-        }
+        placeholder:"Enter phone",
+        label:"phone"
     },
     {
-        name:"City",
-        label:"City",
-        type:"text",
-        validation:{
-            required:true,
-            minLength:5,
-        }
+        name:"isDefault",
+        id:uuid(),
+        type:"checkbox",
+        placeholder:"Enter isDefault",
+        label:"isDefault"
     },
-    {
-        name:"Country",
-        label:"Country",
-        type:"text",
-        validation:{
-            required:true,
-            minLength:5,
-        }
-    },
-    {
-        name:"PostalCode",
-        label:"PostalCode",
-        type:"text",
-        validation:{
-            required:true,
-            minLength:5,
-        }
-    },
-    {
-        name:"PhoneNumber",
-        label:"PhoneNumber",
-        type:"text",
-        validation:{
-            required:true,
-            minLength:11,
-        }
-    },
-    {
-        name:"email",
-        label:"email",
-        type:"email",
-        validation:{
-            pattern:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            required:true,
-            minLength:7,
-        }
-    },
+    
+    
 ]
 export default RENDERER_INPUTS;
 

@@ -38,7 +38,7 @@ const Login: React.FC = () => {
                 });
                 localStorage.setItem("loginData", JSON.stringify(data));
                 setTimeout(() => {
-                  navigate("/home");
+                  navigate("/");
                 }, 2000);
               }
         } catch (error) {

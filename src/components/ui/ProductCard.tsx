@@ -77,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
       },
     });
     setTimeout(() => {
-      navigate('/home/productPage');
+      navigate('/productPage');
     }, 2000);
   };
 

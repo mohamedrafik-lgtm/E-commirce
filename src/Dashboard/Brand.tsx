@@ -13,7 +13,8 @@ const Brand = ()=>{
         queryKey: ['brand'],
         url: '/api/Brand',
     })
-    console.log(brand.data);
+
+    
     return (
         <div className="p-2 flex flex-wrap space-x-3">
             {

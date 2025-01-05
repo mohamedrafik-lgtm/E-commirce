@@ -60,7 +60,7 @@ const NavPar = () => {
           searchTerm: searchText,
         },
       }).then((response) => response.data);
-      navigate("/home/search");
+      navigate("/search");
       dispatch(setSearchSlice(res));
     } catch (error) {
       console.log(error);
@@ -75,7 +75,7 @@ const NavPar = () => {
         </NavLink>
         <div className="flex flex-row">
           <div className="text-xl mr-10">
-            <NavLink to={"/Home"}>Home</NavLink>
+            <NavLink to={"/"}>Home</NavLink>
           </div>
           <div className="text-xl mr-10">
             <NavLink to={"/contact"}>Contact</NavLink>

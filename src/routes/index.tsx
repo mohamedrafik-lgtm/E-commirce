@@ -53,13 +53,13 @@ const router = createBrowserRouter(createRoutesFromElements(
   <>
 
     {/* home route */}
-    <Route path={"/home"} element={<HomeLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
+    <Route path={"/"} element={<HomeLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
        <Route index element={<Home/>}/>
-       <Route path="/home/productPage" element={<ProductPage/>}/>
-       <Route path="/home/search" element={<ProtectedRoute isAllowed={!searchProduct.length} redirectPath="/home">
+       <Route path="/productPage" element={<ProductPage/>}/>
+       <Route path="/search" element={<ProtectedRoute isAllowed={!searchProduct.length} redirectPath="/home">
           <SearchProduct/>
       </ProtectedRoute>} />
-       <Route path={"/home/filter"} element={<FilterProduct/>}/>
+       <Route path={"/filter"} element={<FilterProduct/>}/>
 
     </Route>
     {/* root route */}

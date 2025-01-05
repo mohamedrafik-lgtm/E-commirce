@@ -153,6 +153,13 @@ export interface IShipper{
   phone: string;
   isDefault:boolean
 }
-
+export interface IFormInput {
+  name:string;
+  label:string;
+  type:string;
+  id:string;
+  placeholder:string;
+  
+}
 
 

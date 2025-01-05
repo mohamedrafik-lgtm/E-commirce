@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import axiosInstance from '../config/axios.config';
 import{IShipper} from "../interface/index";
-import OptionsModel from "../components/DetailsModel"
 import ScrollAnimatedComponent from '@/components/ScrollAnimatedComponent';
 import { Skeleton } from 'antd';
 import AddShipperModel from '@/components/ui/AddShipperModel';
@@ -85,8 +84,7 @@ const Shipper = ()=>{
                 <td className="p-3 text-center">{Shipper.isDefault}</td>
                 <td className="p-3 text-center">{Shipper.phone}</td>
                 <td className="p-3 text-center">{Shipper.address}</td>
-                <td className="p-3 text-center"><OptionsModel productId={Shipper.id} />
-                </td>
+                <td className="p-3 text-center">Options</td>
                 </>}
               </tr>
             ))}

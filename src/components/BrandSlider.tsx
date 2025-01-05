@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import BrandCart from "./BrandCaet";
+import BrandCart from "./BrandCart";
 import axiosInstance from "@/config/axios.config";
 
 

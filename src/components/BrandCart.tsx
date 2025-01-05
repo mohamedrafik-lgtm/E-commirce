@@ -1,5 +1,5 @@
 interface IProp {
-    imgUrl?: string; // جعل imgUrl اختياري
+    imgUrl?: string; 
     brandName: string;
     brandId: number;
 }
