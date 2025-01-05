@@ -1,4 +1,4 @@
-import { SerachCategory } from "./SerachCategory"
+import { SearchCategory } from "./SearchCategory"
 
 
 
@@ -8,7 +8,7 @@ const CategoryPage = ()=>{
     
     return (
         <div>
-            <SerachCategory/>
+            <SearchCategory/>
         </div>
     )
 }

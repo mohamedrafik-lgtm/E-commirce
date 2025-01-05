@@ -2,7 +2,9 @@ import ProductCartInCartPage from "@/components/ProductCartInCartPage"
 import InputComponent from "@/components/ui/InputComponent"
 import axiosInstance from "@/config/axios.config"
 import { FormBillingDetails } from "@/data"
+import { ICheckOutDetails } from "@/interface"
 import { useEffect, useState } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
 
 
 
@@ -23,8 +25,8 @@ const CheckOut = ()=>{
     const [cartItems, setCartItems] = useState<IProps[]>([]);
     const [total, setTotal] = useState(0);
 
-
-
+    const { register, handleSubmit } = useForm<ICheckOutDetails>()
+    
     useEffect(() => {
         try {
             axiosInstance.get('/api/CartItem/all', {
@@ -47,16 +49,30 @@ const CheckOut = ()=>{
 
       
     const renderInput = FormBillingDetails.map((data) =>{
+        const {name,id,label,placeholder,type} =  data
         return <div className="flex flex-col space-y-1">
-            <label className="opacity-85 text-gray-400 text-sm" htmlFor={data.name}>{data.label}</label>
+            <label className="opacity-85 text-gray-400 text-sm" htmlFor={name}>{label}</label>
             <InputComponent style={{
                 borderRadius:'5px'
-            }} type={data.type} name={data.name} id={data.name} className="w-full bg-gray-100 p-2"/>
+            }} type={type} id={id} className="w-full bg-gray-100 p-2"  {...register(name as keyof ICheckOutDetails)} placeholder={placeholder}/>
         </div>
     })
 
 
     
+
+    const onSubmit: SubmitHandler<ICheckOutDetails> =async (data) =>{ 
+        try {
+           const res= await axiosInstance.post('/api/Checkout', data, {
+            headers: {
+                'Authorization': `Bearer ${userData?.token}`
+            }
+        })
+        console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return(
         <div className="w-full h-screen">
           <div className="w-10/12 mx-auto grid grid-cols-2 gap-28 mt-14">
@@ -67,9 +83,15 @@ const CheckOut = ()=>{
 
                 {/* Form for Billing Details */}
 
-                <div className="space-y-5">
+                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                   {renderInput}
-                </div>
+                  <div className="flex flex-col space-y-1">
+                    <button className="border py-2 hover:bg-black hover:text-white text-black hover:border-white transition-all duration-300 font-medium mt-3" style={{
+                    borderRadius:'5px'}}>
+                        Check Out
+                    </button>
+                  </div>
+                </form>
                 
             </div>
             <div className="pt-20 px-7 space-y-4">

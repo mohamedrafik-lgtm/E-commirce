@@ -162,4 +162,14 @@ export interface IFormInput {
   
 }
 
-
+export interface ICheckOutDetails{
+  firstName:string;
+  lastName:string;
+  streetAddress:string;
+  city:string;
+  country:string;
+  postalCode:string;
+  phoneNumber:string;
+  email:string;
+  Country:string;
+}

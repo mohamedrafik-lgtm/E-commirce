@@ -1,4 +1,4 @@
-import { FormBillingDetails } from '@/data'
+import { FormShipper } from '@/data'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useState } from 'react'
 // import { jwtDecode } from "jwt-decode";
@@ -41,7 +41,7 @@ export default function AddShipperModel() {
 
 // console.log( userID);
 
-   const renderInput = FormBillingDetails.map((Shipper) => {
+   const renderInput = FormShipper.map((Shipper) => {
     return <div key={Shipper.id}>
       <label htmlFor={Shipper.id} className="block text-sm font-medium text-gray-700">
         {Shipper.label}

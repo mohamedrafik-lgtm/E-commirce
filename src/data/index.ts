@@ -3,18 +3,18 @@ import { IAddDiscountInput, IFormInput, ILogin, IRegister, IUpdateProductInputDa
 import { v4 as uuid } from 'uuid';
 
 
-interface FormBillingDetails{
-    name:string;
-    label:string;
-    type:string;
-    validation:
-      {
-        pattern?:RegExp;
-        required:boolean,
-        minLength:number
-      }
+// interface FormBillingDetails{
+//     name:string;
+//     label:string;
+//     type:string;
+//     validation:
+//       {
+//         pattern?:RegExp;
+//         required:boolean,
+//         minLength:number
+//       }
     
-  }
+//   }
 const RENDERER_INPUTS:IRegister[] = [
 
     {
@@ -193,7 +193,7 @@ export const AddDiscountInput:IAddDiscountInput[] = [{
 ]
 
 
-export const FormBillingDetails:IFormInput[]=[
+export const FormShipper:IFormInput[]=[
     {
         name:"name",
         id:uuid(),
@@ -223,6 +223,66 @@ export const FormBillingDetails:IFormInput[]=[
         label:"isDefault"
     },
     
+    
+]
+
+export const FormBillingDetails:IFormInput[]=[
+    {
+        name:"firstName",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter first Name",
+        label:"firstName"
+    },
+    {
+        name:"lastName",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter last Name",
+        label:"lastName"
+    },
+    {
+        name:"streetAddress",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter street Address",
+        label:"street Address"
+    },
+    {
+        name:"city",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter city",
+        label:"city"
+    },
+    {
+        name:"Country",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter Country",
+        label:"Country"
+    },
+    {
+        name:"postalCode",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter postal Code",
+        label:"postalCode"
+    },
+    {
+        name:"phoneNumber",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter phone Number",
+        label:"phone Number"
+    },
+    {
+        name:"email",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter email",
+        label:"email"
+    },
     
 ]
 export default RENDERER_INPUTS;

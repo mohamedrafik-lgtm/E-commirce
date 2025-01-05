@@ -86,7 +86,9 @@ const router = createBrowserRouter(createRoutesFromElements(
          <Cart/>
          </ProtectedRoute>}
          />
-         <Route path={`categoryItems`} element={<CategoryPage/>}/>
+         
+         <Route path={`categoryItems`}
+          element={<CategoryPage/>}/>
 
          
        <Route path="Register" element={<Register/>}/>

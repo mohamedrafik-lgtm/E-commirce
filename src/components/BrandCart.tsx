@@ -9,7 +9,7 @@ const BrandCart = ({ brandName, imgUrl }: IProp) => {
         <div className="relative w-fit cursor-pointer group">
             <div style={{ borderRadius: "15px" }} className="border w-[250px] h-[250px] overflow-hidden relative">
                 {imgUrl ? (
-                    <img width={250} height={250} src={imgUrl} alt={brandName} className="w-full h-full object-cover" />
+                    <img width={250} height={250} src={imgUrl} alt={brandName} className="w-full h-full object-contain" /> 
                 ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gray-200">
                         <span className="text-gray-500 text-lg">No image available</span>

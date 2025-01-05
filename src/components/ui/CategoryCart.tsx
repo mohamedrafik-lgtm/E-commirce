@@ -48,7 +48,7 @@ const CategoryCard = ({ name, description,imgUrl = "/IMG/e89299e60ad5ab5352de01f
         <img 
           src={imgUrl}
           alt={name} 
-          className="w-full h-full object-top" 
+          className="w-full h-full object-contain"
           style={{
             objectFit: "cover", 
           }}
