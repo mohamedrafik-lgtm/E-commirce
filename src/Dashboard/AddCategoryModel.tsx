@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 interface ICategory {
   CategoryName: string;
   CategoryDescription: string;
-  ImageFile: File | null; // تغيير النوع ليكون ملفًا أو null
+  ImageFile: File | null;
 }
 
 export default function AddCategoryModel() {
@@ -33,7 +33,7 @@ export default function AddCategoryModel() {
 
     setCategoryValue((prev) => ({
       ...prev,
-      [name]: name === 'ImageFile' && files ? files[0] : value, // معالجة ملف الصورة
+      [name]: name === 'ImageFile' && files ? files[0] : value,
     }));
   };
 
@@ -50,7 +50,7 @@ export default function AddCategoryModel() {
     const formData = new FormData();
     formData.append('Name', CategoryValue.CategoryName);
     formData.append('CategoryDescription', CategoryValue.CategoryDescription);
-    formData.append('ImageFile', CategoryValue.ImageFile); // إضافة ملف الصورة كـ File
+    formData.append('ImageFile', CategoryValue.ImageFile); 
 
     try {
       const data = await axiosInstance.post('/api/Category', formData, {

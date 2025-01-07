@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 import NavPar from "../components/NavPar"
 import Sidebar from "../Dashboard/Sidebar"
 import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent"
+import { Suspense } from "react"
 
  
 const AdminLayout = () => {
@@ -9,13 +10,18 @@ const AdminLayout = () => {
     return(
         <>
            
-
-           <NavPar/>
+            <Suspense fallback={<h3>Loding...</h3>}>
+              <NavPar/>
+            </Suspense>
             <main className="flex">
             <ScrollAnimatedComponent direction="left">
-                <Sidebar />
+                <Suspense fallback={<h3>Loding...</h3>}>
+                  <Sidebar />
+                </Suspense>
             </ScrollAnimatedComponent>
+            <Suspense fallback={<h3>Loding...</h3>}>
                 <Outlet />
+            </Suspense>
            </main>
     
         </>

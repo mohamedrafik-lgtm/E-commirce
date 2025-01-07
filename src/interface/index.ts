@@ -173,3 +173,10 @@ export interface ICheckOutDetails{
   email:string;
   Country:string;
 }
+
+export interface ShippingMethodTableDataProps {
+  id:number;
+  method:string;
+  description:string;
+  cost:number;
+}

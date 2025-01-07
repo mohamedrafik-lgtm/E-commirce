@@ -32,6 +32,8 @@ import Brand from "@/Dashboard/Brand";
 import CategoryPage from "@/pages/Category";
 import Shipper from "@/Dashboard/Shipper";
 import WriteAReview from "@/pages/Write_A_Review";
+import ShippingMethods from "@/Dashboard/shippingMethods/ShippingMethods";
+import { Suspense } from "react";
 
 
 
@@ -97,7 +99,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
 
     {/* admin route*/}
-    <Route path="/Admin" element={<AdminLayout/>} errorElement={<ErrorPage msg="500 page not fount" statusCode="500"/>}>
+    <Route path="/Admin" element={<Suspense fallback={<h3>Loding...</h3>}><AdminLayout/></Suspense>} errorElement={<ErrorPage msg="500 page not fount" statusCode="500"/>}>
 
       <Route path="/Admin/Discount" element={
         <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
@@ -109,6 +111,14 @@ const router = createBrowserRouter(createRoutesFromElements(
         <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
           <Category/>
         </ProtectedRoute>
+        }/>
+
+        <Route path="/Admin/ShippingMethods" element={
+          <ProtectedRoute isAllowed={userData?.token} redirectPath="/Login">
+            <Suspense fallback={<h3>Loding...</h3>}>
+              <ShippingMethods/>
+            </Suspense>
+          </ProtectedRoute>
         }/>
 
 

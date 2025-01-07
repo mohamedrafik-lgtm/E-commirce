@@ -24,6 +24,7 @@
     "@hookform/resolvers": "^3.9.0",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.0",
+    "@mui/x-data-grid": "^7.23.5",
     "@reduxjs/toolkit": "^2.2.6",
     "@uploadcare/react-uploader": "^0.6.1",
     "@yaireo/tagify": "^4.27.0",

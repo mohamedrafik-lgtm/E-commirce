@@ -3,19 +3,20 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faCalendar,faBox ,faDownLong,faCartArrowDown,faStar,faTruck} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCalendar,faBox ,faDownLong,faCartArrowDown,faStar,faUser,faTruck} from '@fortawesome/free-solid-svg-icons';
 
 
 const Sidebar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-
+  
   const items = [
     { name: 'Add Product', icon: faCartArrowDown, path: '/Admin/AddProduct' },
     { name: 'Products', icon: faBox, path: '/Admin/products' },
     { name: 'category', icon: faCalendar, path: '/Admin/category' },
     { name: 'Discount', icon: faDownLong, path: '/Admin/Discount' },
     { name: 'Brand', icon: faStar, path: '/Admin/Brand' },
-    { name: 'Shipper', icon: faTruck, path: '/Admin/Shipper' },
+    { name: 'Shipper', icon: faUser, path: '/Admin/Shipper' },
+    { name: 'ShippingMethods', icon: faTruck, path: '/Admin/ShippingMethods' },
   ];
   
   return (

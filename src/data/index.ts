@@ -288,3 +288,28 @@ export const FormBillingDetails:IFormInput[]=[
 export default RENDERER_INPUTS;
 
 
+export const FormShippingMethod:IFormInput[]=[
+    {
+        name:"method",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter method",
+        label:"method"
+    },
+    {
+        name:"description",
+        id:uuid(),
+        type:"text",
+        placeholder:"Enter description",
+        label:"description"
+    },
+    {
+        name:"cost",
+        id:uuid(),
+        type:"number",
+        placeholder:"Enter cost",
+        label:"cost"
+    },
+]
+
+

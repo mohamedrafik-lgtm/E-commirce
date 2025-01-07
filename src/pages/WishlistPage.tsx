@@ -127,7 +127,7 @@ const Wishlist = ()=>{
             },
           });
         setTimeout(()=>{
-            navigate('/home')
+            navigate('/')
         },1500)
     }
   
