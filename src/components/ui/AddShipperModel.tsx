@@ -1,6 +1,9 @@
+import axiosInstance from '@/config/axios.config';
 import { FormShipper } from '@/data'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
+import toast from 'react-hot-toast';
+import CircularProgress from '@mui/material/CircularProgress';
 // import { jwtDecode } from "jwt-decode";
 
 
@@ -8,9 +11,23 @@ import { useState } from 'react'
 //   sub: string;
 //   uid: string;
 // }
+
+interface IShipper {
+  name: string;
+  address: string;
+  phone: string;
+  isDefault: boolean ;
+}
 export default function AddShipperModel() {
   const [isOpen, setIsOpen] = useState(false)
-
+  const [shipperValues, setShipperValues] = useState<IShipper>({
+    name: "",
+    address: "",
+    phone: "",
+    isDefault: false,
+  });
+  const [isLoading,setIsLoading] = useState(false)
+  console.log(shipperValues)
   function open() {
     setIsOpen(true)
   }
@@ -40,6 +57,21 @@ export default function AddShipperModel() {
 // }
 
 // console.log( userID);
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setShipperValues({ 
+      ...shipperValues,
+       [name]:value   })
+  if (name === "isDefault") {
+    setShipperValues({
+      ...shipperValues,
+      [name]: e.target.checked,
+    });
+  }
+}
+
+
+ 
 
    const renderInput = FormShipper.map((Shipper) => {
     return <div key={Shipper.id}>
@@ -52,9 +84,7 @@ export default function AddShipperModel() {
           id={Shipper.id}
           name={Shipper.name}
           style={{borderRadius: "10px"}}
-          onChange={(e) => {
-            console.log(e.target.value)
-          }}
+          onChange={handleChange}
           className={`block
             ${Shipper.name === "isDefault" ? "w-fit" : "w-full"}
              shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300
@@ -66,6 +96,28 @@ export default function AddShipperModel() {
 
    })
 
+const handelSubmit =async (e:FormEvent<HTMLFormElement>)=>{
+    setIsLoading(true);
+    e.preventDefault();
+    try {
+      await axiosInstance.post('/api/Shipper',shipperValues);
+      toast.success('Shipper Added Successfully');
+    } catch (error) {
+      console.log(error)
+      toast.error('Failed to Add Shipper');
+    }finally{
+      
+      setIsLoading(false);
+      close();
+      setShipperValues({
+        name: "",
+        address: "",
+        phone: "",
+        isDefault: false,
+      });
+    }
+}
+
   return (
     <>
       <Button
@@ -75,7 +127,7 @@ export default function AddShipperModel() {
         Add Shipper
       </Button>
 
-      <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={close} __demoMode>
+      <Dialog open={isOpen} as="form" className="relative z-10 focus:outline-none" onClose={close} __demoMode onSubmit={handelSubmit}>
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
@@ -87,17 +139,30 @@ export default function AddShipperModel() {
               
               </DialogTitle>
               
-              <form className="mt-4 space-y-4">
+              <div className="mt-4 space-y-4">
                 { 
                 renderInput
                 }
-                  </form>
-              <div className="mt-4">
-                <Button
-                  className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                  onClick={close}
+                  </div>
+              <div className="mt-4 space-x-3">
+               <Button
+                  className={`inline-flex space-x-1 items-center gap-2 rounded-md py-1.5 px-3 text-sm/6 font-semibold shadow-inner shadow-white/10 focus:outline-none border border-black transition-all duration-300 data-[hover]:bg-black hover:text-white data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700 ${isLoading ? 'cursor-not-allowed opacity-90' : ''}`}disabled={isLoading}
+                  type='submit'
+                  style={{borderRadius:"5px"}}
+                  
                 >
                  Add Shipper
+                 {
+                  isLoading ? <CircularProgress color='inherit' size="25px" /> : null
+                 }
+                </Button>
+                <Button
+                  className="inline-flex items-center gap-2 rounded-md py-1.5 px-3 text-sm/6 font-semibold shadow-inner shadow-white/10 border border-red-600 text-red-500 focus:outline-none data-[hover]:bg-red-600 hover:text-white data-[focus]:outline-1 data-[focus]:outline-white"
+                  onClick={close}
+                  type='button'
+                  style={{borderRadius:"5px"}}
+                >
+                 Close
                 </Button>
               </div>
             </DialogPanel>

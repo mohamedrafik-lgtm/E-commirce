@@ -59,7 +59,7 @@ console.log(values)
     <>
       <Button
         onClick={open}
-        className="text-white bg-blue-500 px-5 py-1.5 hover:bg-blue-600 transition-all duration-300 ml-auto" style={{borderRadius:"5px"}}>Add Shipping Method
+        className="border-2 border-black font-semibold px-5 py-1.5 hover:bg-black hover:text-white transition-all duration-300 ml-auto" style={{borderRadius:"5px"}}>Add Shipping Method
       </Button>
 
       <Dialog open={isOpen} as="form" className="relative z-10 focus:outline-none" onClose={close} __demoMode onSubmit={handleSubmit}>
@@ -67,7 +67,7 @@ console.log(values)
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
-              className="w-full max-w-md rounded-xl p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+              className="w-full max-w-md bg-black/5 rounded-xl p-6 backdrop-blur-md duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
             >
               <DialogTitle as="h3" className="text-base/7 font-medium ">
                 Add Shipping Method
@@ -80,7 +80,7 @@ console.log(values)
                 </div>
               <div className="mt-4 space-x-3">
               <Button
-                  className="inline-flex items-center gap-2 rounded-md bg-blue-500 py-1.5 px-3 text-sm/6 text-white font-semibold shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-blue-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                  className="inline-flex items-center gap-2 border border-black rounded-md py-1.5 px-3 text-sm/6  font-semibold shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-black hover:text-white data-[focus]:outline-1 data-[focus]:outline-black data-[open]:bg-gray-700"
                   type='submit'
                   style={{borderRadius:"5px"}}
                 >
