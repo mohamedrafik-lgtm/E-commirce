@@ -1,11 +1,12 @@
 import ProductCartInCartPage from "@/components/ProductCartInCartPage"
+import PreviousPage from "@/components/shared/PerviousPage"
 import InputComponent from "@/components/ui/InputComponent"
 import axiosInstance from "@/config/axios.config"
 import { FormBillingDetails } from "@/data"
 import { ICheckOutDetails } from "@/interface"
 import { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 
 
 
@@ -25,7 +26,7 @@ const CheckOut = ()=>{
     const userData = userDataString ? JSON.parse(userDataString) : null;
     const [cartItems, setCartItems] = useState<IProps[]>([]);
     const [total, setTotal] = useState(0);
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const { register, handleSubmit } = useForm<ICheckOutDetails>()
     
@@ -80,11 +81,12 @@ const CheckOut = ()=>{
           <div className="w-10/12 mx-auto grid grid-cols-2 gap-28 mt-14">
              <div className="px-28 space-y-5">
                 <div className="flex items-center space-x-3">
-                    <button onClick={()=> navigate(-1)} className="hover:-translate-x-3 transition-all duration-300">
+                    {/* <button onClick={()=> navigate(-1)} className="hover:-translate-x-3 transition-all duration-300">
                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
                        </svg>
-                    </button>
+                    </button> */}
+                    <PreviousPage/>
                     <h2 className="text-2xl font-bold">Billing Details</h2>
                 </div>
 

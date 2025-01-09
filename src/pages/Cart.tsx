@@ -125,6 +125,23 @@ const Cart = () => {
         }, 1500);
     };
 
+    const handleNavigateToCheckOut = (url:string) => {
+        if(cartItems.length){
+            navigate(url);
+        }else{
+            toast.error('There are no products in the cart.', {
+                position: "top-right",
+                duration: 1000,
+                style: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                    backdropFilter: 'blur(20px)',
+                    color: "black",
+                    width: "fit-content",
+                },
+            });
+        }
+    }
+
     return (
         <div className=" pt-10 pb-10 overflow-hidden space-y-3">
             
@@ -150,12 +167,12 @@ const Cart = () => {
                 </div>
                 <div className="w-10/12 mx-auto mt-5 grid grid-cols-2">
                     <div className="">
-                    <button onClick={() => handleNavigate('/Home')} style={{
+                    <button onClick={() => handleNavigate('/')} style={{
                         borderRadius:"5px"
                     }} className="ml-2 border border-black py-2 px-7 text-lg hover:bg-black hover:text-white transition-all duration-300">Return To Shop</button>
                     </div>
                     <div className="mx-auto">
-                        <button onClick={() => handleNavigate('/CheckOut')} style={{
+                        <button onClick={() => handleNavigateToCheckOut('/CheckOut')} style={{
                         borderRadius:"5px"
                     }} className="ml-2 border border-black py-2 px-11 text-lg hover:bg-black hover:text-white transition-all duration-300">Check Out</button></div>
                 </div>
