@@ -33,7 +33,7 @@ console.log(Brand)
 
 
     const renderBrandSliderFirstItems = Brand.slice(0,6).map((brand)=> <div key={brand.id}><BrandCart brandId={brand.id} brandName={brand.name} imgUrl={brand.imageUrl}/></div>)
-    const renderBrandSlider = Brand.map((brand)=> <div><BrandCart brandId={brand.id} brandName={brand.name} imgUrl={brand.imageUrl}/></div>)
+    const renderBrandSlider = Brand.map((brand)=> <div key={brand.id}><BrandCart brandId={brand.id} brandName={brand.name} imgUrl={brand.imageUrl}/></div>)
     return (
         <div className="w-full">
             <div style={{borderRadius:"10px"}} className="w-fit mx-auto p-3 border bg-gray-300/20 backdrop-blur-xl">

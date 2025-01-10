@@ -34,6 +34,7 @@ import Shipper from "@/Dashboard/Shipper";
 import WriteAReview from "@/pages/Write_A_Review";
 import ShippingMethods from "@/Dashboard/shippingMethods/ShippingMethods";
 import { Suspense } from "react";
+import { FilterByBrand } from "@/pages/Brand";
 
 
 
@@ -58,7 +59,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path={"/"} element={<HomeLayout/>} errorElement={<ErrorPage msg="page not fount" statusCode="500"/>}>
        <Route index element={<Home/>}/>
        <Route path="/productPage" element={<ProductPage/>}/>
-       <Route path="/productByBrand" element={<ProductPage/>}/>
+       
        <Route path="/search" element={<ProtectedRoute isAllowed={!searchProduct.length} redirectPath="/home">
           <SearchProduct/>
       </ProtectedRoute>} />
@@ -92,7 +93,11 @@ const router = createBrowserRouter(createRoutesFromElements(
          
          <Route path={`categoryItems`}
           element={<CategoryPage/>}/>
-
+          <Route path="/productByBrand/:brandId" element={
+            <Suspense fallback={<h3>Loding...</h3>}>
+              <FilterByBrand/>
+            </Suspense>
+            }/>
          
        <Route path="Register" element={<Register/>}/>
        <Route path="VerificationCode" element={<VerificationCode/>}/>

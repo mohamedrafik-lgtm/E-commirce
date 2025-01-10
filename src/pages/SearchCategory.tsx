@@ -42,7 +42,7 @@ export const SearchCategory = ()=>{
     </div>)
     return (
 
-              <div className={`flex  space-y-4 flex-wrap ${productByCategory.length ? '': `justify-center`}`}>
+              <div className={` ${productByCategory.length ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 p-4': `justify-center mx-auto`}`}>
             {
                 renderFilterProduct.length ? renderFilterProduct : <div className="flex flex-col items-center justify-center h-screen text-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10">
