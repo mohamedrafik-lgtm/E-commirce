@@ -30,7 +30,7 @@ import UserProfile from "@/AccountSetting/userProfile";
 import CheckOut from "@/pages/CheckOut";
 import Brand from "@/Dashboard/Brand";
 import CategoryPage from "@/pages/Category";
-import Shipper from "@/Dashboard/Shipper";
+import Shipper from "@/Dashboard/shipper/Shipper";
 import WriteAReview from "@/pages/Write_A_Review";
 import ShippingMethods from "@/Dashboard/shippingMethods/ShippingMethods";
 import { Suspense } from "react";
@@ -45,10 +45,7 @@ const searchProduct = ()=>{
   const searchValue = useSelector((state:RootState) => state.Search)
   return searchValue
 }
-// const searchCategory = ()=>{
-//   const categoryId = useSelector((state:RootState) => state.category)
-//   return categoryId
-// }
+
 
  
 const router = createBrowserRouter(createRoutesFromElements(
