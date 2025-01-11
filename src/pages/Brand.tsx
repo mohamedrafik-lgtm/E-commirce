@@ -30,9 +30,10 @@ interface ProductCardProps {
 
 export const FilterByBrand = () => {
     const [productByBrand, setProductByBrand] = useState<ProductCardProps[]>([]);
-    const [isLoading, setIsLoading] = useState(true);  // Loading state
+    const [isLoading, setIsLoading] = useState(true);
     const { brandId } = useParams();
-
+    console.log(productByBrand)
+    document.title = `Products by Brand`;
     useEffect(() => {
         const fetchProductsByBrand = async () => {
             try {

@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
 
 const AddProduct = () => {
-    
+  document.title = 'Add Product';
   const options = [
     { value: 'Smart watches', label: 'Smart watches' },
     { value: 'headphones', label: 'headphones' },

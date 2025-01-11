@@ -34,7 +34,7 @@ const WriteAReview = ()=>{
         rate: 0,
         imageUrls: [],
     })
-    console.log(rateValue)
+    document.title = "Write A Review";
     const productId=useSelector((state: RootState) => state.productID.productId);
 
     useEffect(() =>{

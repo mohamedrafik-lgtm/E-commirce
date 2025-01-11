@@ -87,7 +87,7 @@ const Shipper = () => {
     <div className="w-full h-min m-5 p-4 border rounded-md flex flex-col bg-white shadow-lg">
       <ScrollAnimatedComponent direction="top">
         <div className="mb-3 flex justify-between">
-          <h3 className="text-xl">Shippers</h3>
+          <h2 className="text-xl">Shippers</h2>
           <AddShipperModel />
         </div>
 

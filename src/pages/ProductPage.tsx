@@ -32,6 +32,7 @@ const ProductPage = () => {
   const [productData, setProductData] = useState<ProductData | null>(null);
   let productId=useSelector((state: RootState) => state.productID.productId); 
   const [selectedImage, setSelectedImage] = useState(productData?.imageUrls[0]);
+  document.title = productData?.productName || "Product Page";
   useEffect(() => {
     if (!productId) {
         const storedProductId = localStorage.getItem('selectedProductId');
@@ -179,7 +180,7 @@ const ProductPage = () => {
       </div>
       </div>
 
-      <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts} visibleProducts={6} />
+      <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts}  />
 
       <div className="flex justify-center mt-10">
         <button

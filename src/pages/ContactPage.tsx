@@ -1,15 +1,22 @@
-import ShippingMethodMaltyChooses from "@/components/ShippengMethodMultyShoses";
+import ShippingOptions from "@/components/ShippengMethodMultyShoses";
 
 
 
 const ContactPage = () => {
-    
+    const handleShippingSelect = (method: {
+        id: number;
+        method: string;
+        description: string;
+        cost: number;
+      }) => {
+        console.log("Selected Shipping Method:", method);
+      };
   
     return (
         <div>
 
 
-         <ShippingMethodMaltyChooses/>
+              <ShippingOptions onShippingSelect={handleShippingSelect} />
 
         </div>
     );

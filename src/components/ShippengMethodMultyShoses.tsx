@@ -1,49 +1,81 @@
-import Checkbox from '@mui/material/Checkbox';
-import { useState } from 'react';
+import axiosInstance from "@/config/axios.config";
+import React, { useEffect, useState } from "react";
 
-const  ShippingMethodMaltyChooses = () => {
-
-    const [checked, setChecked] = useState(true);
-
-    const handleChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
-      setChecked(event.target.checked);
-    };
-    return (
-        <div className='border p-4 w-fit'> 
-            <div>
-              <h3 className="text-xl font-semibold">Choose the shipping method that suits you</h3>
-            </div>
-
-            <form>
-                <div className="flex flex-col gap-4">
-                    <div className="flex gap-4 items-center">
-                        <label htmlFor="standard">Standard</label>
-                        <Checkbox
-                        checked={checked}
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                    </div>
-                    <div className="flex gap-4 items-center">
-                        <label htmlFor="express">Express</label>
-                        <Checkbox
-                        checked={checked}
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                    </div>
-                    <div className="flex gap-4 items-center">
-                        <label htmlFor="overnight">Overnight</label>
-                        <Checkbox
-                        checked={checked}
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                    </div>
-                </div>
-            </form>
-        </div>
-    )
+interface ShippingMethod {
+  id: number;
+  method: string;
+  description: string;
+  cost: number;
 }
 
-export default ShippingMethodMaltyChooses
+interface ShippingOptionsProps {
+  onShippingSelect: (method: ShippingMethod) => void;
+}
+
+const ShippingOptions: React.FC<ShippingOptionsProps> = ({ onShippingSelect }) => {
+  const [selectedMethod, setSelectedMethod] = useState<number | null>(null);
+  const [shippingMethods, setShippingMethods] = useState<ShippingMethod[]>([]);
+
+  useEffect(() => {
+    const fetchShippingMethods = async () => {
+      try {
+        const { data } = await axiosInstance.get("/api/ShippingMethods");
+        setShippingMethods(data);
+      } catch (error) {
+        console.error("Error fetching shipping methods:", error);
+      }
+    };
+
+    fetchShippingMethods();
+  }, []);
+
+  const handleSelect = (method: ShippingMethod) => {
+    setSelectedMethod(method.id);
+    onShippingSelect(method); 
+  };
+
+  return (
+    <div className="p-4 bg-gray-50 rounded-lg shadow-lg ">
+      <h2 className="text-lg font-semibold text-gray-700 mb-4">Shipping Methods</h2>
+      {/* Set max height and scrollable overflow */}
+      <ul className="space-y-3 max-h-72 overflow-y-auto">
+        {shippingMethods.map((method) => (
+          <li
+            style={{ borderRadius: "10px" }}
+            key={method.id}
+            className={`flex flex-col items-start p-4 border cursor-pointer transition ${
+              selectedMethod === method.id
+                ? "border-blue-500 bg-blue-50"
+                : "border-gray-300 bg-white hover:border-blue-500 hover:bg-blue-50"
+            }`}
+            onClick={() => handleSelect(method)}
+          >
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center space-x-3">
+                <input
+                  type="radio"
+                  id={`shipping-${method.id}`}
+                  name="shippingMethod"
+                  value={method.id}
+                  checked={selectedMethod === method.id}
+                  onChange={() => handleSelect(method)}
+                  className={`w-5 h-5 cursor-pointer appearance-none border-2 rounded-full border-gray-300 checked:border-blue-500 checked:bg-blue-500`}
+                />
+                <label
+                  htmlFor={`shipping-${method.id}`}
+                  className="text-md font-medium text-gray-800 cursor-pointer"
+                >
+                  {method.method}
+                </label>
+              </div>
+              <span className="text-gray-600 text-sm font-medium">${method.cost}</span>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">{method.description}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default ShippingOptions;

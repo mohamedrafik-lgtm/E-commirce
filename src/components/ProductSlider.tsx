@@ -3,47 +3,64 @@ import { Products } from "../interface";
 import axiosInstance from "../config/axios.config";
 import ProductCard from "./ui/ProductCard";
 import Variants from "./ui/Scilaton";
-import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import { useMediaQuery } from "@mui/material";
+
 // Skeleton Card for loading state (modified for slider)
 const SkeletonCard = () => (
   <div className="bg-gray-200 animate-pulse rounded-lg shadow-lg p-4">
     <Stack spacing={1}>
-          <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-          <Skeleton variant="circular" width={40} height={40} />
-          <Skeleton variant="rectangular" width={210} height={60} />
-          <Skeleton variant="rounded" width={210} height={60} />
+      <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+      <Skeleton variant="circular" width={40} height={40} />
+      <Skeleton variant="rectangular" width={210} height={60} />
+      <Skeleton variant="rounded" width={210} height={60} />
     </Stack>
   </div>
 );
 
 interface IProps {
-  visibleProducts: number;
   endpoint: string;
   sliderTitle: string;
 }
 
-const ProductSlider = ({ visibleProducts, endpoint, sliderTitle }: IProps) => {
+const ProductSlider = ({ endpoint, sliderTitle }: IProps) => {
   const [loading, setLoading] = useState(true);
-  const [products, setProduct] = useState<Products[]>([]);
+  const [products, setProducts] = useState<Products[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Responsive logic for visible products
+  const isSmallScreen = useMediaQuery("(max-width: 640px)"); // Mobile
+  const isMediumScreen = useMediaQuery("(max-width: 1024px)"); // Tablet
+  const isLaptopScreen = useMediaQuery("(max-width: 1280px)"); // Laptop/Small Desktop
+  const isLargeScreen = useMediaQuery("(min-width: 1281px)"); // Large Desktop
+  
+  // Adjust number of visible products based on screen size
+  const visibleProducts = isSmallScreen
+    ? 1
+    : isMediumScreen
+    ? 2
+    : isLaptopScreen
+    ? 3
+    : isLargeScreen
+    ? 6 // Display 6 products on large screens
+    : 4; // Default to 4 on large screens
 
   useEffect(() => {
     setLoading(true);
     const fetchProducts = async () => {
       try {
         const { data } = await axiosInstance.get(endpoint);
-        setProduct(data);
+        setProducts(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
-        setLoading(false); // Ensures loading is stopped even if error occurs
+        setLoading(false);
       }
     };
 
     fetchProducts();
   }, [endpoint]);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0;
@@ -57,12 +74,12 @@ const ProductSlider = ({ visibleProducts, endpoint, sliderTitle }: IProps) => {
     setCurrentIndex(newIndex);
   };
 
-  if (loading) return <Variants />; // Render skeletons from Variants component during loading
+  if (loading) return <Variants />;
 
-  if (!products.length) return null; // No products to show
+  if (!products.length) return null;
 
   return (
-    <div className="relative w-full mr-3">
+    <div className="relative w-full">
       <div className="mb-5">
         <h3 className="text-2xl p-2 text-center">{sliderTitle}</h3>
         <hr className="w-3/4 mx-auto" />
@@ -82,7 +99,11 @@ const ProductSlider = ({ visibleProducts, endpoint, sliderTitle }: IProps) => {
         >
           {loading
             ? Array.from({ length: visibleProducts }).map((_, idx) => (
-                <div key={idx} className="flex-shrink-0 p-4" style={{ width: `${100 / visibleProducts}%` }}>
+                <div
+                  key={idx}
+                  className="flex-shrink-0 p-4"
+                  style={{ width: `${100 / visibleProducts}%` }}
+                >
                   <SkeletonCard />
                 </div>
               ))
@@ -109,7 +130,7 @@ const ProductSlider = ({ visibleProducts, endpoint, sliderTitle }: IProps) => {
       </div>
       <button
         onClick={goToNext}
-        className="absolute top-1/2 transform -translate-y-1/2 right-0 w-7 h-7 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition duration-300 z-10"
+        className="absolute top-1/2 transform -translate-y-1/2 right-4 w-7 h-7 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition duration-300 z-10"
       >
         ❯
       </button>

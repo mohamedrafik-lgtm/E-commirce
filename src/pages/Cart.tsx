@@ -16,14 +16,14 @@ interface IProps{
 }
 
 const Cart = () => {
-    // xjvixbv
+
     const storageKey = "loginData";
     const userDataString = localStorage.getItem(storageKey);
     const userData = userDataString ? JSON.parse(userDataString) : null;
     const navigate = useNavigate();
     const [cartItems, setCartItems] = useState<IProps[]>([]);
     const [total, setTotal] = useState(0);
-
+    document.title = "Cart";
     useEffect(() => {
         try {
             axiosInstance.get('/api/CartItem/all', {

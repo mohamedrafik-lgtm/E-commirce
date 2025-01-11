@@ -4,13 +4,13 @@ import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { FormEvent, useState } from 'react'
 import toast from 'react-hot-toast';
 import CircularProgress from '@mui/material/CircularProgress';
-// import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 
-// interface IUser{
-//   sub: string;
-//   uid: string;
-// }
+interface IUser{
+  sub: string;
+  uid: string;
+}
 
 interface IShipper {
   name: string;
@@ -35,28 +35,28 @@ export default function AddShipperModel() {
   function close() {
     setIsOpen(false)
   }
-//   const storageKey = "loginData";
-// const userDataString = localStorage.getItem(storageKey);
-// let userID = null;
+  const storageKey = "loginData";
+const userDataString = localStorage.getItem(storageKey);
+let userID = null;
 
-// if (userDataString) {
-//   try {
-//     const userData = JSON.parse(userDataString);
+if (userDataString) {
+  try {
+    const userData = JSON.parse(userDataString);
 
-//     if (userData?.token) {
-//       const decodedToken:IUser = jwtDecode(userData.token);
-//       userID =  decodedToken.uid;
-//     } else {
-//       console.error("Token is missing in userData.");
-//     }
-//   } catch (error) {
-//     console.error("Failed to parse userData or decode token:", error);
-//   }
-// } else {
-//   console.warn("No login data found in localStorage.");
-// }
+    if (userData?.token) {
+      const decodedToken:IUser = jwtDecode(userData.token);
+      userID =  decodedToken.uid;
+    } else {
+      console.error("Token is missing in userData.");
+    }
+  } catch (error) {
+    console.error("Failed to parse userData or decode token:", error);
+  }
+} else {
+  console.warn("No login data found in localStorage.");
+}
 
-// console.log( userID);
+console.log( userID);
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const { name, value } = e.target;
   setShipperValues({ 

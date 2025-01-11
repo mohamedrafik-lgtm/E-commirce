@@ -181,9 +181,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
           </div>
         )}
         <h3 className="text-xl font-semibold mt-2">{productName}</h3>
-        <p className="text-lg text-gray-700">${unitPrice.toFixed(2)}</p>
+        <p className="text-lg text-gray-700">${(unitPrice - discount).toFixed(2)}</p>
         {discount > 0 && (
-          <p className="text-red-500">Discount: {discount}%</p>
+          <p className="text-red-500 line-through opacity-50">Discount:{unitPrice}</p>
         )}
         <Rating name="size-medium" defaultValue={rate} />
         <button onClick={addToCart} className="block p-2 rounded-md bg-blue-600 text-white">Add to cart</button>

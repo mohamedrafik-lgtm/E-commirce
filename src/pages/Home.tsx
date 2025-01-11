@@ -27,7 +27,7 @@ export const Home = () => {
    const getAll:string  = "/api/Category"
     
 
-    
+   document.title = "Home";
   return (
     <div className="overflow-hidden space-y-8">
                  
@@ -41,7 +41,7 @@ export const Home = () => {
                  <div className="mr-3 ml-14">
                    <Suspense fallback={<h3>Loding...</h3>}>
                      <ScrollAnimatedComponent direction="right">
-                       <ProductSlider sliderTitle="NEW EST" endpoint={newEst} visibleProducts={6} />
+                       <ProductSlider sliderTitle="NEW EST" endpoint={newEst}  />
                      </ScrollAnimatedComponent>
                    </Suspense>
                  </div>
@@ -55,7 +55,7 @@ export const Home = () => {
                  <div className="mr-3">
                  <Suspense fallback={<h3>Loding...</h3>}>
                    <ScrollAnimatedComponent direction="left">
-                      <ProductSlider sliderTitle="Top Selling" endpoint={topSelling} visibleProducts={6} />
+                      <ProductSlider sliderTitle="Top Selling" endpoint={topSelling} />
                    </ScrollAnimatedComponent>
                  </Suspense>
                  </div>
@@ -72,7 +72,7 @@ export const Home = () => {
                  <div className="mr-3">
                  <Suspense fallback={<h3>Loding...</h3>}>
                    <ScrollAnimatedComponent direction="right">
-                      <ProductSlider sliderTitle="on sale" endpoint={onSale} visibleProducts={6} />
+                      <ProductSlider sliderTitle="on sale" endpoint={onSale} />
                    </ScrollAnimatedComponent>
                  </Suspense>
                  </div >
@@ -81,14 +81,14 @@ export const Home = () => {
                  <div className="w-10/12  mt-10 mx-auto ">
                  <Suspense fallback={<h3>Loding...</h3>}>
                    <ScrollAnimatedComponent direction="right">
-                      <SliderCategory visibleProducts={5} endpoint={getAll} sliderTitle={"Category"}/>
+                      <SliderCategory endpoint={getAll} sliderTitle={"Category"}/>
                    </ScrollAnimatedComponent>
                  </Suspense>
                  </div>
                  <div className="mb-14 mr-3">
                  <Suspense fallback={<h3>Loding...</h3>}>
                    <ScrollAnimatedComponent direction="left">
-                      <ProductSlider sliderTitle="Out Of Stock" endpoint={outOfStock} visibleProducts={6} />
+                      <ProductSlider sliderTitle="Out Of Stock" endpoint={outOfStock} />
                    </ScrollAnimatedComponent>
                  </Suspense>
                  </div>

@@ -25,7 +25,7 @@ const VerificationCode= ({email}:IProp) => {
       }
     }
   };
-
+  document.title = "Verification Code";
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     const pasteData = event.clipboardData.getData('text');
     if (/^[0-9]{6}$/.test(pasteData)) {

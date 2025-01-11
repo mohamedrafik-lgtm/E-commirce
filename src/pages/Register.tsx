@@ -19,7 +19,7 @@ const Register: React.FC = () => {
     }
     
     const [getEmail,setGetEmail] = useState("")
-    
+    document.title = "Register";
     //  handlers
 const { register, handleSubmit,formState:{errors} } = useForm<IProp>({
     resolver:yupResolver(registerSchema)

@@ -13,7 +13,7 @@ interface IProps{
     imageUrl:string,
 }
 const Category = ()=>{
-    
+    document.title = 'Category';
     const [category,setCategory] = useState<IProps[]>([])
     useEffect(()=>{
         const categoryRequst =async ()=>{

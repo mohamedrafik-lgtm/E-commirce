@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import axiosInstance from '../config/axios.config';
-import{IDiscount} from "../interface/index";
-import DiscountMenu from '@/components/ui/DiscountMenu';
-import AddDiscountModel from '@/components/ui/AddDiscountModel';
+import axiosInstance from '../../config/axios.config';
+import{IProduct} from "../../interface/index";
+import OptionsModel from "../../components/DetailsModel"
+import FilterModel from '../../components/FilterModel';
+import toast from 'react-hot-toast';
 import ScrollAnimatedComponent from '@/components/ScrollAnimatedComponent';
-
-
+import { Skeleton } from 'antd';
 const fetchProducts = async () => {
-  const { data } = await axiosInstance.get('/api/Discount');
+  const { data } = await axiosInstance.get('/api/Product');
   return data;
 };
 
-
-const DiscountPage = () => {
-  
+const ProductsPage = () => {
+  document.title = 'Products';
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   
 
-  const { data: Discounts = [], error, isLoading } = useQuery('products', fetchProducts, {
+  const { data: products = [], error, isLoading } = useQuery('products', fetchProducts, {
     cacheTime: 5 * 60 * 1000, 
     staleTime: 2 * 60 * 1000, 
   });
@@ -27,11 +26,11 @@ const DiscountPage = () => {
   
 
 
-  const totalPages = Math.ceil(Discounts.length / itemsPerPage);
+  const totalPages = Math.ceil(products.length / itemsPerPage);
 
   
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const Discount = Discounts.slice(startIndex, startIndex + itemsPerPage);
+  const currentProducts = products.slice(startIndex, startIndex + itemsPerPage);
 
   
   const handlePageChange = (page: number) => {
@@ -46,60 +45,78 @@ const DiscountPage = () => {
     setCurrentPage(1); 
   };
 
+  const ExportPdf =async () => {
+    // Export to PDF code goes here
+    try {
+      const {status} = await axiosInstance.get("/api/Product/export-pdf")
+      
+      if (status === 200) {
+        toast.success("The product file has been exported successfully.", {
+          position: "top-right",
+          duration: 1500,
+          style: {
+            backgroundColor: 'rgba(0, 0, 0, 0.05)',
+            backdropFilter: 'blur(20px)',
+            color: "green",
+            width: "fit-content",
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   
-
-
-  if (isLoading) return <div className="text-center py-4">Loading...</div>;
   if (error) return <div className="text-center py-4 text-red-600">Error loading products</div>;
 
- 
   return (
+    
     <div className="w-full h-min m-5 p-4 border rounded-md flex flex-col bg-white shadow-lg">
-         
-        <ScrollAnimatedComponent direction="top">
-        <div className='mb-5 flex justify-between'>
-             <div>
-                <div className="relative w-full max-w-md">
-                  <input 
-                    type="text" 
-                    className="w-full border border-gray-300 bg-white rounded-full py-2 pl-10 pr-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                    placeholder="Discound Search ..."
-                  />
-                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg className="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-4.35-4.35m1.4-5.65A7 7 0 1110 3a7 7 0 018.05 7.75 7.75 0 013.55 0z" />
-                      </svg>
-                  </div>
-                </div>
+      <ScrollAnimatedComponent direction="top">
+      <div className='mb-3 flex justify-between'>
+           <h3 className='text-xl'>Products</h3>
+           <div className='flex space-x-3'>
+            <button onClick={ExportPdf} className='py-2 px-4 text-blue-500 font-semibold  rounded-md border'>Export-pdf</button>
+           <FilterModel/>
            </div>
-          <AddDiscountModel/>
-        </div>
+      </div>
 
       <table className="min-w-full border-collapse bg-gray-50">
         <thead>
           <tr className="bg-gray-200 border-b">
             <th className="p-3 text-center text-gray-600">Product ID</th>
-            <th className="p-3 text-center text-gray-600">discount Amount</th>
-            <th className="p-3 text-center text-gray-600">start Date</th>
-            <th className="p-3 text-center text-gray-600">end Date</th>
-            <th className="p-3 text-center text-gray-600">product Id</th>
-            <th className="p-3 text-center text-gray-600">Options</th>
+            <th className="p-3 text-center text-gray-600">Product Name</th>
+            <th className="p-3 text-center text-gray-600">Category</th>
+            <th className="p-3 text-center text-gray-600">Brand</th>
+            <th className="p-3 text-center text-gray-600">Unit Price</th>
+            <th className="p-3 text-center text-gray-600">Units in Stock</th>
+            <th className="p-3 text-center text-gray-600">More choices</th>
           </tr>
         </thead>
         <tbody>
-          {Discount.map((product:IDiscount) => (
+          {currentProducts.map((product:IProduct) => (
            
-            <tr key={product.productId} className="hover:bg-gray-100 border-b">
-              <td className="p-3 text-center">{product.discountId}</td>
-              <td className="p-3 text-center">{product.discountAmount}</td>
-              <td className="p-3 text-center">{product.startDate}</td>
-              <td className="p-3 text-center">{product.endDate}</td>
+            <tr onClick={()=> console.log(product.productId)} key={product.productId} className="hover:bg-gray-100 border-b">
+              {isLoading ? 
+                <Skeleton  active paragraph={{ rows: 2 }}/>
+                :
+              <>
               <td className="p-3 text-center">{product.productId}</td>
-              <td className="p-3 text-center"><DiscountMenu discountId={product.discountId}/></td>
+              <td className="p-3 text-center">{product.productName}</td>
+              <td className="p-3 text-center">{product.category}</td>
+              <td className="p-3 text-center">{product.brand}</td>
+              <td className="p-3 text-center">{product.unitPrice}</td>
+              <td className="p-3 text-center">{product.unitsInStock}</td>
+              <td className="p-3 text-center"><OptionsModel productId={product.productId} />
+              </td>
+              </>}
             </tr>
           ))}
         </tbody>
       </table>
+      </ScrollAnimatedComponent>
       <div className="flex flex-col items-center mt-4 space-y-4">
         <div className="flex items-center space-x-4">
           <label htmlFor="items-per-page" className="text-gray-600">Items per page:</label>
@@ -155,14 +172,8 @@ const DiscountPage = () => {
           </button>
         </div>
       </div>
-        </ScrollAnimatedComponent>
     </div>
   );
 };
 
-export default DiscountPage;
-
-
-
-
-
+export default ProductsPage;

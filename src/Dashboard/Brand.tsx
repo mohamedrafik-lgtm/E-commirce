@@ -4,6 +4,7 @@ import useAuthenticatedQuery from "@/hook/useAuthenticatedQuery";
 
 
 const Brand = ()=>{
+    document.title = 'Brand';
       interface IBrand {
         id: number;
         name: string;

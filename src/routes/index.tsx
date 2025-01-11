@@ -10,14 +10,13 @@ import ContactPage from "../pages/ContactPage";
 import Login from "../pages/Login";
 import AdminLayout from "../pages/AdminLayout";
 import Register from "../pages/Register";
-import ProductsPage from "../Dashboard/Product";
+import ProductsPage from "../Dashboard/product/Product";
 import AddProduct from "../Dashboard/AddProductPage";
 import VerificationCode from "../pages/VerifcationCode";
 import HomeLayout from "../pages/HomeLayout";
 import ProductPage from "../pages/ProductPage";
 import Category from "../Dashboard/Category";
 import {SearchProduct} from "../components/SearchProduct";
-import Discount from "@/Dashboard/Discount";
 import { FilterProduct } from "@/components/FilterProduct";
 import Cart from "@/pages/Cart";
 import ProtectedRoute from "@/components/Auth/ProtectedRoute";
@@ -35,6 +34,7 @@ import WriteAReview from "@/pages/Write_A_Review";
 import ShippingMethods from "@/Dashboard/shippingMethods/ShippingMethods";
 import { Suspense } from "react";
 import { FilterByBrand } from "@/pages/Brand";
+import Discount from "@/Dashboard/Discount/Discount";
 
 
 

@@ -21,7 +21,7 @@ const Wishlist = ()=>{
     const navigate = useNavigate()
     const [WishlistItem, setWishlistItem] = useState<IProps[]>([])
     const [isLoading, setIsLoading] = useState(false)
-   
+   document.title = "Wishlist"
     useEffect(()=>{
         
         try {
