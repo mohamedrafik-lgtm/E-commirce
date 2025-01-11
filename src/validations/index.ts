@@ -120,3 +120,18 @@ if(filePaths.length < 1 ){
 
   return productErrors
  }
+
+
+ export const checkOutSchema = yup
+ .object({
+   firstName: yup.string().required("first name is required!").min(5,"first name should be at least 5 characters"),
+   lastName: yup.string().required("last name is required!").min(5, "last name should be at least 5 characters"),
+   streetAddress: yup.string().required("street address is required!").min(5, "street address should be at least 5 characters"),
+   city: yup.string().required("city is required!").min(5, "city should be at least 5 characters"),
+   country: yup.string().required("country is required!").min(5, "country should be at least 5 characters"),
+   postalCode: yup.string().required("postal code is required!").min(5, "postal code should be at least 5 characters"),
+   phoneNumber: yup.string().required("phone number is required!").min(7, "phone number should be at least 7 characters").matches(/^(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})$/
+,'Not a valid phone number'),
+   email: yup.string().required("email is required!").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,"Not a valid email address"),
+ })
+ .required()

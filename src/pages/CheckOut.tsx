@@ -8,7 +8,11 @@ import { ICheckOutDetails } from "@/interface"
 import { useEffect, useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { jwtDecode } from 'jwt-decode';
-
+import toast from "react-hot-toast"
+import CircularProgress from '@mui/material/CircularProgress';
+import { yupResolver } from "@hookform/resolvers/yup"
+import { checkOutSchema } from "@/validations"
+import InputErrorMsg from "@/components/ui/InputErrorMsg"
 interface IProps {
     productId: number,
     productName: string,
@@ -53,8 +57,10 @@ const CheckOut = () => {
     const [cartItems, setCartItems] = useState<IProps[]>([]);
     const [total, setTotal] = useState(0);
     const [shippingMethod, setShippingMethod] = useState<number | null>(null);
-    const { register, handleSubmit } = useForm<ICheckOutDetails>();
-
+    const [isLoading,setIsLoading] = useState(false)
+    const { register, handleSubmit, formState: { errors }} = useForm<ICheckOutDetails>({
+        resolver: yupResolver(checkOutSchema),
+      });
     useEffect(() => {
         if (!userData?.token) return;
 
@@ -90,6 +96,7 @@ const CheckOut = () => {
             <div key={data.id} className="flex flex-col space-y-1">
                 <label className="opacity-85 text-gray-400 text-sm" htmlFor={name}>{label}</label>
                 <InputComponent style={{ borderRadius: '5px' }} type={type} id={id} className="w-full bg-gray-100 p-2" {...register(name as keyof ICheckOutDetails)} placeholder={placeholder} />
+                {errors[name as keyof ICheckOutDetails] && <InputErrorMsg msg={errors[name as keyof ICheckOutDetails]?.message}/>}
             </div>
         );
     });
@@ -99,7 +106,7 @@ const CheckOut = () => {
     };
 
     const onSubmit: SubmitHandler<ICheckOutDetails> = async (data) => {
-      
+        setIsLoading(true)
         try {
 
             await axiosInstance.post('/api/Checkout', data, {
@@ -114,13 +121,26 @@ const CheckOut = () => {
                 userId: +userID,
                 shippingMethodId: shippingMethod
             });
-            window.location.href = res.data.checkoutUrl;
+            toast.success("You will be redirected to the payment gateway now.", {
+                position: "top-right",
+                duration: 2000,
+                style: {
+                  backgroundColor: "green",
+                  color: "white",
+                  width: "fit-content",
+                },
+              });
+              setTimeout(()=>{
+                  window.location.href = res.data.checkoutUrl;
+              },1000)
           } else {
             console.error("User ID is null. Cannot proceed with the order.");
           }
            
         } catch (error) {
             console.error("Error submitting the checkout or order:", error);
+        }finally{
+            setIsLoading(false)
         }
     };
 
@@ -136,10 +156,11 @@ const CheckOut = () => {
                     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
                         {renderInput}
                         <div className="flex flex-col space-y-1">
-                            <button className="border py-2 hover:bg-black hover:text-white text-black hover:border-white transition-all duration-300 font-medium mt-3" style={{
+                            <button className={`${isLoading ? 'cursor-not-allowed opacity-80' : ''}border py-2 hover:bg-black hover:text-white text-black hover:border-white transition-all duration-300 font-medium mt-3`} style={{
                                 borderRadius: '5px'
                             }}>
-                                Check Out
+                                {isLoading ? <CircularProgress color="inherit" /> : "Check Out"}
+                                
                             </button>
                         </div>
                     </form>

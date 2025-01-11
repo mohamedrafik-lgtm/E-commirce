@@ -25,9 +25,6 @@ const DiscountPage = () => {
     staleTime: 2 * 60 * 1000, 
   });
 
-  
-
-
   const totalPages = Math.ceil(Discounts.length / itemsPerPage);
 
   

@@ -35,7 +35,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [isHovered, setIsHovered] = useState(false);
   const [isInWishlist, setIsInWishlist] = useState(false);
 

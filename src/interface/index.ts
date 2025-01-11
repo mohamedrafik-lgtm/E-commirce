@@ -171,7 +171,6 @@ export interface ICheckOutDetails{
   postalCode:string;
   phoneNumber:string;
   email:string;
-  Country:string;
 }
 
 export interface ShippingMethodTableDataProps {
