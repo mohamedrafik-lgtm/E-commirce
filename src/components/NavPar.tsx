@@ -68,7 +68,8 @@ const NavPar = () => {
   };
 
   return (
-    <nav className="block pt-8 p-6 border-b-2">
+      <header>
+         <nav className="block pt-8 p-6 border-b">
       <div className="flex flex-row justify-around header">
         <NavLink to={"/"}>
           <h1 className="text-2xl font-bold">Exclusive</h1>
@@ -158,7 +159,9 @@ const NavPar = () => {
           </div>
         </div>
       </div>
-    </nav>
+        </nav>
+      </header>
+    
   );
 };
 

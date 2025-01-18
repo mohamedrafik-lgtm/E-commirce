@@ -1,23 +1,11 @@
-import ShippingOptions from "@/components/ShippengMethodMultyShoses";
-
-
 
 const ContactPage = () => {
-    const handleShippingSelect = (method: {
-        id: number;
-        method: string;
-        description: string;
-        cost: number;
-      }) => {
-        console.log("Selected Shipping Method:", method);
-      };
+    
   
     return (
         <div>
-
-
-              <ShippingOptions onShippingSelect={handleShippingSelect} />
-
+            <h1>Contact Page</h1>
+            <p>Here is the contact page</p>
         </div>
     );
 }
