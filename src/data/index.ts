@@ -256,11 +256,11 @@ export const FormBillingDetails:IFormInput[]=[
         label:"city"
     },
     {
-        name:"Country",
+        name:"country",
         id:uuid(),
         type:"text",
         placeholder:"Enter Country",
-        label:"Country"
+        label:"country"
     },
     {
         name:"postalCode",

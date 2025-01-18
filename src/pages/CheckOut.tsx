@@ -61,6 +61,7 @@ const CheckOut = () => {
     const { register, handleSubmit, formState: { errors }} = useForm<ICheckOutDetails>({
         resolver: yupResolver(checkOutSchema),
       });
+      console.log(errors)
     useEffect(() => {
         if (!userData?.token) return;
 
@@ -125,8 +126,8 @@ const CheckOut = () => {
                 position: "top-right",
                 duration: 2000,
                 style: {
-                  backgroundColor: "green",
-                  color: "white",
+                  backgroundColor: "white/20",
+                  color: "green",
                   width: "fit-content",
                 },
               });

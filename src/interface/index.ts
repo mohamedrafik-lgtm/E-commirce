@@ -167,10 +167,10 @@ export interface ICheckOutDetails{
   lastName:string;
   streetAddress:string;
   city:string;
-  country:string;
   postalCode:string;
   phoneNumber:string;
   email:string;
+  country:string;
 }
 
 export interface ShippingMethodTableDataProps {

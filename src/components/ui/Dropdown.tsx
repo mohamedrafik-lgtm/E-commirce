@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState,useRef,useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -71,3 +71,76 @@ const Dropdown: React.FC<DropdownProps> = ({ options }) => {
 };
 
 export default Dropdown;
+
+
+// import Button from '@mui/material/Button';
+// import Menu from '@mui/material/Menu';
+// import MenuItem from '@mui/material/MenuItem';
+
+// export  function PositionedMenu({ options }: DropdownProps) {
+//   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+//   const open = Boolean(anchorEl);
+//   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+//     setAnchorEl(event.currentTarget);
+//   };
+//   const handleClose = () => {
+//     setAnchorEl(null);
+//   };
+
+//   return (
+//     <div>
+//       <Button
+//         id="demo-positioned-button"
+//         aria-controls={open ? 'demo-positioned-menu' : undefined}
+//         // aria-haspopup="true"
+//         // aria-expanded={open ? 'true' : undefined}
+//         onClick={handleClick}
+//         style={{
+//           padding:"0px",
+//           color:"black"
+//         }}
+//       >
+//         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+//            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+//         </svg>
+//       </Button>
+//       <Menu
+//         id="demo-positioned-menu"
+//         aria-labelledby="demo-positioned-button"
+//         anchorEl={anchorEl}
+//         open={open}
+//         onClose={handleClose}
+//         anchorOrigin={{
+//           vertical: 'top',
+//           horizontal: 'left',
+//         }}
+//         transformOrigin={{
+//           vertical: 'top',
+//           horizontal: 'left',
+//         }}
+//       >
+        
+//         {options.map((option, index) => (
+//           <MenuItem onClick={handleClose}>
+//           <NavLink
+//             key={index}
+//             to={option.path}
+//             className={
+//               ` px-4 py-2 flex items-center transition-colors !border-b-0`
+//             }
+//             onClick={() => {
+//               if(option.label === "log out"){
+//                 localStorage.removeItem('loginData');
+//               }
+//             } }
+//           >
+//             <FontAwesomeIcon icon={option.icon} className="mr-2" />
+//             {option.label}
+//           </NavLink>
+//           </MenuItem>
+//         ))}
+        
+//       </Menu>
+//     </div>
+//   );
+// }

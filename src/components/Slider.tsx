@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { memo, Suspense } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,9 +7,13 @@ import { NavLink } from 'react-router-dom';
 
 
 interface ImageSliderProps {
-  images: string[];
+
+  images: { src: string; alt: string; loading: "eager" | "lazy" | undefined }[];
+
   width: string;
+
   height?: string;
+
 }
 
 const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height }) => {
@@ -72,9 +76,11 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height }) => {
 
             <div>
               <picture>
-                <source srcSet={image.replace('.jpg', '.webp')} type="image/webp" />
+                <source srcSet={image.src.replace('.jpg', '.webp')} type="image/webp" />
+                <Suspense fallback={<h3>Loading...</h3>}>
+                <img src={image.src} alt={image.alt} className="object-contain h-full" loading={image.loading} />
+                </Suspense>
                 {/* <img src={image} alt={`slide-${index}`} className="object-contain h-full" loading="lazy" /> */}
-                <img src={image} alt={`slide-${index}`}  className="object-contain h-full" loading="lazy"/>
               </picture>
             </div>
         </div>
@@ -87,6 +93,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, width, height }) => {
   );
 };
 
-export default ImageSlider;
+const MemoizedImageSlider = memo(ImageSlider);
+export default MemoizedImageSlider;
 
 

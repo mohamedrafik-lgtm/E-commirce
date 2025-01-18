@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import BrandCart from "./BrandCart";
 import axiosInstance from "@/config/axios.config";
 
@@ -37,8 +37,8 @@ const BrandSlider = () => {
     ));
 
     return (
-        <div className="w-full">
-            <div className="w-fit mx-auto p-3 border bg-gray-300/20 backdrop-blur-xl rounded-lg">
+        <div className="w-full ">
+            <div className="w-fit mx-auto p-3 border bg-gray-300/20 backdrop-blur-xl rounded-lg" style={{borderRadius:"15px"}}>
                 <div className="space-y-4 px-10">
                     <h3 className="text-3xl">Buy By Brand</h3>
                     <hr />
@@ -100,4 +100,5 @@ const BrandSlider = () => {
     );
 };
 
-export default BrandSlider;
+const MemoizedBrandSlider = memo(BrandSlider);
+export default MemoizedBrandSlider;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Rating } from "@mui/material";
@@ -156,7 +156,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
   return (
     <div
       style={{ borderRadius: '15px', position: 'relative' }}
-      className="bg-white border shadow-md overflow-hidden ml-5 transition-transform duration-300"
+      className="bg-white/50 border border-gray-200 shadow-md overflow-hidden ml-5 transition-transform duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -191,4 +191,5 @@ const ProductCard: React.FC<ProductCardProps> = ({ productId, productName, unitP
   );
 };
 
-export default ProductCard;
+const MemoizedProductCard = memo(ProductCard);
+export default MemoizedProductCard;

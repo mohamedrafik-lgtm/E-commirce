@@ -1,11 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import{ useEffect, useState } from "react";
+import{ memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../App/Store";
 import ProductSlider from "../components/ProductSlider";
 import { setProductId } from "@/App/features/productId";
 import { useNavigate } from "react-router-dom";
+import Comments from "@/components/Coments";
+import axiosInstance from "@/config/axios.config";
 
+
+interface ICommentsData {
+    id: number,
+    productId: number,
+    userId: number,
+    content: string
+}
 interface ProductData {
   productId: number;
   productName: string;
@@ -30,8 +39,12 @@ const ProductPage = () => {
   const [isHover,setIsHover]= useState(false)
   const navigate = useNavigate()
   const [productData, setProductData] = useState<ProductData | null>(null);
+  const [commentsData,setCommentsData]=useState<ICommentsData[]>([])
   let productId=useSelector((state: RootState) => state.productID.productId); 
   const [selectedImage, setSelectedImage] = useState(productData?.imageUrls[0]);
+  const storageKey = "loginData"
+    const userDataString = localStorage.getItem(storageKey)
+    const userData =userDataString ? JSON.parse(userDataString) : null;
   document.title = productData?.productName || "Product Page";
   useEffect(() => {
     if (!productId) {
@@ -54,10 +67,30 @@ const ProductPage = () => {
     }
 }, [productId, dispatch]);
 
-  
+
+   useEffect(() =>{
+    
+    const getComments =async ()=>{
+     try {
+      
+      const {data}=  await axiosInstance.get(`/api/Comments/Product/${productId}`, {
+        headers: {
+          'Authorization': `Bearer ${userData?.token}`,
+        }
+      })
+      setCommentsData(data)
+     } catch (error) {
+      console.log(error)
+     }
+     
+    }
+    getComments()
+   },[])
+
+  console.log(commentsData)
    const SimilarProducts: string = `/api/Home/${productId}/similar`
   return (
-    <div className="w-full">
+    <main className="w-full">
       <div className="container mx-auto p-8 mt-10 mb-10 bg-white rounded-lg max-w-7xl ">
       <div className="flex flex-col md:flex-row gap-10">
         {/* Main Product Image */}
@@ -179,8 +212,7 @@ const ProductPage = () => {
         </div>
       </div>
       </div>
-
-      <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts}  />
+        <ProductSlider sliderTitle="Similar Products" endpoint={SimilarProducts}  />
 
       <div className="flex justify-center mt-10">
         <button
@@ -189,7 +221,7 @@ const ProductPage = () => {
         onMouseEnter={()=> setIsHover(true)}
         onMouseLeave={()=> setIsHover(false)}
         style={{ borderRadius: "30px"}}
-        className="text-xl font-semibold text-blue-600 px-6 py-3 border border-blue-600 hover:text-white hover:bg-blue-600 transition-all duration-300 flex items-center">
+        className="text-xl font-semibold text-blue-600 px-6 py-3 border border-blue-600 hover:text-white hover:bg-blue-600 transition-all duration-600 flex items-center">
           Write a Review
           
           {isHover ? 
@@ -203,9 +235,29 @@ const ProductPage = () => {
       </div>
 
 
-    </div>
+     {commentsData.length ? 
+         <section className="container mx-auto p-8 mt-10 mb-10 bg-white rounded-lg max-w-7xl ">
+         <div>
+          <h1 className="text-3xl font-bold mb-6">Reviews</h1>
+         </div>
+
+         <div className="space-y-5">
+           {commentsData.map((comment:ICommentsData)=>(
+            <Comments comment={comment.content} rating={2}/>
+           ))}
+         </div>
+       </section>
+    : null 
+    }
+     
+
+
+
+
+    </main>
   );
 };
 
 
-export default ProductPage;
+const MemoizedProductPage = memo(ProductPage);
+export default MemoizedProductPage;

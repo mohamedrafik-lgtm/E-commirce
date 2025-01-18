@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Products } from "../interface";
 import axiosInstance from "../config/axios.config";
 import ProductCard from "./ui/ProductCard";
@@ -6,7 +6,7 @@ import Variants from "./ui/Scilaton";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import { useMediaQuery } from "@mui/material";
-
+import { useInView } from "react-intersection-observer";
 // Skeleton Card for loading state (modified for slider)
 const SkeletonCard = () => (
   <div className="bg-gray-200 animate-pulse rounded-lg shadow-lg p-4">
@@ -61,7 +61,10 @@ const ProductSlider = ({ endpoint, sliderTitle }: IProps) => {
 
     fetchProducts();
   }, [endpoint]);
-
+  const { ref } = useInView({
+    triggerOnce: true,  // 
+    threshold: 0,   
+  });
   const goToPrevious = () => {
     const isFirstSlide = currentIndex === 0;
     const newIndex = isFirstSlide ? products.length - visibleProducts : currentIndex - 1;
@@ -79,9 +82,9 @@ const ProductSlider = ({ endpoint, sliderTitle }: IProps) => {
   if (!products.length) return null;
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full" ref={ref}>
       <div className="mb-5">
-        <h3 className="text-2xl p-2 text-center">{sliderTitle}</h3>
+        <h2 className="text-2xl p-2 text-center">{sliderTitle}</h2>
         <hr className="w-3/4 mx-auto" />
       </div>
       <button
@@ -138,4 +141,5 @@ const ProductSlider = ({ endpoint, sliderTitle }: IProps) => {
   );
 };
 
-export default ProductSlider;
+const MemoizedProductSlider = memo(ProductSlider);
+export default MemoizedProductSlider;
