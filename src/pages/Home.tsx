@@ -125,6 +125,7 @@ export const Home = memo(() => {
           </ScrollAnimatedComponent>
         </Suspense>
       </div>
+      
     </div>
   );
 });

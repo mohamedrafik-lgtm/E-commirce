@@ -13,11 +13,13 @@ import ScrollAnimatedComponent from "@/components/ScrollAnimatedComponent";
 
 const AddProduct = () => {
   document.title = 'Add Product';
+  
   const options = [
     { value: 'Smart watches', label: 'Smart watches' },
     { value: 'headphones', label: 'headphones' },
     { value: 'labtop', label: 'labtop' },
     { value: 'phone', label: 'phone' },
+    { value: 'speakers', label: 'speakers' },
   ];
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
@@ -236,6 +238,7 @@ const AddProduct = () => {
     console.log(errors)
     const hasErrorMsg = Object.values(errors).some(value => value === '') && Object.values(errors).every(value => value === '')
     if(!hasErrorMsg){
+      setLoading(false)
       setErrors(errors)
       return;
     }

@@ -1,13 +1,11 @@
 
 const ContactPage = () => {
     
-  
-    return (
-        <div>
-            <h1>Contact Page</h1>
-            <p>Here is the contact page</p>
+      return (
+        <div className="flex justify-center items-center h-screen">
+          contact page
         </div>
-    );
+      );
 }
 
 

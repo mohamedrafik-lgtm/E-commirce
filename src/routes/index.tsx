@@ -96,11 +96,13 @@ const router = createBrowserRouter(createRoutesFromElements(
             </Suspense>
             }/>
          
-       <Route path="Register" element={<Register/>}/>
-       <Route path="VerificationCode" element={<VerificationCode/>}/>
-       <Route path="Login" element={<Login/>}/>
+       
     </Route>
-
+       <Route path={"/user"}>
+           <Route path="/user/Register" element={<Register/>}/>
+           <Route path="/user/VerificationCode" element={<VerificationCode/>}/>
+           <Route path="/user/Login" element={<Login/>}/>
+       </Route>
     {/* admin route*/}
     <Route path="/Admin" element={<Suspense fallback={<h3>Loding...</h3>}><AdminLayout/></Suspense>} errorElement={<ErrorPage msg="500 page not fount" statusCode="500"/>}>
 

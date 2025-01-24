@@ -47,7 +47,7 @@ const NavPar = () => {
     { label: 'Account Settings', icon: faCog, path: "/AccountSetting/userProfile" },
     // { label: 'Admin Page', icon: faShieldAlt, path: "/Admin" },
     { label: 'Dashboard', icon: faDashboard, path: "/Admin" },
-    { label: 'log out', icon:faLongArrowLeft , path: "/Login" },
+    { label: 'log out', icon:faLongArrowLeft , path: "/user/Login" },
   ];
 
 
@@ -86,7 +86,7 @@ const NavPar = () => {
           </div>
           {!isLoggedIn ? (
             <div className="text-xl mr-10">
-              <NavLink to={"/login"}>Login</NavLink>
+              <NavLink to={"/user/login"}>Login</NavLink>
             </div>
           ) : null}
         </div>

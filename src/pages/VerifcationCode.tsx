@@ -49,7 +49,7 @@ const VerificationCode= ({email}:IProp) => {
               },
             });
             setTimeout(() => {
-              navigator("/home");
+              navigator("/user/Login");
             }, 3000);
           }
     } catch (error) {
@@ -58,7 +58,10 @@ const VerificationCode= ({email}:IProp) => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-12">
+    <div className='min-h-screen bg-black flex justify-center items-center' style={{
+      background: 'linear-gradient(0deg, rgba(9,7,7,1) 19%, rgba(167,45,253,1) 100%)',
+      }}>
+      <div className="flex flex-col items-center mt-12">
       <h2 className="text-2xl font-semibold mb-4">Enter Verification Code</h2>
       <div className="flex space-x-2">
         {new Array(6).fill('').map((_, index) => (
@@ -70,16 +73,17 @@ const VerificationCode= ({email}:IProp) => {
             maxLength={1}
             onChange={(e) => handleChange(e.target.value.slice(-1), index)}
             onPaste={handlePaste}
-            className="w-12 h-12 text-xl text-center border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-12 h-12 text-xl text-center border border-white bg-zinc-800 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         ))}
       </div>
       <button
         onClick={handleSubmit}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="mt-4 px-4 py-2 border text-black rounded hover:bg-white"
       >
         Verify
       </button>
+    </div>
     </div>
   );
 };

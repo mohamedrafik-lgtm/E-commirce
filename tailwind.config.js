@@ -1,5 +1,8 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -71,7 +74,10 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      backgroundImage: {
+        'radial-purple': 'radial-gradient(circle, rgba(128,0,255,1) 0%, rgba(56,0,98,1) 50%, rgba(0,0,0,1) 100%)',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
